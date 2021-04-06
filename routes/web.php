@@ -12,5 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.layout');
+});
+
+Route::get('/abc', function() {
+	return 'aaa';
 });
