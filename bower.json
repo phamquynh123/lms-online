@@ -1,0 +1,20 @@
+{
+  "name": "lms",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Pham Thi Quynh <phamquynh047@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/phamquynh123/lms-online.git",
+  "ignore": [
+    "*/.",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bower": "https://github.com/phamquynh123/lms-temp.git"
+  }
+}
