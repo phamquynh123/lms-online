@@ -18,3 +18,10 @@ Route::get('/', function () {
 Route::get('/abc', function() {
 	return 'aaa';
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+// register Course
+Route::get('/registercustom', 'Auth\RegisterController@registercustom')->name('registercustom');
+Route::post('/registerSubmit', 'Auth\RegisterController@registerSubmit')->name('registerSubmit');

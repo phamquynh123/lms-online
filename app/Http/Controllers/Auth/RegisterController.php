@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use App\Repositories\SubjectRepository;
+use App\Repositories\RegisterRepository;
 
 class RegisterController extends Controller
 {
@@ -68,5 +71,23 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    public function registercustom()
+    {
+        $repo = new SubjectRepository();
+        $subjects = $repo->getAll();
+
+        return view('auth.registercustom', compact('subjects'));
+    }
+
+    public function registerSubmit(Request $request)
+    {
+        $data = $request->all();
+        $data['status'] = config('messages.deactive');
+        $repo = new RegisterRepository();
+        $data = $repo->create($data);
+
+        return response()->json(['success' => trans('message.success'), 'error' => false]);
     }
 }
