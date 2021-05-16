@@ -11,17 +11,19 @@
 |
 */
 
-Route::get('/', function () {
-    return view('layouts.layout');
-});
-
-Route::get('/abc', function() {
-	return 'aaa';
-});
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 // register Course
 Route::get('/registercustom', 'Auth\RegisterController@registercustom')->name('registercustom');
 Route::post('/registerSubmit', 'Auth\RegisterController@registerSubmit')->name('registerSubmit');
+
+Route::group(['middleware' => 'locale'], function() { 
+    Route::get('change-language/{language}', 'LanguageController@changeLanguage')
+        ->name('user.change-language');
+    Route::group(['middleware' => 'auth'], function() {
+        Route::get('/', function () {
+            return view('layouts.layout');
+        });
+        Route::get('/home', 'HomeController@index')->name('home');
+    });
+});

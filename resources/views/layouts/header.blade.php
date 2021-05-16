@@ -67,10 +67,23 @@
                             <div class="widget-content-wrapper">
                                 <div class="widget-content-left">
                                     <div class="btn-group">
+                                        <a href="{!! route('user.change-language', ['en']) !!}" class='mr-3'>En</a>
+                                        <a href="{!! route('user.change-language', ['vi']) !!}">Vi</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="header-btn-lg pr-0">
+                        <div class="widget-content p-0">
+                            <div class="widget-content-wrapper">
+                                <div class="widget-content-left">
+                                    <div class="btn-group">
                                         <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
                                             <img width="42" class="rounded-circle" src="images/1.jpg" alt>
                                             <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                         </a>
+                                        
                                         <div tabindex="-1" role="menu" aria-hidden="true" class="rm-pointers dropdown-menu-lg dropdown-menu dropdown-menu-right">
                                             <div class="dropdown-menu-header">
                                                 <div class="dropdown-menu-header-inner bg-info">
