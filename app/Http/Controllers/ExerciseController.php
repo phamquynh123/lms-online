@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Exercise;
 use App\Models\Subject;
-use App\Repositories\ExerciseRepository;
-use App\Repositories\SubjectRepository;
+use App\Repositories\Exercise\ExerciseRepository;
+use App\Repositories\Subject\SubjectRepository;
 use App\Services\ExcelService;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
@@ -20,17 +20,21 @@ class ExerciseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    protected $reponsitory;
+    protected $repository;
+    protected $subjectRepo;
 
-    public function __construct(ExerciseRepository $repository)
-    {
+    public function __construct(
+        ExerciseRepository $repository,
+        SubjectRepository $subjectRepo
+    ) {
         $this->repository = $repository;
+        $this->subjectRepo = $subjectRepo;
     }
 
     public function index()
     {
-        $repo = new SubjectRepository();
-        $subjects = $repo->getAll();
+        // $repo = new SubjectRepository();
+        $subjects = $this->subjectRepo->getAll();
 
         return view('document/exercise', compact('subjects'));
     }

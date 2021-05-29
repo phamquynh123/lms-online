@@ -6,15 +6,15 @@ use App\Models\ClassInfor;
 use Illuminate\Http\Request;
 use App\Models\Document;
 use App\Models\Exercise;
-use App\Repositories\ClassesRepository;
-use App\Repositories\ClassInfoRepository;
-use App\Repositories\DocumentRepository;
-use App\Repositories\ExerciseRepository;
-use App\Repositories\LessonRepository;
-use App\Repositories\UserRepository;
-use App\Repositories\LessonExerciseRepository;
-use App\Repositories\LessonDocumentRepository;
-use App\Repositories\HomeworkRepository;
+use App\Repositories\Class\ClassesRepositoryInterface;
+use App\Repositories\ClassInfo\ClassInfoRepositoryInterface;
+use App\Repositories\Document\DocumentRepositoryInterface;
+use App\Repositories\Exercise\ExerciseRepositoryInterface;
+use App\Repositories\Lesson\LessonRepositoryInterface;
+use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\LessonExercise\LessonExerciseRepositoryInterface as lessonExerciseRepo;
+use App\Repositories\LessonDocument\LessonDocumentRepositoryInterface as lessonDocumentRepo;
+use App\Repositories\Homework\HomeworkRepositoryInterface;
 use Yajra\Datatables\Datatables;
 use App\Http\Requests\TestRequest;
 use App\Http\Requests\HomeworksRequest;
@@ -29,16 +29,37 @@ class ClassInforController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    protected $reponsitory;
-    protected $homeworkRepository;
+    protected $classInfoRepo;
+    protected $homeworkRepo;
+    protected $lessonExerciseRepo;
+    protected $lessonDocumentRepo;
+    protected $classRepo;
+    protected $documentRepo;
+    protected $exerciseRepo;
+    protected $userRepo;
+    protected $lessonRepo;
 
     public function __construct(
-        ClassInfoRepository $repository,
-        HomeworkRepository $homeworkRepository
+        ClassInfoRepository $classInfoRepo,
+        HomeworkRepositoryInterface $homeworkRepo,
+        lessonnExerciseRepo $lessonExerciseRepo,
+        lessonDocumentRepo $lessonDocumentRepo,
+        ClassesRepositoryInterface $classRepo,
+        DocumentRepositoryInterface $documentRepo,
+        ExerciseRepositoryInterface $exerciseRepo,
+        UserRepositoryInterface $userRepo,
+        LessonRepositoryInterface $lessonRepo
     )
     {
-        $this->repository = $repository;
-        $this->homeworkRepository = $homeworkRepository;
+        $this->classInfoRepo = $classInfoRepo;
+        $this->homeworkRepo = $homeworkRepo;
+        $this->lessonExerciseRepo = $lessonExerciseRepo;
+        $this->lessonDocumentRepo = $lessonDocumentRepo;
+        $this->classRepo = $classRepo;
+        $this->documentRepo = $documentRepo;
+        $this->exerciseRepo = $exerciseRepo;
+        $this->userRepo = $userRepo;
+        $this->lessonRepo = $lessonRepo;
     }
 
     public function index($id)
@@ -71,26 +92,26 @@ class ClassInforController extends Controller
 
     public function editLession($lesson_id, $class_id)
     {
-        $class = new ClassesRepository();
-        $class = $class->find($class_id);
+        // $class = new ClassesRepository();
+        $class = $this->classRepo->find($class_id);
         // infor lesson
-        $lesson = new LessonRepository();
-        $lessons = $lesson->find($lesson_id);
+        // $lesson = new LessonRepository();
+        $lessons = $this->lessonRepo->find($lesson_id);
         // all document
-        $document = new DocumentRepository();
-        $documents = $document->findCondition('subject_id', $class->subject_id);
+        // $document = new DocumentRepository();
+        $documents = $this->documentRepo->findCondition('subject_id', $class->subject_id);
         // all exercise
-        $exercise = new ExerciseRepository();
-        $exercises = $exercise->findCondition('subject_id', $class->subject_id);
+        // $exercise = new ExerciseRepository();
+        $exercises = $this->exerciseRepo->findCondition('subject_id', $class->subject_id);
         //lessondocument
-        $lessondocumentrepo = new LessonDocumentRepository();
-        $lessondocuments = $lessondocumentrepo->findCondition('lesson_id', $lessons->id)->load('document')->map(function($item) {
+        // $lessondocumentrepo = new LessonDocumentRepository();
+        $lessondocuments = $this->lessonDocumentRepo->findCondition('lesson_id', $lessons->id)->load('document')->map(function($item) {
                 $item['document'] = $item->document[0];
             return $item;
         });
 
-        $lessonexercise = new LessonExerciseRepository();
-        $lessonexercises = $lessonexercise->findCondition('lesson_id', $lessons->id)->load('exercise')->map(function($item) {
+        // $lessonexercise = new LessonExerciseRepository();
+        $lessonexercises = $this->lessonExerciseRepo->findCondition('lesson_id', $lessons->id)->load('exercise')->map(function($item) {
             $item['exercise'] = $item->exercise[0];
 
             return $item;
@@ -101,19 +122,19 @@ class ClassInforController extends Controller
 
     public function editinfo(Request $request)
     {
-        $repolesson = new LessonRepository();
+        // $repolesson = new LessonRepository();
         $data = $request->all();
         $data['slug'] = str_slug($data['name']);
-        $data = $repolesson->update($data['id'], $data);
+        $data = $this->lessonRepo->update($data['id'], $data);
 
         return response()->json(['success' => trans('meassge.successs'), 'error' => false]);
     }
 
     public function editlessionDocument(Request $request)
     {
-        $repo = new LessonDocumentRepository();
-        $data = $repo->create($request->all());
-        // $data = $this->repository->find($class_id);
+        // $repo = new LessonDocumentRepository();
+        $data = $this->lessonDocumentRepo->create($request->all());
+        // $data = $this->classInfoRepo->find($class_id);
 
         return response()->json(['success' => trans('meassge.successs'), 'error' => false]);
     }
@@ -121,22 +142,19 @@ class ClassInforController extends Controller
     public function editlessionExercise(Request $request)
     {
         $data = $request->all();
-        $repo = new LessonExerciseRepository();
+        // $repo = new LessonExerciseRepository();
         $data['deadline'] = now()->addDays(2);
         // dd($data);
-        $data = $repo->create($data);
-        // $data = $this->repository->find($class_id);
+        $data = $this->lessonExerciseRepo->create($data);
+        // $data = $this->classInfoRepo->find($class_id);
 
         return response()->json(['success' => trans('meassge.successs'), 'error' => false]);
     }
 
     public function ShowLession($lesson_id, $class_id)
     {
-        $lesson = new LessonRepository();
-        $lessons = $lesson->find($lesson_id);
-
-        $lessondocumentrepo = new LessonDocumentRepository();
-        $lessondocuments = $lessondocumentrepo->findCondition('lesson_id', $lesson_id)->load('document')->map(function($item) {
+        $lessons = $this->lessonRepo->find($lesson_id);
+        $lessondocuments = $lessonDocumentRepo->findCondition('lesson_id', $lesson_id)->load('document')->map(function($item) {
                 $item['document'] = $item->document[0];
 
             return $item;
@@ -147,11 +165,10 @@ class ClassInforController extends Controller
 
     public function showExercise($lesson_id, $class_id)
     {
-        $lesson = new LessonRepository();
-        $lessons = $lesson->find($lesson_id);
+        $lessons = $this->lessonRepo->find($lesson_id);
 
-        $lessonexercise = new LessonExerciseRepository();
-        $lessonexercises = $lessonexercise->findCondition('lesson_id', $lesson_id)->load('exercise')->map(function($item) {
+        // $lessonexercise = new LessonExerciseRepository();
+        $lessonexercises = $this->lessonExerciseRpo->findCondition('lesson_id', $lesson_id)->load('exercise')->map(function($item) {
             $item['exercise'] = $item->exercise[0];
 
             return $item;
@@ -173,7 +190,7 @@ class ClassInforController extends Controller
     {
         $data = $request->all();
         $data['user_id'] = Auth::user()->id;
-        $response = $this->homeworkRepository->findHomeworkAnswer($data['lesson_id'], $data['lession_exercise_id'], $data['user_id']);
+        $response = $this->homeworkRepo->findHomeworkAnswer($data['lesson_id'], $data['lession_exercise_id'], $data['user_id']);
 
         return response()->json($response);
     }

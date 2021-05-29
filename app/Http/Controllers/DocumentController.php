@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Document;
 use App\Models\Subject;
-use App\Repositories\DocumentRepository;
-use App\Repositories\SubjectRepository;
+use App\Repositories\Document\DocumentRepositoryInterface;
+use App\Repositories\Subject\SubjectRepositoryInterface;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use App\Http\Requests\DocumentRequest;
@@ -14,11 +14,16 @@ use Illuminate\Support\Str;
 class DocumentController extends Controller
 {
 
-    protected $reponsitory;
+    protected $repository;
+    protected $subjectRepo;
 
-    public function __construct(DocumentRepository $repository)
-    {
+
+    public function __construct(
+        DocumentRepositoryInterface $repository,
+        SubjectRepositoryInterface $subjectRepo
+    ) {
         $this->repository = $repository;
+        $this->subjectRepo = $subjectRepo;
     }
     /**
      * Display a listing of the resource.
@@ -27,8 +32,8 @@ class DocumentController extends Controller
      */
     public function index()
     {
-        $repo = new SubjectRepository();
-        $subjects = $repo->getAll();
+        // $repo = new SubjectRepository();
+        $subjects = $this->subjectRepo->getAll();
 
         return view('document/theory', compact('subjects'));
     }
