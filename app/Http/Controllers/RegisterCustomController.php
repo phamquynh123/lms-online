@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use App\Repositories\SubjectRepository;
 use App\Repositories\RegisterRepository;
 use Yajra\Datatables\Datatables;
 use Socialite;
 
 class RegisterCustomController extends Controller
 {
+    protected $RegisterRepository;
+
     public function __construct(RegisterRepository $RegisterRepository)
     {
         $this->RegisterRepository = $RegisterRepository;

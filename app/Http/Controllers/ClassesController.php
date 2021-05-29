@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Subject;
-use App\Repositories\ClassesRepository;
-use App\Repositories\LessonRepository;
-use App\Repositories\SubjectRepository;
-use App\Repositories\ClassInfoRepository;
-use App\Repositories\UserRepository;
+use App\Repositories\Class\ClassesRepositoryInterface;
+use App\Repositories\Lesson\LessonRepositoryInterface;
+use App\Repositories\Subject\SubjectRepositoryInterface;
+use App\Repositories\ClassInfo\ClassInfoRepositoryInterface;
+use App\Repositories\User\UserRepositoryInterface;
 use Yajra\Datatables\Datatables;
 use App\Http\Requests\TestRequest;
 use Illuminate\Support\Facades\Auth;
@@ -17,17 +17,31 @@ class ClassesController extends Controller
 {
     protected $reponsitory;
 
-    public function __construct(ClassesRepository $repository)
-    {
+    protected $lessonRepo;
+    protected $useRepo;
+    protected $subjectRepo;
+    protected $classInfoRepo;
+
+    public function __construct(
+        ClassesRepository $repository,
+        LessonRepositoryInterface $lessonRepo,
+        UserRepositoryInterface $useRepo,
+        SubjectRepositoryInterface $subjectRepo,
+        ClassInfoRepositoryInterface $classInfoRepo
+    ) {
         $this->repository = $repository;
+        $this->lessonRepo = $lessonRepo;
+        $this->useRepo = $useRepo;
+        $this->subjectRepo = $subjectRepo;
+        $this->classInfoRepo = $classInfoRepo;
     }
 
     public function index()
     {
-        $repo = new SubjectRepository();
-        $subjects = $repo->getAll();
-        $repoteacher = new UserRepository();
-        $teachers = $repoteacher->findCondition('role_id', config('messages.roleTeacher'));
+        // $repo = new SubjectRepository();
+        $subjects = $this->subjectRepo->getAll();
+        // $repoteacher = new UserRepository();
+        $teachers = $this->userRepo->findCondition('role_id', config('messages.roleTeacher'));
 
         return view('admins/classes', compact('subjects', 'teachers'));
     }
@@ -57,8 +71,8 @@ class ClassesController extends Controller
 
     public function studentClassDatatable($user_id)
     {
-        $classinforepo = new ClassInfoRepository();
-        $data = $classinforepo->findCondition('user_id', $user_id)->load('classes')->map(function($item) {
+        // $classinforepo = new ClassInfoRepository();
+        $data = $this->classInfoRepo->findCondition('user_id', $user_id)->load('classes')->map(function($item) {
             $item['name'] = $item->classes->name;
 
             return $item;
@@ -104,8 +118,8 @@ class ClassesController extends Controller
     {
         $data = $request->all();
         $data['slug'] = str_slug($data['name']);
-        $repoLesson = new LessonRepository();
-        $data = $repoLesson->create($data);
+        // $repoLesson = new LessonRepository();
+        $data = $this->lessonRepo->create($data);
 
         return response()->json([ 'error' => false, 'success' => trans('message.success') ]);
     }
@@ -113,8 +127,8 @@ class ClassesController extends Controller
     public function datatablesAdddetail($classId)
     {
         //list student actived
-        $repo = new UserRepository();
-        $data = $repo->findConditionClass('role_id', config('messages.roleStudent'), 'status', config('messages.active'))->load('classes');
+        // $repo = new UserRepository();
+        $data = $this->useRepo->findConditionClass('role_id', config('messages.roleStudent'), 'status', config('messages.active'))->load('classes');
         foreach ($data as $value) {
             foreach ($value['classes'] as $value1) {
                 if ($value1['pivot']['class_id'] == $classId) {
@@ -149,12 +163,12 @@ class ClassesController extends Controller
     {
         if (Auth::user()->role_id == config('messages.roleAdmin')) {
             $data= $request->all();
-            $inforrepo = new ClassInfoRepository();
+            // $inforrepo = new ClassInfoRepository();
             if ($data['inclass'] == config('messages.active')) {
-                $student = $inforrepo->findConditionClass('class_id', $data['class_id'], 'user_id', $data['user_id']);
-                $student = $inforrepo->delete($student[0]['id']);
+                $student = $this->classInfoRepo->findConditionClass('class_id', $data['class_id'], 'user_id', $data['user_id']);
+                $student = $this->classInfoRepo->delete($student[0]['id']);
             } else {
-                $data = $inforrepo->create($data);
+                $data = $this->classInfoRepo->create($data);
             }
 
             return response()->json([ 'error' => false, 'success' => trans('message.success') ]);

@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;    
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreUser;
 use App\Http\Requests\ChangePasswordRequest;
-use App\Repositories\UserRepository;
+use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Storage;
@@ -21,7 +21,7 @@ class UserController extends Controller
      */
     protected $userRepository;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->userRepository = $userRepository;
     }
@@ -106,6 +106,7 @@ class UserController extends Controller
     {
         $users = $this->userRepository->findCondition('role_id', $id);
 
+        // dd($users);
         return Datatables::of($users)
             ->addColumn('action', function ($user) {
                 return '<a href="#" class="btn btn-sm btn-warning show-user" data-id="' . $user->id . '"><i class="fa fa-eye"></i></a>';

@@ -1,4 +1,4 @@
-mp<?php 
+<?php 
 
     return [
         'linkdefaul' => 'bower_components/adminTemplate/Img/defaul.jpeg',

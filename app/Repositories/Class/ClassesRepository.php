@@ -1,10 +1,11 @@
 <?php
-namespace App\Repositories;
+namespace App\Repositories\Class;
 
 use App\Repositories\EloquentRepository;
+use App\Repositories\Class\ClassesRepositoryInterface;
 use App\Models\Classes;
 
-class ClassesRepository extends EloquentRepository
+class ClassesRepository extends EloquentRepository implements ClassesRepositoryInterface
 {
     /**
      * get model

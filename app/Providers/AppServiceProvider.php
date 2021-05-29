@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        Schema::defaultStringLength(191);
     }
 
     /**
@@ -23,6 +24,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        
+        $this->app->bind("App\\Repositories\\User\\UserRepositoryInterface","App\\Repositories\\User\\UserRepository");
+        $this->app->bind("App\\Repositories\\Attendance\\AttendanceRepositoryInterface","App\\Repositories\\Attendance\\AttendanceRepository");
+        $this->app->bind("App\\Repositories\\Class\\ClassRepositoryInterface","App\\Repositories\\Class\\ClassRepository");
+        $this->app->bind("App\\Repositories\\ClassInfo\\ClassInfoRepositoryInterface","App\\Repositories\\ClassInfo\\ClassInfoRepository");
+        $this->app->bind("App\\Repositories\\Course\\CourseRepositoryInterface","App\\Repositories\\Course\\CourseRepository");
+        $this->app->bind("App\\Repositories\\Document\\DocumentRepositoryInterface","App\\Repositories\\Document\\DocumentRepository");
+        $this->app->bind("App\\Repositories\\Exercise\\ExerciseRepositoryInterface","App\\Repositories\\Exercise\\ExerciseRepository");
+        $this->app->bind("App\\Repositories\\Homework\\HomeworkRepositoryInterface","App\\Repositories\\Homework\\HomeworkRepository");
+        $this->app->bind("App\\Repositories\\Lesson\\LessonRepositoryInterface","App\\Repositories\\Lesson\\LessonRepository");
+        $this->app->bind("App\\Repositories\\LessonDocument\\LessonDocumentRepositoryInterface","App\\Repositories\\LessonDocument\\LessonDocumentRepository");
+        $this->app->bind("App\\Repositories\\LessonExercise\\LessonExerciseRepositoryInterface","App\\Repositories\\LessonExercise\\LessonExerciseRepository");
+        $this->app->bind("App\\Repositories\\Subject\\SubjectRepositoryInterface","App\\Repositories\\Subject\\SubjectRepository");
     }
 }

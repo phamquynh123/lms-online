@@ -1,10 +1,11 @@
 <?php
-namespace App\Repositories;
+namespace App\Repositories\Homework;
 
 use App\Repositories\EloquentRepository;
+use App\Repositories\Homework\HomeworkRepositoryInterface;
 use App\Models\Homework;
 
-class HomeworkRepository extends EloquentRepository
+class HomeworkRepository extends EloquentRepository implements HomeworkRepositoryInterface
 {
     /**
      * get model
