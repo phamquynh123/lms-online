@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateQuestionDetailsTable extends Migration
+class CreatePermissionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateQuestionDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('question_details', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('question_id');
-            $table->string('title');
-            $table->string('content');
-            $table->string('status'); //true or false.
+        Schema::create('permissions', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('display_name');
+            $table->string('description');
+            $table->softDeletes(); 
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateQuestionDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('question_details');
+        Schema::dropIfExists('permissions');
     }
 }

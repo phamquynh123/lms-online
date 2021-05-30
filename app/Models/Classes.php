@@ -10,10 +10,16 @@ class Classes extends Model
 
     protected $fillable = [
         'name',
-        'slug',
-        'subject_id',
-        'user_id',
+        'course_id',
+        'teacher_id',
+        'assistance_id',
         'status',
+        'time_start',
+        'description',
+        'zoom_id',
+        'form_study',
+        'created_user',
+        'updated_user',
     ];
 
     public function subject() 
@@ -21,9 +27,14 @@ class Classes extends Model
         return $this->belongsTo('App\Models\Subject', 'subject_id', 'id');
     }
 
+    public function course() 
+    {
+        return $this->belongsTo('App\Models\Subject', 'course_id', 'id');
+    }
+
     public function teacher()
     {
-        return $this->belongsTo('App\Models\User', 'user_id', 'id');
+        return $this->belongsTo('App\Models\User', 'teacher_id', 'id');
     }
 
     public function classInfor()

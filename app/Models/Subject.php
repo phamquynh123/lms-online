@@ -7,11 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Subject extends Model
 {
     protected $table = 'subjects';
-    protected $fillable = [
-        'name',
-        'slug',
-        'number_of_test',
-    ];
+    protected $guarded= [];
 
     public function class()
     {

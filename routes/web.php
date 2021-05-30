@@ -77,6 +77,7 @@ Route::group(['middleware' => 'locale'], function() {
             // list register
             Route::get('/registerList', 'RegisterCustomController@registerList');
             Route::get('/registerDatatable/{status}', 'RegisterCustomController@registerDatatable')->name('registerDatatable');
+            Route::get('/course', 'CourseController@index');
 
         });
 

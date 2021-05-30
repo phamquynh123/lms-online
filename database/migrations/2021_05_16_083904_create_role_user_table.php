@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateClassInforsTable extends Migration
+class CreateRoleUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateClassInforsTable extends Migration
      */
     public function up()
     {
-        Schema::create('class_infors', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('class_id');
-            $table->integer('user_id');
+        Schema::create('role_user', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('role_id');
+            $table->string('user_id');
+            $table->softDeletes(); 
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateClassInforsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('class_infors');
+        Schema::dropIfExists('role_user');
     }
 }

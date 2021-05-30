@@ -9,7 +9,7 @@ class ClassInfor extends Model
     protected $table = 'class_infors';
     protected $fillable = [
         'class_id',
-        'user_id',
+        'student_id',
     ];
 
     public function classes()
@@ -19,6 +19,6 @@ class ClassInfor extends Model
 
     public function users()
     {
-        return $this->hasMany('App\Models\User', 'id', 'user_id');
+        return $this->hasMany('App\Models\User', 'id', 'student_id');
     }
 }

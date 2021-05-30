@@ -2,7 +2,7 @@
 namespace App\Repositories\ClassInfo;
 
 use App\Repositories\EloquentRepository;
-use App\Repositories\ClassInfo\ClassInfoRepositoryInterface
+use App\Repositories\ClassInfo\ClassInfoRepositoryInterface;
 use App\Models\ClassInfor;
 
 class ClassInfoRepository extends EloquentRepository implements ClassInfoRepositoryInterface
