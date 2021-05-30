@@ -119,6 +119,9 @@ class UserController extends Controller
                 }
                 return '<img class="img-avatar" src=" ' . $image . ' "/>';
             })
+            ->editColumn('created_at', function($user) {
+                return $user->created_at->format('d-m-Y');
+            })
             ->editColumn('status', function ($user) {
                 if ($user->status == config('messages.active')) {
                     return "<label class='switch switch-border switch-danger ahihi' title='Active'>

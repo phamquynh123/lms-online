@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Subject;
-use App\Repositories\Class\ClassesRepositoryInterface;
+use App\Repositories\Classroom\ClassroomRepositoryInterface;
 use App\Repositories\Lesson\LessonRepositoryInterface;
 use App\Repositories\Subject\SubjectRepositoryInterface;
 use App\Repositories\ClassInfo\ClassInfoRepositoryInterface;
@@ -15,32 +15,29 @@ use Illuminate\Support\Facades\Auth;
 
 class ClassesController extends Controller
 {
-    protected $reponsitory;
-
+    protected $repository;
     protected $lessonRepo;
-    protected $useRepo;
+    protected $userRepo;
     protected $subjectRepo;
     protected $classInfoRepo;
 
     public function __construct(
-        ClassesRepository $repository,
+        ClassroomRepositoryInterface $repository,
         LessonRepositoryInterface $lessonRepo,
-        UserRepositoryInterface $useRepo,
+        UserRepositoryInterface $userRepo,
         SubjectRepositoryInterface $subjectRepo,
         ClassInfoRepositoryInterface $classInfoRepo
     ) {
         $this->repository = $repository;
         $this->lessonRepo = $lessonRepo;
-        $this->useRepo = $useRepo;
+        $this->userRepo = $userRepo;
         $this->subjectRepo = $subjectRepo;
         $this->classInfoRepo = $classInfoRepo;
     }
 
     public function index()
     {
-        // $repo = new SubjectRepository();
         $subjects = $this->subjectRepo->getAll();
-        // $repoteacher = new UserRepository();
         $teachers = $this->userRepo->findCondition('role_id', config('messages.roleTeacher'));
 
         return view('admins/classes', compact('subjects', 'teachers'));
@@ -49,14 +46,12 @@ class ClassesController extends Controller
     public function classesDatatable($status)
     {
         $data = $this->repository->findCondition('status', $status)->load('subject', 'teacher')
-        // dd($data);
         ->map(function($item) {
             $item['subject_id'] = $item->subject->name;
             $item['user_id'] = $item->teacher->name;
 
             return $item;
         });
-        dd($data);
         return Datatables::of($data)
             ->addColumn('action', function ($data) {
                 return '<a href="#" class="btn btn-sm btn-success adddetail" id="show" data-id="' . $data->id . '"><i class="fa fa-plus"></i></a>

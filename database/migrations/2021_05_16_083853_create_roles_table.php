@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateQuestionTestTable extends Migration
+class CreateRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateQuestionTestTable extends Migration
      */
     public function up()
     {
-        Schema::create('question_test', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('test_id');
-            $table->integer('test_question_id');
-            $table->integer('question_choose_id');
-            $table->integer('check_status')->nullable();
+        Schema::create('roles', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('display_name');
+            $table->string('description');
+            $table->softDeletes(); 
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateQuestionTestTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('question_test');
+        Schema::dropIfExists('roles');
     }
 }

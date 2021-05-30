@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRoleUserTable extends Migration
+class CreateLessonExcercieTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateRoleUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('role_user', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('role_id');
-            $table->string('user_id');
+        Schema::create('lesson_excercie', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->integer('lesson_id');
+            $table->integer('class_id');
+            $table->integer('excercise_id');
+            $table->softDeletes(); 
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateRoleUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('role_user');
+        Schema::dropIfExists('lesson_excercie');
     }
 }
