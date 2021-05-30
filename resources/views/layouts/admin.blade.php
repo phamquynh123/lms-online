@@ -48,7 +48,7 @@
                     <span class="light-logo"><img src="{{ asset('bower_components/adminTemplate/Img/logo-light.png') }}" alt="logo"></span>
                 </div>
                 <div class="logo-lg">
-                    <span class="light-logo">Quynh - PHP Team </span>
+                    <span class="light-logo">Quynh - HUST </span>
                     {{-- <span class="dark-logo"><img src="../../images/logo-dark-text.png" alt="logo"></span> --}}
                 </div>
             </a>
@@ -196,7 +196,7 @@
                     </li>
                </ul>
             </div>
-            &copy; 2019 . Design by <a href="https://www.facebook.com/yelloww.strawberry">Quynh <3 </a>.
+            &copy; 2021 . Design by <a href="https://www.facebook.com/yelloww.strawberry">Quỳnh <3 </a>.
         </footer>
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-light">

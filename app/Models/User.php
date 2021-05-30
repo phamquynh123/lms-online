@@ -38,4 +38,9 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Classes', 'class_infors', 'user_id', 'class_id');
     }
 
+    public function classStudying()
+    {
+        return $this->hasMany('App\Models\Classes', 'teacher_id', 'class_id')->where('status', config('messages.happenning'));
+    }
+
 }

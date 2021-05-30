@@ -1,12 +1,18 @@
 <?php
     return [
         'welcome' => 'Welcome to Website!',
-        'techearMangement' => 'Teacher Managerment',
+        'techearMangement' => 'Teacher Management',
         'studentMangement' => 'Student Mangement',
         'courseMangement' => 'Course Mangement',
         'documentMangement' => 'Document Management',
         'classMangement' => 'Class Management',
         'permissionMangement' => 'Permission Management',
+        'courseManagement' => 'Course Management',
+        'manage' => [
+            'learning' => 'Learning Management',
+            'course' => 'Course Management',
+        ],
+        'course' => 'Course',
         'theory' => 'Theory',
         'exercise' => 'Exercise',
         'MyProfile' => ' My Profile',
@@ -63,7 +69,7 @@
         'confirmpassnotmatch' => 'Confirm Password and new password not match',
         'emailUnique' => 'Email existed',
         'emailemail' => 'Email must be valid',
-        'createSuccess' => 'Create Account Successfully! ',
+        'createSuccess' => 'Create Successfully! ',
         'changeStatusSuccess' => 'Status Change Sucuccessfully !',
         'changeProfileSuccess' => 'Profile Update Sucuccessfully !',
         'changePasswordSuccess' => 'Password change Sucuccessfully !',
@@ -98,4 +104,5 @@
         'withUs' => 'With Us',
         'list' => 'List',
         'confirmed' => 'Confirmed',
+        'description' => 'Description',
     ];

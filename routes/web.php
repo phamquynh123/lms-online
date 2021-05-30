@@ -41,6 +41,7 @@ Route::group(['middleware' => 'locale'], function() {
 
             Route::group(['prefix' => 'teachers'], function() {
                 Route::get('/', 'UserController@teacher');
+                Route::get('teacher-info/{id}', 'UserController@teacherInfo')->name('teacher-info');
             });
 
             Route::prefix('/students')->group(function() {
@@ -77,8 +78,14 @@ Route::group(['middleware' => 'locale'], function() {
             // list register
             Route::get('/registerList', 'RegisterCustomController@registerList');
             Route::get('/registerDatatable/{status}', 'RegisterCustomController@registerDatatable')->name('registerDatatable');
-            Route::get('/course', 'CourseController@index');
-
+            Route::prefix('course')->name('course.')->group(function() {
+                Route::get('/', 'CourseController@index');
+                Route::get('/datatable', 'CourseController@datatable')->name('datatable');
+                Route::post('/add', 'CourseController@create')->name('add');
+                Route::get('/show', 'CourseController@show')->name('show');
+                Route::post('/edit', 'CourseController@edit')->name('edit');
+                Route::post('/delete', 'CourseController@destroy')->name('delete');
+            });
         });
 
         Route::prefix('/documents')->group(function() {

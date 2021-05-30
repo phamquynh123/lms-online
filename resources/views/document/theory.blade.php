@@ -15,21 +15,19 @@
                 </nav>
             </div>
         </div>
+        <button type="button" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#addNew">{{ trans('message.addNew') }}</button>
     </div>
 </div>
 
 <section class="content">
     <div class="box">
-        <div class="box-header with-border">
-            <h3 class="box-title">{{ trans('message.theory') }}</h3>
-        </div>
         <div class="box-body">
-            <button type="button" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#addNew">{{ trans('message.addNew') }}</button>
             <table class="table table-bordered" id="theory-table" data-url="{{ route('theoryDatatable') }}" >
                 <thead>
                     <tr>
                         <th>{{ trans('message.id') }}</th>
                         <th>{{ trans('message.title') }}</th>
+                        <th>{{ trans('message.course') }}</th>
                         <th>{{ trans('message.created_at') }}</th>
                         <th>{{ trans('message.action') }}</th>
                     </tr>
@@ -42,7 +40,7 @@
 @endsection
 {{-- modal add New  --}}
 <div id="addNew" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg theoty-datatable">
 
         <!-- Modal content-->
         <div class="modal-content">
@@ -53,7 +51,6 @@
             <div class="modal-body">
                 <form action="" method="POST" role="form" novalidate id="addData" data-url="{{ asset('documents/addTheory') }}">
                     @csrf
-                    <legend>{{ trans('message.addNew') }} {{ trans('message.theory') }} </legend>
                     <div class="form-group">
                         <label for="">{{ trans('message.course') }}</label>
                         <select name="course_id" id="Course" class="form-control">

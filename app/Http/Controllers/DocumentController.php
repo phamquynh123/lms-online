@@ -6,6 +6,7 @@ use App\Models\Document;
 use App\Models\Subject;
 use App\Repositories\Document\DocumentRepositoryInterface;
 use App\Repositories\Subject\SubjectRepositoryInterface;
+use App\Repositories\Course\CourseRepositoryInterface;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use App\Http\Requests\DocumentRequest;
@@ -16,14 +17,17 @@ class DocumentController extends Controller
 
     protected $repository;
     protected $subjectRepo;
+    protected $courseRepo;
 
 
     public function __construct(
         DocumentRepositoryInterface $repository,
-        SubjectRepositoryInterface $subjectRepo
+        SubjectRepositoryInterface $subjectRepo,
+        CourseRepositoryInterface $courseRepo
     ) {
         $this->repository = $repository;
         $this->subjectRepo = $subjectRepo;
+        $this->courseRepo = $courseRepo;
     }
     /**
      * Display a listing of the resource.
@@ -32,17 +36,13 @@ class DocumentController extends Controller
      */
     public function index()
     {
-        // $repo = new SubjectRepository();
-        $subjects = $this->subjectRepo->getAll();
+        $subjects = $this->courseRepo->getAll();
 
         return view('document/theory', compact('subjects'));
     }
 
     public function theoryDatatable(){
-        $data = $this->repository->getAll();
-        foreach ($data as $value) {
-            $value['title'] = Str::limit( $value['title'], $limit = 60, $end = '...');
-        }
+        $data = $this->repository->getAll()->load('course');
 
         return Datatables::of($data)
             ->addColumn('action', function ($data) {
@@ -50,9 +50,20 @@ class DocumentController extends Controller
                         <a href="#" class="btn btn-sm btn-info showdata" id="show" data-id="' . $data->id . '"><i class="fa fa-edit"></i></a>
                         <a href="#" class="btn btn-sm btn-danger delete" data-id="' . $data->id . '"><i class="fa fa-trash"></i></a>';
             })
-
+            ->editColumn('title', function($doc) {
+                return Str::limit( $doc['title'], 40, $end = '...');
+            })
+            ->editColumn('created_at', function($data) {
+                return $data->created_at->format('d-m-Y');
+            })
+            ->editColumn('course', function($data) {
+                return $data->course->name;
+            })
             ->rawColumns([ 
                 'action',
+                'created_at',
+                'title',
+                'course'
             ])
             ->make(true);
     }
@@ -65,6 +76,7 @@ class DocumentController extends Controller
     {
         $data = $request->all();
         $data['slug'] = str_slug($data['title']);
+        $data['status'] = config('messages.active');
         $data1 = $this->repository->create($data);
 
         return response()->json([ 'error' => false, 'success' => trans('message.createSuccess') ]);

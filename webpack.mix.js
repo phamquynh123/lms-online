@@ -19,6 +19,7 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/admin/classes.js', 'public/js/classes.js')
     .js('resources/js/admin/classesDetail.js', 'public/js/classesDetail.js')
     .js('resources/js/admin/lesson.js', 'public/js/lesson.js')
+    .js('resources/js/admin/course.js', 'public/js/course.js')
     .sass('resources/sass/app.scss', 'public/css')
     .styles('resources/sass/admin.css', 'public/css/admin.css')
     .styles('resources/sass/editLesson.css', 'public/css/editLesson.css');

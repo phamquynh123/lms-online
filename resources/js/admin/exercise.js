@@ -14,6 +14,7 @@ $(function() {
         columns: [
             { data: 'id', name: 'id' },
             { data: 'title', name: 'title' },
+            { data: 'course', name: 'course' },
             { data: 'created_at', name: 'created_at' },
             { data: 'action', name: 'action' },
         ],
@@ -24,7 +25,7 @@ $(function() {
         var formdata = new FormData();
         formdata.append('title', $('#add-title').val());
         formdata.append('content', CKEDITOR.instances.editor1.getData());
-        formdata.append('subject_id', $('#Course').val());
+        formdata.append('course_id', $('#Course').val());
         $.ajax({
             dataType: 'JSON',
             method: 'post',
@@ -62,7 +63,7 @@ $(function() {
             processData: false,
             url: route('editExercise', id),
             success: function(response){
-                $('#edit-Course').val(response.subject_id);
+                $('#edit-Course').val(response.course_id);
                 $('#edit-title').val(response.title);
                 CKEDITOR.instances.editEditor.setData(response.content);
             },
@@ -77,7 +78,7 @@ $(function() {
         var formdata = new FormData();
         formdata.append('title', $('#edit-title').val());
         formdata.append('content', CKEDITOR.instances.editEditor.getData());
-        formdata.append('subject_id', $('#edit-Course').val());
+        formdata.append('course_id', $('#edit-Course').val());
         $.ajax({
             dataType: 'JSON',
             method: 'post',

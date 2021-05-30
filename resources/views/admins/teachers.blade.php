@@ -4,29 +4,24 @@
 <div class="content-header">
     <div class="d-flex align-items-center">
         <div class="mr-auto">
-            <h3 class="page-title">{{ trans('message.teacherList') }}</h3>
+            <h3 class="page-title">{{ trans('message.techearMangement') }}</h3>
             <div class="d-inline-block align-items-center">
                 <nav>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
                         <li class="breadcrumb-item" aria-current="page">{{ trans('message.teacherList') }}</li>
-                        <li class="breadcrumb-item active" aria-current="page">{{ trans('message.teacherList') }}</li>
                     </ol>
                 </nav>
             </div>
         </div>
+        @if(Gate::allows('teacher_managerment'))
+            <button type="button" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#addNewUser">{{ trans('message.addNew') }}</button>
+        @endif
     </div>
 </div>
 
 <section class="content">
     <div class="box">
-        <div class="box-header with-border">
-            <h3 class="box-title">{{ trans('message.teacherList') }}</h3>
-        </div>
         <div class="box-body">
-            @if(Gate::allows('teacher_managerment'))
-            <button type="button" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#addNewUser">{{ trans('message.addNew') }}</button>
-            @endif
             @if(Gate::allows('add_teacher'))
             <table class="table table-bordered" id="user-table" data-url="{{ route('datatables.user', config('messages.roleTeacher')) }}" data-status={{ route('changestatus') }}>
                 <thead>
@@ -100,27 +95,29 @@
             </div>
             <div class="modal-body">
                 <form action="" method="POST" role="form" id="a">
-                    <legend>{{ trans('id') }}</legend>
-                
                     <div class="form-group">
-                        <label for="">{{ trans('message.id') }}</label>
-                        <p type="text" class="form-control" id="showid" placeholder="Input field"></p>
+                        <label for="">{{ trans('message.id') }}: </label>
+                        <p type="text" id="showid" placeholder="Input field"></p>
                     </div>
                     <div class="form-group">
-                        <label for="">{{ trans('message.name') }}</label>
-                        <p type="text" class="form-control" id="showname" placeholder="Input field"></p>
+                        <label for="">{{ trans('message.name') }} : </label>
+                        <span type="text" id="showname" placeholder="Input field"></span>
                     </div>
                     <div class="form-group">
-                        <label for="">{{ trans('message.email') }}</label>
-                        <p type="text" class="form-control" id="showemail" placeholder="Input field"></p>
+                        <label for="">{{ trans('message.email') }}: </label>
+                        <span type="text" id="showemail" placeholder="Input field"></span>
                     </div>
                     <div class="form-group">
                         <label for="">{{ trans('message.avatar') }}</label>
                         <img src="" alt="" id="showavatar" class="img-avatar" data-img={{ asset(config('messages.imgDefaul')) }}>
                     </div>
                     <div class="form-group">
-                        <label for="">{{ trans('message.status') }}</label>
-                        <p type="text" class="form-control" id="showstatus" placeholder="Input field"></p>
+                        <label for="">{{ trans('message.status') }} : </label>
+                        <span type="text" id="showstatus" placeholder="Input field"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="">{{ trans('message.class') }} : </label>
+                        <span type="text" id="showclass" placeholder="Input field"></span>
                     </div>
                 </form>
             </div>
