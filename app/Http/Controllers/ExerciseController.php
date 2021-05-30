@@ -6,6 +6,7 @@ use App\Models\Exercise;
 use App\Models\Subject;
 use App\Repositories\Exercise\ExerciseRepository;
 use App\Repositories\Subject\SubjectRepository;
+use App\Repositories\Course\CourseRepositoryInterface;
 use App\Services\ExcelService;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
@@ -22,29 +23,28 @@ class ExerciseController extends Controller
      */
     protected $repository;
     protected $subjectRepo;
+    protected $courseRepo;
 
     public function __construct(
         ExerciseRepository $repository,
-        SubjectRepository $subjectRepo
+        SubjectRepository $subjectRepo,
+        CourseRepositoryInterface $courseRepo
     ) {
         $this->repository = $repository;
         $this->subjectRepo = $subjectRepo;
+        $this->courseRepo = $courseRepo;
     }
 
     public function index()
     {
-        // $repo = new SubjectRepository();
-        $subjects = $this->subjectRepo->getAll();
+        $subjects = $this->courseRepo->getAll();
 
         return view('document/exercise', compact('subjects'));
     }
 
     public function exerciseDatatable() 
     {
-        $data = $this->repository->getAll();
-        foreach ($data as $value) {
-            $value['title'] = Str::limit( $value['title'], $limit = 60, $end = ' ...');
-        }
+        $data = $this->repository->getAll()->load('course');
 
         return Datatables::of($data)
             ->addColumn('action', function ($data) {
@@ -52,8 +52,20 @@ class ExerciseController extends Controller
                         <a href="#" class="btn btn-sm btn-info showdata" id="show" data-id="' . $data->id . '"><i class="fa fa-edit"></i></a>
                         <a href="#" class="btn btn-sm btn-danger delete" data-id="' . $data->id . '"><i class="fa fa-trash"></i></a>';
             })
+             ->editColumn('title', function($doc) {
+                return Str::limit( $doc['title'], 40, $end = '...');
+            })
+            ->editColumn('created_at', function($data) {
+                return $data->created_at->format('d-m-Y');
+            })
+            ->editColumn('course', function($data) {
+                return $data->course->name;
+            })
             ->rawColumns([ 
                 'action',
+                'title',
+                'created_at',
+                'course'
             ])
             ->make(true);
     }
@@ -80,7 +92,8 @@ class ExerciseController extends Controller
     {
         $data = $request->all();
         $data['slug'] = str_slug($data['title']);
-        $data1 = $this->repository->create($data);
+        $data['status'] = config('messages.active');
+        $data = $this->repository->create($data);
 
         return response()->json([ 'error' => false, 'success' => trans('message.createSuccess') ]);
     }

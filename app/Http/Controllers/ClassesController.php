@@ -8,6 +8,7 @@ use App\Repositories\Classroom\ClassroomRepositoryInterface;
 use App\Repositories\Lesson\LessonRepositoryInterface;
 use App\Repositories\Subject\SubjectRepositoryInterface;
 use App\Repositories\ClassInfo\ClassInfoRepositoryInterface;
+use App\Repositories\Course\CourseRepositoryInterface;
 use App\Repositories\User\UserRepositoryInterface;
 use Yajra\Datatables\Datatables;
 use App\Http\Requests\TestRequest;
@@ -20,24 +21,27 @@ class ClassesController extends Controller
     protected $userRepo;
     protected $subjectRepo;
     protected $classInfoRepo;
+    protected $courseRepo;
 
     public function __construct(
         ClassroomRepositoryInterface $repository,
         LessonRepositoryInterface $lessonRepo,
         UserRepositoryInterface $userRepo,
         SubjectRepositoryInterface $subjectRepo,
-        ClassInfoRepositoryInterface $classInfoRepo
+        ClassInfoRepositoryInterface $classInfoRepo,
+        CourseRepositoryInterface $courseRepo
     ) {
         $this->repository = $repository;
         $this->lessonRepo = $lessonRepo;
         $this->userRepo = $userRepo;
         $this->subjectRepo = $subjectRepo;
         $this->classInfoRepo = $classInfoRepo;
+        $this->courseRepo = $courseRepo;
     }
 
     public function index()
     {
-        $subjects = $this->subjectRepo->getAll();
+        $subjects = $this->courseRepo->getAll();
         $teachers = $this->userRepo->findCondition('role_id', config('messages.roleTeacher'));
 
         return view('admins/classes', compact('subjects', 'teachers'));

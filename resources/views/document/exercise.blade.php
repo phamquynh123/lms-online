@@ -9,33 +9,30 @@
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
-                        <li class="breadcrumb-item" aria-current="page">{{ trans('message.documentMangement') }}</li>
                         <li class="breadcrumb-item active" aria-current="page">{{ trans('message.exercise') }}</li>
                     </ol>
                 </nav>
             </div>
         </div>
+        <button type="button" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#addNew">{{ trans('message.addNew') }}</button>
     </div>
 </div>
 
 <section class="content">
     <div class="box">
-        <div class="box-header with-border">
-            <h3 class="box-title">{{ trans('message.exercise') }}</h3>
-        </div>
         <div class="box-body">
-            <form action="{{ route('importData') }}" method="post" enctype="multipart/form-data">
+            {{-- <form action="{{ route('importData') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <input type="file" name="file" class="form-control">
                 <br>
                 <button class="btn btn-success">Import User Data</button>
-            </form>
-            <button type="button" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#addNew">{{ trans('message.addNew') }}</button>
+            </form> --}}
             <table class="table table-bordered" id="exercise-table" data-url={{ route('exerciseDatatable') }}>
                 <thead>
                     <tr>
                         <th>{{ trans('message.id') }}</th>
                         <th>{{ trans('message.title') }}</th>
+                        <th>{{ trans('message.course') }}</th>
                         <th>{{ trans('message.created_at') }}</th>
                         <th>{{ trans('message.action') }}</th>
                     </tr>
