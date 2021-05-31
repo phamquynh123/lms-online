@@ -5,7 +5,7 @@ use App\Repositories\LessonDocument\LessonDocumentRepositoryInterface as intefac
 use App\Repositories\EloquentRepository;
 use App\Models\LessonDocument;
 
-class LessonDocumentRepository extends EloquentRepository implements interface
+class LessonDocumentRepository extends EloquentRepository implements inteface
 {
     /**
      * get model
