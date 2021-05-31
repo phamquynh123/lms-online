@@ -82,8 +82,8 @@ Route::group(['middleware' => 'locale'], function() {
                 Route::get('/', 'CourseController@index');
                 Route::get('/datatable', 'CourseController@datatable')->name('datatable');
                 Route::post('/add', 'CourseController@create')->name('add');
-                Route::get('/show', 'CourseController@show')->name('show');
-                Route::post('/edit', 'CourseController@edit')->name('edit');
+                Route::get('/show/{id}', 'CourseController@show')->name('show');
+                Route::post('/update/{id}', 'CourseController@update')->name('update');
                 Route::post('/delete', 'CourseController@destroy')->name('delete');
             });
         });

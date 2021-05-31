@@ -54,57 +54,51 @@ $('.submit-add').on('click', function(e) {
     })
 })
 
-$(document).on('click', '.switch-indicator', function(e){
-    var formData = new FormData();
-    formData.append('id', $(this).attr('user-id'));
-    formData.append('status', $(this).attr('data-status'))
-    $.ajax({
-        type: 'post', 
-        url: $('#user-table').attr('data-status'),
-        processData: false,
-        contentType: false,
-        data:formData,
-        dataType: 'JSON', 
-        success: function (response) {
-            $('#user-table').DataTable().ajax.reload(null, false);
-            if (response.error == true) {
-                toastr.error(response.success);
-            } else {
-                toastr.success(response.success);
-            }
-        },  
-        error:function(jqXHR, textStatus, errorThrown){
-           
-        }
-    })
-});
-
-$(document).on('click', '.show-user', function() {
+$(document).on('click', '.edit', function() {
     var id =$(this).attr('data-id');
-    var asset = $('#showavatar').attr('data-img');
-    console.log(asset);
     $('#myModal').modal('show');
     $.ajax({
         type: 'get', 
-        url: route('showUser', id),
+        url: route('course.show', id),
         processData: false,
         contentType: false,
         dataType: 'JSON', 
         success: function (response) {
-            $('#showid').text(response.data.id);
-            $('#showname').text(response.data.name);
-            $('#showemail').text(response.data.email);
-            $('#showavatar').attr('src', asset + response.data.avatar);
-            if (response.data.status == '1') {
-                $('#showstatus').text('Active');
-            } else {
-                $('#showstatus').text('Dective');
-            }
+            $('.submit-edit').attr('data-id', response.id);
+            $('#showname').val(response.name);
+            $('#showdes').val(response.description);
+            $('#shownote').val(response.note);
 
             console.log(response);
         },  
         error:function(jqXHR, textStatus, errorThrown){
            
+        }
+    })
+})
+
+$(document).on('click', '.submit-edit', function(e) {
+    e.preventDefault();
+    var id = $(this).data('id');
+    var formdata = new FormData();
+    formdata.append('name', $('#showname').val());
+    formdata.append('description', $('#showdes').val());
+    formdata.append('note', $('#shownote').val());
+    $.ajax({
+        dataType: 'JSON',
+        method: 'post',
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: formdata,
+        url: route('course.update', id),
+        success: function(response){
+            $('#course-table').DataTable().ajax.reload(null, false);
+            $('#myModal').modal('hide');
+            toastr.success(response.success);
+        },
+        error:function(jqXHR, textStatus, errorThrown){
+            
         }
     })
 })
