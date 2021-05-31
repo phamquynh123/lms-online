@@ -6,7 +6,7 @@ use App\Models\ClassInfor;
 use Illuminate\Http\Request;
 use App\Models\Document;
 use App\Models\Exercise;
-use App\Repositories\Class\ClassesRepositoryInterface;
+use App\Repositories\Classroom\ClassesRepositoryInterface;
 use App\Repositories\ClassInfo\ClassInfoRepositoryInterface;
 use App\Repositories\Document\DocumentRepositoryInterface;
 use App\Repositories\Exercise\ExerciseRepositoryInterface;

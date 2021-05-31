@@ -2,10 +2,9 @@
 namespace App\Repositories;
 
 use App\Repositories\EloquentRepository;
-use App\Repositories\LessonExercise\LessonExerciseRepositoryInterface as interface;
+use App\Repositories\LessonExercise\LessonExerciseRepositoryInterface;
 use App\Models\LessonExercise;
-
-class LessonExerciseRepository extends EloquentRepository implements interface
+class LessonExerciseRepository extends EloquentRepository implements LessonExerciseRepositoryInterface
 {
     /**
      * get model

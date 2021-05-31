@@ -31,7 +31,7 @@ class ClassesRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => trans('message.name').trans('message.Required');
+            'name.required' => trans('message.name').trans('message.Required')
         ];
     }
 }
