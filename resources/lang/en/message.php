@@ -105,4 +105,9 @@
         'list' => 'List',
         'confirmed' => 'Confirmed',
         'description' => 'Description',
+        'note' => 'Ghi chú',
+        'classroom' => [
+            'date_start' => 'Date start',
+            'form_study' => 'Form study',
+        ]
     ];

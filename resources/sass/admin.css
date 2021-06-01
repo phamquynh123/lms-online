@@ -32,4 +32,10 @@
 .content {
     padding: 10px !important;
 }
-.content > .box > .box-body >
+.content > .box > .box-body {
+    padding: 15px !important;
+}
+
+.required {
+    color:red;
+}

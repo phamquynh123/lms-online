@@ -29,7 +29,7 @@ class Classes extends Model
 
     public function course() 
     {
-        return $this->belongsTo('App\Models\Subject', 'course_id', 'id');
+        return $this->belongsTo('App\Models\Course', 'course_id', 'id');
     }
 
     public function teacher()

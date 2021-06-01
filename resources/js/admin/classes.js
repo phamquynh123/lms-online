@@ -4,6 +4,8 @@ $(function() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+    $('.js-example-basic-single').select2({
+    });
 
     $('#happenning').DataTable({
         processing: true,
@@ -34,15 +36,19 @@ $(function() {
     $('.submit-add').on('click', function(e) {
         e.preventDefault();
         var formData1 = new FormData();
-        formData1.append('subject_id', $('#course').val());
-        formData1.append('user_id', $('#teacher').val());
+        formData1.append('course_id', $('#course').val());
+        formData1.append('teacher_id', $('#teacher').val());
         formData1.append('name', $('#add-name').val());
+        formData1.append('description', $('#add-des').val());
+        formData1.append('zoom_id', $('#zoom-id').val());
+        formData1.append('time_start', $('#date-start').val());
+        formData1.append('form_study', $("#form_study").val())
         $.ajax({
             type: 'post', 
             url: route('addClass'),
             processData: false,
             contentType: false,
-            data:formData1,
+            data: formData1,
             dataType: 'JSON', 
             success: function (response) {
                 $('#upcomming').DataTable().ajax.reload(null, false);

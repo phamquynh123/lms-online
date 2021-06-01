@@ -1,21 +1,30 @@
 @extends('layouts.admin')
+
+@section('css')
+{{-- <link rel="stylesheet prefetch" href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css"> --}}
+<link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/datepicker.css') }}">
+{{-- <link rel="stylesheet" type="text/css" href="jquery.datetimepicker.css"/> --}}
+<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+
+@endsection
 @section('content-content')
 
 <div class="content-header">
     <div class="d-flex align-items-center">
         <div class="mr-auto">
-
             <h3 class="page-title">{{ trans('message.classMangement') }}</h3>
             <div class="d-inline-block align-items-center">
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
-                        <li class="breadcrumb-item" aria-current="page">{{ trans('message.classMangement') }}</li>
                         <li class="breadcrumb-item active" aria-current="page">{{ trans('message.class') }}</li>
                     </ol>
                 </nav>
             </div>
         </div>
+        @if (Gate::allows('class_managerment'))
+            <button type="button" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#addNewClass">{{ trans('message.addNew') }} {{ trans('message.class') }}</button>
+        @endif
     </div>
 </div>
 
@@ -59,7 +68,6 @@
                     @if (Gate::allows('class_managerment'))
                         <div role="tabpanel" class="tab-pane active" id="home">
                             <p>{{ trans('message.running') }}</p>
-                            <button type="button" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#addNewClass">{{ trans('message.addNew') }} {{ trans('message.class') }}</button>
                             <table class="table table-bordered" id="happenning" data-url={{ route('classesDatatable', config('messages.happenning')) }}>
                                 <thead>
                                     <tr>
@@ -184,25 +192,45 @@
                     @csrf
                     <legend>{{ trans('message.addNew') }} {{ trans('message.class') }} </legend>
                     <div class="form-group">
-                        <label for="">{{ trans('message.course') }}</label>
-                        <select name="course_id" id="course" class="form-control">
+                        <label for="">{{ trans('message.course') }} <span class="required">*</span></label>
+                        <select name="course_id" id="course" class="form-control select2">
                             @foreach ($subjects as $subject)
                                 <option value="{{ $subject->id }}" >{{ $subject->name }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="">{{ trans('message.teacher') }}</label>
-                        <select name="course_id" id="teacher" class="form-control">
+                        <label for="">{{ trans('message.teacher') }}  <span class="required">*</span></label>
+                        <select name="course_id" id="teacher" class="form-control select2">
                             @foreach ($teachers as $teacher)
                                 <option value="{{ $teacher->id }}" >{{ $teacher->name }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="">{{ trans('message.name') }} {{ trans('message.class') }}</label>
+                        <label for="">{{ trans('message.name') }} {{ trans('message.class') }}  <span class="required">*</span></label>
                         <input type="text" class="form-control" id="add-name" name="title" placeholder="Input field">
                     </div>
+                    <div class="form-group">
+                        <label for="">{{ trans('message.classroom.date_start') }}  <span class="required">*</span> </label>
+                        <input type="text" class="form-control datepicker" data-date-format="mm/dd/yyyy" data-provide="datepicker" id="date-start" name="date-start" placeholder="Input field">
+                    </div>
+                    <div class="form-group">
+                        <label for="">{{ trans('message.description') }} <span class="required">*</span> </label>
+                        <input type="text" class="form-control" id="add-des" name="description" placeholder={{ trans('message.description') }}>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Zoom Id</label>
+                        <input type="text" class="form-control" id="zoom-id" name="zoomId" placeholder="Zoom Id">
+                    </div>
+                    <div class="form-group">
+                        <label for="">{{ trans('message.classroom.form_study') }}  <span class="required">*</span></label>
+                        <select name="course_id" id="form_study" class="form-control">
+                            <option value="online" >Online</option>
+                            <option value="offline" >Offline</option>
+                        </select>
+                    </div>
+
                 </form>
             </div>
             <div class="modal-footer float-right">
@@ -246,7 +274,11 @@
 </div>
 
 @section('ajax')
+    <script src="{{ asset('bower_components/adminTemplate/Js/bootstrap-datepicker.js') }}"></script>
+   
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
     <script src="{{ asset('js/classes.js') }}"></script>
+
 @endsection
 {{-- <p>
     // 1 union gộp 2 bản ghi nếu có cungf số lwuongj cột . join là phải có điểm chung
