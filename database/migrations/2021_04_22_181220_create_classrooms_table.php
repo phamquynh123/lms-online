@@ -22,10 +22,10 @@ class CreateClassroomsTable extends Migration
             $table->integer('status')->comment('studying or finished');
             $table->dateTime('time_start');
             $table->string('description');
-            $table->integer('zoom_id');
+            $table->integer('zoom_id')->nullable();
             $table->string('form_study')->comment('online or offliine');
             $table->integer('created_user');
-            $table->integer('updated_user');
+            $table->integer('updated_user')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -9,24 +9,20 @@
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
-                        <li class="breadcrumb-item" aria-current="page">{{ trans('message.studentList') }}</li>
                         <li class="breadcrumb-item active" aria-current="page">{{ trans('message.studentList') }}</li>
                     </ol>
                 </nav>
             </div>
         </div>
+        @if(Gate::allows('add_student'))
+            <button type="button" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#addNewUser">{{ trans('message.addNew') }}</button>
+            @endif
     </div>
 </div>
 
 <section class="content">
     <div class="box">
-        <div class="box-header with-border">
-            <h3 class="box-title">{{ trans('message.studentList') }}</h3>
-        </div>
         <div class="box-body">
-            @if(Gate::allows('add_student'))
-            <button type="button" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#addNewUser">{{ trans('message.addNew') }}</button>
-            @endif
             <table class="table table-bordered" id="user-table" data-url="{{ route('datatables.user', config('messages.roleStudent')) }}" data-status= {{ route('changestatus') }}>
                 <thead>
                     <tr>
@@ -53,13 +49,11 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">{{ trans('message.addNew') }}</h4>
+                <h4 class="modal-title">{{ trans('message.addNew') }} {{ trans('message.student') }}</h4>
             </div>
             <div class="modal-body">
                 <form action="" method="POST" role="form" novalidate id="addUser" data-url="{{ route('addUser', config('messages.roleStudent')) }}">
                     @csrf
-                    <legend>{{ trans('message.addNew') }} {{ trans('message.student') }} </legend>
-                
                     <div class="form-group">
                         <label for="">{{ trans('message.name') }}</label>
                         <input type="text" class="form-control" id="add-name" name="name" placeholder="Input field">
@@ -91,27 +85,29 @@
             </div>
             <div class="modal-body">
                 <form action="" method="POST" role="form" id="a">
-                    <legend>{{ trans('id') }}</legend>
-                
                     <div class="form-group">
-                        <label for="">{{ trans('message.id') }}</label>
-                        <p type="text" class="form-control" id="showid" placeholder="Input field"></p>
+                        <label for="">{{ trans('message.id') }}: </label>
+                        <p type="text" id="showid" placeholder="Input field"></p>
                     </div>
                     <div class="form-group">
-                        <label for="">{{ trans('message.name') }}</label>
-                        <p type="text" class="form-control" id="showname" placeholder="Input field"></p>
+                        <label for="">{{ trans('message.name') }} : </label>
+                        <span type="text" id="showname" placeholder="Input field"></span>
                     </div>
                     <div class="form-group">
-                        <label for="">{{ trans('message.email') }}</label>
-                        <p type="text" class="form-control" id="showemail" placeholder="Input field"></p>
+                        <label for="">{{ trans('message.email') }}: </label>
+                        <span type="text" id="showemail" placeholder="Input field"></span>
                     </div>
                     <div class="form-group">
                         <label for="">{{ trans('message.avatar') }}</label>
                         <img src="" alt="" id="showavatar" class="img-avatar" data-img={{ asset(config('messages.imgDefaul')) }}>
                     </div>
                     <div class="form-group">
-                        <label for="">{{ trans('message.status') }}</label>
-                        <p type="text" class="form-control" id="showstatus" placeholder="Input field"></p>
+                        <label for="">{{ trans('message.status') }} : </label>
+                        <span type="text" id="showstatus" placeholder="Input field"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="">{{ trans('message.class') }} : </label>
+                        <span type="text" id="showclass" placeholder="Input field"></span>
                     </div>
                 </form>
             </div>

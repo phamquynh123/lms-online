@@ -35,7 +35,7 @@ class User extends Authenticatable
 
     public function classes()
     {
-        return $this->belongsToMany('App\Models\Classes', 'class_infors', 'user_id', 'class_id');
+        return $this->belongsToMany('App\Models\Classes', 'class_infors', 'student_id', 'class_id');
     }
 
     public function classStudying()

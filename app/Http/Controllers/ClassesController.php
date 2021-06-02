@@ -49,20 +49,29 @@ class ClassesController extends Controller
 
     public function classesDatatable($status)
     {
-        $data = $this->repository->findCondition('status', $status)->load('subject', 'teacher')
-        ->map(function($item) {
-            $item['subject_id'] = $item->subject->name;
-            $item['user_id'] = $item->teacher->name;
+        $data = $this->repository->findCondition('status', $status)->load('course', 'teacher');
+        // ->map(function($item) {
 
-            return $item;
-        });
+        //     $item['course_id'] = $item->course->name;
+        //     $item['user_id'] = $item->teacher->name;
+
+        //     return $item;
+        // });
         return Datatables::of($data)
             ->addColumn('action', function ($data) {
                 return '<a href="#" class="btn btn-sm btn-success adddetail" id="show" data-id="' . $data->id . '"><i class="fa fa-plus"></i></a>
                         <a href="'. route('classDetail', $data->id) . '" class="btn btn-sm btn-warning Gotoclass" data-id="' . $data->id . '"><i class="fa fa-sign-in"></i></a>';
             })
+            ->editColumn('subject_id', function($data) {
+                return $data->course->name;
+            })
+            ->editColumn('user_id', function($data) {
+                return $data->teacher->name;
+            })
             ->rawColumns([ 
                 'action',
+                'subject_id',
+                'user_id'
             ])
             ->make(true);
     }
@@ -76,7 +85,7 @@ class ClassesController extends Controller
 
             return $item;
         });
-        // dd($data);
+
         return Datatables::of($data)
             ->addColumn('action', function ($data) {
                 return '<a href="'. route('classDetail', $data->class_id) .'" class="btn btn-sm btn-warning Gotoclass" data-id="' . $data->class_id . '"><i class="fa fa-sign-in"></i></a>';
@@ -89,10 +98,7 @@ class ClassesController extends Controller
 
     public function teacherClassDatatable($user_id, $status)
     {
-        // dd($user_id);
-        $classrepo = new ClassesRepository();
-        $data = $classrepo->findConditionClass('user_id', $user_id, 'status', $status);
-// dd($data);
+        $data = $this->repository->findConditionClass('teacher_id', $user_id, 'status', $status);
         return Datatables::of($data)
             ->addColumn('action', function ($data) {
                 return '<a href="'. route('classDetail', $data->id) .'" class="btn btn-sm btn-warning Gotoclass" data-id="' . $data->id . '"><i class="fa fa-sign-in"></i></a>';
@@ -108,6 +114,8 @@ class ClassesController extends Controller
         $data = $request->all();
         $data['status'] = config('messages.upcomming');
         $data['slug'] = str_slug($data['name']);
+        $data['created_user'] = Auth::user()->id;
+        $data['time_start'] = date('Y-m-d H:i:s',strtotime($data['time_start']));
         $data = $this->repository->create($data);
 
         return response()->json([ 'error' => false, 'success' => trans('message.success') ]);
@@ -127,7 +135,7 @@ class ClassesController extends Controller
     {
         //list student actived
         // $repo = new UserRepository();
-        $data = $this->useRepo->findConditionClass('role_id', config('messages.roleStudent'), 'status', config('messages.active'))->load('classes');
+        $data = $this->userRepo->findConditionClass('role_id', config('messages.roleStudent'), 'status', config('messages.active'))->load('classes');
         foreach ($data as $value) {
             foreach ($value['classes'] as $value1) {
                 if ($value1['pivot']['class_id'] == $classId) {

@@ -30,16 +30,15 @@ class CourseController extends Controller
 
         return Datatables::of($data)
             ->addColumn('action', function ($data) {
-                return '<a href="' . route('ShowLession', [$data->id, $data->class_id]) . '" class="btn btn-sm btn-success adddetail" id="show" data-id="' . $data->id . '" title="' . trans('message.showTheory') . '"><i class="fa fa-eye"></i></a>
-                        <a href="' . route('ShowExercise', [$data->id, $data->class_id]) . '" class="btn btn-sm btn-warning adddetail" id="show" data-id="' . $data->id . '" title="' . trans('message.showExercise') . '"><i class="fa fa-file" aria-hidden="true"></i></a>
-                        <a href="' . route('editLession', [$data->id, $data->class_id]) . '" class="btn btn-sm btn-info showdata"  data-id="' . $data->id . '"><i class="fa fa-edit"></i></a>
-                        <a href="' . route('showmarkingLession', [$data->id, $data->class_id]) . '" class="btn btn-sm btn-success marking"  data-id="' . $data->id . '" title="marking"><i class="fa fa-check"></i></a>';
+                return '
+                        <a href="#" class="btn btn-sm btn-info edit" id="show" data-id="' . $data->id . '"><i class="fa fa-edit"></i></a>';
             })
             ->editColumn('created_at', function($data) {
                 return $data->created_at->format('d-m-Y');
             })
-            ->rawColumns([ 
+            ->rawColumns([
                 'action',
+                'created_at'
             ])
             ->make(true);
     }
@@ -52,5 +51,34 @@ class CourseController extends Controller
         $data = $this->courseRepo->create($data);
 
         return response()->json([ 'error' => false, 'success' => trans('message.success') ]);
+    }
+
+    public function show($id)
+    {
+        $data = $this->courseRepo->find($id);
+
+        return response()->json($data);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = $request->all();
+        $data['slug'] = str_slug($data['name']);
+        $data = $this->courseRepo->update($id, $data);
+
+        return response()->json([ 'error' => false, 'success' =>trans('message.edit') . trans('message.success') ]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Document  $document
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $data=$this->courseRepo->delete($id);
+
+        return response()->json([ 'error' => false, 'success' =>trans('message.delete') . trans('message.success') ]);
     }
 }

@@ -9,7 +9,6 @@
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
-                        <li class="breadcrumb-item" aria-current="page">{{ trans('message.manage.learning') }}</li>
                         <li class="breadcrumb-item active" aria-current="page">{{ trans('message.manage.course') }}</li>
                     </ol>
                 </nav>
@@ -73,42 +72,35 @@
 
 {{--  show info --}}
 <div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
 
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">{{ trans('message.teacher') }}</h4>
+                <h4 class="modal-title">{{ trans('message.course') }}</h4>
             </div>
             <div class="modal-body">
                 <form action="" method="POST" role="form" id="a">
-                    <legend>{{ trans('id') }}</legend>
-                
-                    <div class="form-group">
-                        <label for="">{{ trans('message.id') }}</label>
-                        <p type="text" class="form-control" id="showid" placeholder="Input field"></p>
-                    </div>
                     <div class="form-group">
                         <label for="">{{ trans('message.name') }}</label>
-                        <p type="text" class="form-control" id="showname" placeholder="Input field"></p>
+                        <input type="text" class="form-control" id="showname" placeholder="Input field" />
                     </div>
                     <div class="form-group">
-                        <label for="">{{ trans('message.email') }}</label>
-                        <p type="text" class="form-control" id="showemail" placeholder="Input field"></p>
+                        <label for="">{{ trans('message.description') }}</label>
+                        {{-- <input type="text" class="form-control" id="showdes" placeholder="Input field" /> --}}
+                        <textarea name="" id="showdes" cols="30" class="form-control"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="">{{ trans('message.avatar') }}</label>
-                        <img src="" alt="" id="showavatar" class="img-avatar" data-img={{ asset(config('messages.imgDefaul')) }}>
-                    </div>
-                    <div class="form-group">
-                        <label for="">{{ trans('message.status') }}</label>
-                        <p type="text" class="form-control" id="showstatus" placeholder="Input field"></p>
+                        <label for="">{{ trans('message.note') }}</label>
+                        {{-- <input type="text" class="form-control" id="shownote" placeholder="Input field" /> --}}
+                        <textarea name="" id="shownote" cols="30" class="form-control"></textarea>
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <div class="modal-footer float-right">
+                <button type="button" class="btn btn-default float-right " data-dismiss="modal">{{ trans('message.close') }}</button>
+                <button type="button" class="btn btn-info float-right submit-edit">{{ trans('message.submit') }}</button> 
             </div>
         </div>
 
