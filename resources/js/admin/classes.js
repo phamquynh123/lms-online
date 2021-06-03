@@ -126,20 +126,26 @@ $(document).on('click', '.adddetail', function() {
 });
 
 $(document).on('click', '.switch-indicator', function(e){
+    let status = $(this).attr('data-status');
+    if (status == 0) {
+        $title = 'Thêm học sinh vào lóp.'
+    } else {
+        $title = 'Xóa học sinh khỏi lớp';
+    }
     Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
+        title: $title,
+        // text: "You won't be able to revert this!",
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: 'Yes'
     }).then((result) => {
         if (result.value) {
             e.preventDefault();
             var formData = new FormData();
             var classId = $('#AddStudent2Class').attr('class-id');
-            formData.append('user_id', $(this).attr('user-id'));
+            formData.append('student_id', $(this).attr('user-id'));
             formData.append('class_id', classId);
             formData.append('inclass', $(this).attr('data-status'));
             $.ajax({
@@ -150,7 +156,7 @@ $(document).on('click', '.switch-indicator', function(e){
                 data:formData,
                 dataType: 'JSON', 
                 success: function (response) {
-                    $('#user-table').DataTable().ajax.reload(null, false);
+                    $('#AddStudent2Class').DataTable().ajax.reload(null, false);
                     if (response.error == true) {
                         toastr.error(response.success);
                     } else {
