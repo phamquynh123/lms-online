@@ -9,6 +9,7 @@ use App\Models\Exercise;
 use App\Repositories\Classroom\ClassroomRepositoryInterface;
 use App\Repositories\ClassInfo\ClassInfoRepositoryInterface;
 use App\Repositories\Document\DocumentRepositoryInterface;
+// use App\Repositories\Exercise\ExerciseRepositoryInterface;
 use App\Repositories\Exercise\ExerciseRepositoryInterface;
 use App\Repositories\Lesson\LessonRepositoryInterface;
 use App\Repositories\User\UserRepositoryInterface;
@@ -20,7 +21,7 @@ use App\Http\Requests\TestRequest;
 use App\Http\Requests\HomeworksRequest;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
-// use Carbon\Carbon;
+use Carbon\Carbon;
 
 class ClassInforController extends Controller
 {
@@ -49,8 +50,7 @@ class ClassInforController extends Controller
         ExerciseRepositoryInterface $exerciseRepo,
         UserRepositoryInterface $userRepo,
         LessonRepositoryInterface $lessonRepo
-    )
-    {
+    ) {
         $this->classInfoRepo = $classInfoRepo;
         $this->homeworkRepo = $homeworkRepo;
         $this->lessonExerciseRepo = $lessonExerciseRepo;
@@ -64,13 +64,16 @@ class ClassInforController extends Controller
 
     public function index($id)
     {
-        dd('123');
-        return view('admins/classesInfo', compact('id'));
+        $data = $this->classRepo->find($id);
+        if ($data) {
+            return view('admins/classesInfo', compact(['id', 'data']));
+        } else {
+            return response()->view('errors.404', ['message' => 'Lớp học không tồn tại']);
+        }
     }
 
     public function classDetailDatatable($id){
-        $repoLesson = new LessonRepository();
-        $data = $repoLesson->findCondition('class_id', $id);
+        $data = $this->lessonRepo->findCondition('class_id', $id);
 
         return Datatables::of($data)
             ->addColumn('action', function ($data) {
@@ -85,31 +88,41 @@ class ClassInforController extends Controller
                         <a href="' . route('ShowExercise', [$data->id, $data->class_id]) . '" class="btn btn-sm btn-warning adddetail" id="show" data-id="' . $data->id . '" title="' . trans('message.marking') . '"><i class="fa fa-file" aria-hidden="true"></i></a>';
                 }
             })
+            ->editColumn('is_test', function($item) {
+                if ($item->is_test == 0) {
+                    return trans('message.classroom.lesson_normal');
+                } else {
+                    return trans('message.classroom.lesson_test');
+                }
+            })
+            ->editColumn('schedule_time', function($item) {
+                return Carbon::parse($item->schedule_time)->format('H:i d-m-Y');
+            })
             ->rawColumns([ 
                 'action',
+                'is_test',
+                'schedule_time'
             ])
             ->make(true);
     }
 
     public function editLession($lesson_id, $class_id)
     {
-        // $class = new ClassesRepository();
         $class = $this->classRepo->find($class_id);
         // infor lesson
-        // $lesson = new LessonRepository();
         $lessons = $this->lessonRepo->find($lesson_id);
         // all document
-        // $document = new DocumentRepository();
-        $documents = $this->documentRepo->findCondition('subject_id', $class->subject_id);
+        $documents = $this->documentRepo->findCondition('course_id', $class->course_id);
+
         // all exercise
-        // $exercise = new ExerciseRepository();
-        $exercises = $this->exerciseRepo->findCondition('subject_id', $class->subject_id);
+        $exercises = $this->exerciseRepo->findCondition('course_id', $class->course_id);
         //lessondocument
-        // $lessondocumentrepo = new LessonDocumentRepository();
         $lessondocuments = $this->lessonDocumentRepo->findCondition('lesson_id', $lessons->id)->load('document')->map(function($item) {
                 $item['document'] = $item->document[0];
+
             return $item;
-        });
+            }
+        );
 
         // $lessonexercise = new LessonExerciseRepository();
         $lessonexercises = $this->lessonExerciseRepo->findCondition('lesson_id', $lessons->id)->load('exercise')->map(function($item) {
@@ -118,7 +131,7 @@ class ClassInforController extends Controller
             return $item;
         });
 
-        return view('admins/editLesson' , compact(['lessons', 'documents', 'exercises', 'lessondocuments', 'lessonexercises']));
+        return view('admins/editLesson' , compact(['lessons', 'documents', 'exercises', 'lessondocuments', 'lessonexercises', 'class']));
     }
 
     public function editinfo(Request $request)
@@ -155,7 +168,7 @@ class ClassInforController extends Controller
     public function ShowLession($lesson_id, $class_id)
     {
         $lessons = $this->lessonRepo->find($lesson_id);
-        $lessondocuments = $lessonDocumentRepo->findCondition('lesson_id', $lesson_id)->load('document')->map(function($item) {
+        $lessondocuments = $this->lessonDocumentRepo->findCondition('lesson_id', $lesson_id)->load('document')->map(function($item) {
                 $item['document'] = $item->document[0];
 
             return $item;
@@ -169,7 +182,7 @@ class ClassInforController extends Controller
         $lessons = $this->lessonRepo->find($lesson_id);
 
         // $lessonexercise = new LessonExerciseRepository();
-        $lessonexercises = $this->lessonExerciseRpo->findCondition('lesson_id', $lesson_id)->load('exercise')->map(function($item) {
+        $lessonexercises = $this->lessonExerciseRepo->findCondition('lesson_id', $lesson_id)->load('exercise')->map(function($item) {
             $item['exercise'] = $item->exercise[0];
 
             return $item;

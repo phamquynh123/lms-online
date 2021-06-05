@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/editLesson.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
 
 @section('content-content')
@@ -14,7 +15,7 @@
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
-                        <li class="breadcrumb-item" aria-current="page">{{ trans('message.class') }}</li>
+                        <li class="breadcrumb-item" aria-current="page">{{ trans('message.class') }} {{ $class->name }}</li>
                         <li class="breadcrumb-item active" aria-current="page">{{ trans('message.classDetail') }}</li>
                     </ol>
                 </nav>
@@ -91,7 +92,8 @@
                             @csrf
                             <legend>{{ trans('message.select') }} {{ trans('message.theory') }}</legend>
                             <div class="form-group">
-                                <select name="" id="addLessionDocument" class="form-control">
+                                <select name="" id="addLessionDocument" class="form-control select2-document" style="width: 100%">
+                                    <option></option>
                                     @foreach ($documents as $document)
                                         <option data-documentid="{{ $document->id }}">{{ $document->title }}</option>
                                     @endforeach
@@ -129,6 +131,7 @@
                             {{--  Deadline: <input type="datetime-local" required class="a" value=""/> --}}
                             <div class="form-group">
                                 <select name="" id="addLessionExercise" class="form-control">
+                                    <option></option>
                                     @foreach ($exercises as $exercise)
                                         <option data-exerciseid="{{ $exercise->id }}">{{ $exercise->title }}</option>
                                     @endforeach
@@ -168,5 +171,6 @@
 @endsection
 
 @section('ajax')
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('js/classesDetail.js') }}"></script>
 @endsection

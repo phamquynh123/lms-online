@@ -4,7 +4,7 @@ $(function() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-
+    $('.select2-document').select2();
     $('#classDetail').DataTable({
         processing: true,
         serverSide: true,
@@ -12,7 +12,8 @@ $(function() {
         columns: [
             { data: 'id', name: 'id' },
             { data: 'name', name: 'name' },
-            { data: 'time_study', name: 'created_at' },
+            { data: 'is_test', name: 'is_test' },
+            { data: 'schedule_time', name: 'schedule_time' },
             { data: 'action', name: 'action' },
         ],
     });
@@ -96,8 +97,11 @@ $(function() {
         var id = $('#classDetail').attr('data-id');
         var formData = new FormData();
         formData.append('name', $('#classname').val());
-        formData.append('time_study', $('#classtimestudy').val());
+        formData.append('num_of_lesson', $('#num-lesson').val());
+        formData.append('schedule_time', $('#classtimestudy').val());
         formData.append('class_id', id);
+        formData.append('description', $("#description").val());
+        formData.append('is_test', $("#type").val());
 
         $.ajax({
             dataType: 'JSON',
@@ -111,6 +115,17 @@ $(function() {
                 toastr.info(response.success);
                 $('#addNewleson').modal('hide');
                 $('#classDetail').DataTable().ajax.reload(null, false);
+            },
+            error:function(jqXHR, textStatus, errorThrown){
+                if (jqXHR.responseJSON.errors.name !== undefined){
+                    toastr.error(jqXHR.responseJSON.errors.name[0]);
+                }
+                if (jqXHR.responseJSON.errors.num_of_lesson !== undefined){
+                    toastr.error(jqXHR.responseJSON.errors.num_of_lesson[0]);
+                }
+                if (jqXHR.responseJSON.errors.schedule_time !== undefined){
+                    toastr.error(jqXHR.responseJSON.errors.schedule_time[0]);
+                }
             }
         });
     })

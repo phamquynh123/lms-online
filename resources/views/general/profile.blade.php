@@ -1,4 +1,8 @@
 @extends('layouts.admin')
+@section('css')
+
+@endsection
+
 @section('content-content')
 <div class="content-header">
     <div class="d-flex align-items-center">
@@ -60,7 +64,7 @@
                     <input type="hidden" class="form-control" name="role_id" id="" placeholder="Input field" value={{ Auth::user()->role_id }}>
                 </div>
             
-                <button type="submit" class="btn btn-primary edit-profile">{{ trans('message.submit') }}</button>
+                <button type="submit" class="btn btn-primary edit-profile float-right">{{ trans('message.submit') }}</button>
             </form>
         </div>
         <!-- /.box-body -->
@@ -82,7 +86,7 @@
                     <label for=""> {{ trans('message.confirmPassword') }}</label>
                     <input type="password" class="form-control" id="confirmpass" name="confirmpass" placeholder="Input field">
                 </div>
-                <button type="submit" class="btn btn-primary">{{ trans('message.submit') }}</button>
+                <button type="submit" class="btn btn-primary float-right">{{ trans('message.submit') }}</button>
             </form>
         </div>
         <!-- /.box-footer-->
