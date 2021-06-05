@@ -6,14 +6,14 @@ use App\Models\ClassInfor;
 use Illuminate\Http\Request;
 use App\Models\Document;
 use App\Models\Exercise;
-use App\Repositories\Classroom\ClassesRepositoryInterface;
+use App\Repositories\Classroom\ClassroomRepositoryInterface;
 use App\Repositories\ClassInfo\ClassInfoRepositoryInterface;
 use App\Repositories\Document\DocumentRepositoryInterface;
 use App\Repositories\Exercise\ExerciseRepositoryInterface;
 use App\Repositories\Lesson\LessonRepositoryInterface;
 use App\Repositories\User\UserRepositoryInterface;
-use App\Repositories\LessonExercise\LessonExerciseRepositoryInterface as lessonExerciseRepo;
-use App\Repositories\LessonDocument\LessonDocumentRepositoryInterface as lessonDocumentRepo;
+use App\Repositories\LessonExercise\LessonExerciseRepositoryInterface as LessonExerciseRepo;
+use App\Repositories\LessonDocument\LessonDocumentRepositoryInterface as LessonDocumentRepo;
 use App\Repositories\Homework\HomeworkRepositoryInterface;
 use Yajra\Datatables\Datatables;
 use App\Http\Requests\TestRequest;
@@ -40,11 +40,11 @@ class ClassInforController extends Controller
     protected $lessonRepo;
 
     public function __construct(
-        ClassInfoRepository $classInfoRepo,
+        ClassInfoRepositoryInterface $classInfoRepo,
         HomeworkRepositoryInterface $homeworkRepo,
-        lessonnExerciseRepo $lessonExerciseRepo,
-        lessonDocumentRepo $lessonDocumentRepo,
-        ClassesRepositoryInterface $classRepo,
+        LessonExerciseRepo $lessonExerciseRepo,
+        LessonDocumentRepo $lessonDocumentRepo,
+        ClassroomRepositoryInterface $classRepo,
         DocumentRepositoryInterface $documentRepo,
         ExerciseRepositoryInterface $exerciseRepo,
         UserRepositoryInterface $userRepo,
@@ -64,6 +64,7 @@ class ClassInforController extends Controller
 
     public function index($id)
     {
+        dd('123');
         return view('admins/classesInfo', compact('id'));
     }
 

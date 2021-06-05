@@ -57,6 +57,7 @@ Route::group(['middleware' => 'locale'], function() {
                 Route::post('/addLesson', 'ClassesController@addLesson')->name('addLesson');
                 Route::get('datatablesAdddetail/{classId}', 'ClassesController@datatablesAdddetail')->name('datatables.addDetaiClass');
                 Route::post('/addStudentToClass', 'ClassesController@addStudentToClass')->name('addStudentToClass');
+                // 'ClassInforController@index'
                 Route::get('/classDetail/{id}', 'ClassInforController@index')->name('classDetail');
                 Route::get('/classDetailDatatable/{id}', 'ClassInforController@classDetailDatatable')->name('classDetailDatatable');
                 // edit content of lession: document, exercise, name ...
@@ -111,4 +112,7 @@ Route::group(['middleware' => 'locale'], function() {
         Route::get('permissionDatatable', 'PermissionController@permissionDatatable');
         
     });
+});
+route::get('home-page', function() {
+    return view('clients.homepage');
 });

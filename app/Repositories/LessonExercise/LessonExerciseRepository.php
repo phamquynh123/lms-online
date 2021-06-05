@@ -1,5 +1,5 @@
 <?php
-namespace App\Repositories;
+namespace App\Repositories\LessonExercise;
 
 use App\Repositories\EloquentRepository;
 use App\Repositories\LessonExercise\LessonExerciseRepositoryInterface;
