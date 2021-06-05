@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Imports\AddStudentToClassImport;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Requests\CreateLessonRequest;
 
 class ClassesController extends Controller
 {
@@ -123,11 +124,10 @@ class ClassesController extends Controller
         return response()->json([ 'error' => false, 'success' => trans('message.success') ]);
     }
 
-    public function addLesson(Request $request)
+    public function addLesson(CreateLessonRequest $request)
     {
         $data = $request->all();
         $data['slug'] = str_slug($data['name']);
-        // $repoLesson = new LessonRepository();
         $data = $this->lessonRepo->create($data);
 
         return response()->json([ 'error' => false, 'success' => trans('message.success') ]);

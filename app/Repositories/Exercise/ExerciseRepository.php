@@ -5,7 +5,7 @@ use App\Repositories\EloquentRepository;
 use App\Repositories\Exercise\ExerciseRepositoryInterface;
 use App\Models\Exercise;
 
-class ExerciseRepository extends EloquentRepository
+class ExerciseRepository extends EloquentRepository implements ExerciseRepositoryInterface
 {
     /**
      * get model

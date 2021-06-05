@@ -109,5 +109,14 @@
         'classroom' => [
             'date_start' => 'Date start',
             'form_study' => 'Form study',
-        ]
+            'num_of_lesson' => 'Number of lesson',
+            'type' => 'Type',
+            'lesson_normal' => 'Normal lesson',
+            'lesson_test' => 'Test lesson',
+            'required' => [
+                'name' => ' Name is require',
+                'num_of_lesson' => 'Number of lesson is require',
+                'schedule_time' => 'Time study is required',
+            ],
+        ],
     ];
