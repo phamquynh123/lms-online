@@ -5,6 +5,11 @@ $(function() {
         }
     });
     $('.select2-document').select2();
+    CKEDITOR.replace( 'editortheory' );
+
+    $('.select2-document').select2();
+    CKEDITOR.replace( 'editorexercise' );
+
     $('#classDetail').DataTable({
         processing: true,
         serverSide: true,
@@ -29,8 +34,8 @@ $(function() {
             data: new FormData(this),
             url: route('editinfo'),
             success: function(response){
-                toastr.info(response.success);
-                location.reload();
+                toastr.success(response.success);
+                // location.reload();
             }
         })
     });
@@ -39,7 +44,7 @@ $(function() {
         var lesson_id = $('#addTheory').attr('data-lessonid');
         var document_id = $('option:selected', this).attr('data-documentid');
         var html = `<div data-lessonid="`+ lesson_id +`" data-documentid="`+ document_id +`">`+ $('#addLessionDocument').val() +`
-                        <button class="addtheory">add</button>
+                        <button class="addtheory btn btn-sm btn-info">add</button>
                     </div>`
         $('.appendTheory').append(html);
     });
@@ -48,6 +53,7 @@ $(function() {
         var formData = new FormData();
         formData.append('lesson_id', $(this).parent().attr('data-lessonid'));
         formData.append('document_id', $(this).parent().attr('data-documentid'));
+        formData.append('class_id', $('#addTheory').attr('data-classId'));
         $.ajax({
             dataType: 'JSON',
             method: 'post',
@@ -57,8 +63,13 @@ $(function() {
             data: formData,
             url: route('editlessionDocument'),
             success: function(response){
-                toastr.info(response.success);
-                location.reload();
+                if (response.error) {
+                    toastr.error(response.message);
+                } else {
+                    toastr.info(response.success);
+                }
+                
+                // location.reload();
             }
         });
     });
@@ -102,6 +113,7 @@ $(function() {
         formData.append('class_id', id);
         formData.append('description', $("#description").val());
         formData.append('is_test', $("#type").val());
+        formData.append('deadline', $("#deadline").val());
 
         $.ajax({
             dataType: 'JSON',
@@ -126,6 +138,50 @@ $(function() {
                 if (jqXHR.responseJSON.errors.schedule_time !== undefined){
                     toastr.error(jqXHR.responseJSON.errors.schedule_time[0]);
                 }
+            }
+        });
+    })
+
+    $('#add-new-theory').on('submit', function(e) {
+        e.preventDefault();
+        let data = new FormData(this);
+        data.append('class_id', $('.info-class').attr('data-classId'))
+        data.append('lesson_id', $('.info-class').attr('data-lessonid'));
+        data.append('content', CKEDITOR.instances.editortheory.getData());
+        $.ajax({
+            dataType: 'JSON',
+            method: 'post',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: data,
+            url: route('addlessionDocument'),
+            success: function(response){
+                $('#addNewTheory').modal('hide');
+                toastr.success(response.success);
+                // location.reload();
+            }
+        });
+    })
+
+    $('#add-new-exercise').on('submit', function(e) {
+        e.preventDefault();
+        let data = new FormData(this);
+        data.append('class_id', $('.info-class').attr('data-classId'))
+        data.append('lesson_id', $('.info-class').attr('data-lessonid'));
+        data.append('content', CKEDITOR.instances.editorexercise.getData());
+        $.ajax({
+            dataType: 'JSON',
+            method: 'post',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: data,
+            url: route('addlessionExercise'),
+            success: function(response){
+                $('#addNewExercise').modal('hide');
+                toastr.success(response.success);
+                // location.reload();
             }
         });
     })

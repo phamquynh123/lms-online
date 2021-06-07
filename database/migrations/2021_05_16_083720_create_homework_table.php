@@ -21,14 +21,13 @@ class CreateHomeworkTable extends Migration
             $table->integer('classroom_id');
             $table->text('content')->nullable();
             $table->string('link_ex')->nullable();
-            $table->integer('mark');
-            $table->string('comment');
+            $table->integer('mark')->nullable();
+            $table->string('comment')->nullable();
             $table->dateTime('time_commit');
             $table->softDeletes();
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *

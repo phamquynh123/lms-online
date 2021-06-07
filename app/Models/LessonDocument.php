@@ -10,6 +10,7 @@ class LessonDocument extends Model
     protected $fillable = [
         'lesson_id',
         'document_id',
+        'class_id'
     ];
 
     public function document()

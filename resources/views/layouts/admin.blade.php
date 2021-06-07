@@ -11,7 +11,6 @@
 
     <title> SuperAdmin </title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
   
     <!-- Bootstrap 4.0-->
     <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/bootstrap.min.css') }}">
@@ -33,6 +32,8 @@
     {{-- datatable  --}}
     <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/jquery.dataTables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/toastr.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/datepicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     @yield('css')
     @routes()
 </head>
@@ -74,7 +75,7 @@
                         </li>   
                         <!-- User Account-->
                         <li class="dropdown user user-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-top: 15px">
                                 @if( Auth::user()->avatar != null)
                                     <img src=" {{ asset(config('messages.imgDefaul').Auth::user()->avatar) }}" class="user-image rounded-circle" alt="User Image">
                                 @else
@@ -114,7 +115,7 @@
 
                         <!-- Messages -->
                         <li class="dropdown messages-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-top: 20px">
                                 <i class="fa fa-envelope-open"></i>
                             </a>
                             <ul class="dropdown-menu animated fadeInDown">
@@ -164,7 +165,7 @@
                         </li>
 
                         <li>
-                            <a href="#" data-toggle="control-sidebar"><i class="fa fa-cog fa-spin"></i></a>
+                            <a href="#" data-toggle="control-sidebar" style="padding-top: 20px"><i class="fa fa-cog fa-spin"></i></a>
                         </li>
                     </ul>
                 </div>
@@ -270,6 +271,8 @@
     <script src="{{ asset('bower_components/adminTemplate/Js/form-validation.js') }}"></script>
     <script src="{{ asset('bower_components/adminTemplate/Js/toastr.min.js') }}"></script>
     <script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{{ asset('bower_components/adminTemplate/Js/bootstrap-datepicker.js') }}"></script>
    {{--  <script>
         var CKEDITOR_BASEPATH = 'http://localhost/project1/public/';
         window.CKEDITOR_BASEPATH = {{ asset('bower_components/adminTemplate/Js/ckeditor.js') }};

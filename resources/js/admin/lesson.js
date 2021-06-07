@@ -14,6 +14,7 @@ $(function() {
         e.preventDefault();
         var formData = new FormData();
         formData.append('lesson_id', $(this).attr('data-lessonId'));
+        formData.append('classroom_id', $(this).attr('data-lessonId'));
         formData.append('lession_exercise_id', $('#submitExercise').attr('lesson_exercise_id'));
         formData.append('content', CKEDITOR.instances.editor1.getData());
         $.ajax({
@@ -53,12 +54,20 @@ $(function() {
             data:formData,
             dataType: 'JSON',
             success: function (response) {
-                $('.submitMarking').attr('data-homeworkId', response.id);
-                $('#mark').html(response.mark);
-                $('#content').html(response.content);
-                $('#comment').html(response.comment);
-                $('#mark1').val(response.mark);
-                $('#comment1').val(response.comment);
+                console.log(response);
+                if(response == undefined || response == null || response.length == 0) {
+                    $('#showHomework').modal('show');
+                    console.log("ndjkfjknf");
+                    $('.submitMarking').attr('data-homeworkId', response.id);
+                    $('#mark').html(response.mark);
+                    $('#content').html(response.content);
+                    $('#comment').html(response.comment);
+                    $('#mark1').val(response.mark);
+                    $('#comment1').val(response.comment);
+                } else {
+                     toastr.warning('Bài học chưa được chấm điểm.')
+                }
+                
             },
         });
     })

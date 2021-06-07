@@ -22,6 +22,7 @@ use App\Http\Requests\HomeworksRequest;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use DB;
 
 class ClassInforController extends Controller
 {
@@ -113,7 +114,6 @@ class ClassInforController extends Controller
         $lessons = $this->lessonRepo->find($lesson_id);
         // all document
         $documents = $this->documentRepo->findCondition('course_id', $class->course_id);
-
         // all exercise
         $exercises = $this->exerciseRepo->findCondition('course_id', $class->course_id);
         //lessondocument
@@ -124,7 +124,6 @@ class ClassInforController extends Controller
             }
         );
 
-        // $lessonexercise = new LessonExerciseRepository();
         $lessonexercises = $this->lessonExerciseRepo->findCondition('lesson_id', $lessons->id)->load('exercise')->map(function($item) {
             $item['exercise'] = $item->exercise[0];
 
@@ -136,21 +135,23 @@ class ClassInforController extends Controller
 
     public function editinfo(Request $request)
     {
-        // $repolesson = new LessonRepository();
         $data = $request->all();
         $data['slug'] = str_slug($data['name']);
         $data = $this->lessonRepo->update($data['id'], $data);
 
-        return response()->json(['success' => trans('meassge.successs'), 'error' => false]);
+        return response()->json(['success' => trans('meassge.success'), 'error' => false]);
     }
 
     public function editlessionDocument(Request $request)
     {
-        // $repo = new LessonDocumentRepository();
+        // dd($request->all());
+        $check = $this->lessonDocumentRepo->checkExist($request->all());
+        if ($check) {
+            return response()->json(['message' => 'Bài lý thuyết đã tồn tại', 'error' => true]);
+        }
         $data = $this->lessonDocumentRepo->create($request->all());
-        // $data = $this->classInfoRepo->find($class_id);
 
-        return response()->json(['success' => trans('meassge.successs'), 'error' => false]);
+        return response()->json(['message' => trans('meassge.successs'), 'error' => false]);
     }
 
     public function editlessionExercise(Request $request)
@@ -174,14 +175,13 @@ class ClassInforController extends Controller
             return $item;
         });
 
-        return view('admins/lessonDocument', compact(['lessondocuments', 'lessons']));
+        return view('admins/lessonDocument', compact(['lessondocuments', 'lessons', 'class_id']));
     }
 
     public function showExercise($lesson_id, $class_id)
     {
         $lessons = $this->lessonRepo->find($lesson_id);
 
-        // $lessonexercise = new LessonExerciseRepository();
         $lessonexercises = $this->lessonExerciseRepo->findCondition('lesson_id', $lesson_id)->load('exercise')->map(function($item) {
             $item['exercise'] = $item->exercise[0];
 
@@ -207,6 +207,60 @@ class ClassInforController extends Controller
         $response = $this->homeworkRepo->findHomeworkAnswer($data['lesson_id'], $data['lession_exercise_id'], $data['user_id']);
 
         return response()->json($response);
+    }
+
+
+
+
+
+
+    public function addlessionDocument(Request $request)
+    {
+        $data = $request->all();
+        $class = $this->classRepo->find($data['class_id']);
+
+        $document['title'] = $data['title'];
+        $document['content'] = $data['content'];
+        $document['status'] = 1;
+        $document['course_id'] = $class->course_id;
+        $document['slug'] = str_slug($data['title']);
+        DB::beginTransaction();
+        try {
+            $document = $this->documentRepo->create($document);
+            $data['document_id'] = $document->id;
+            $res = $this->lessonDocumentRepo->create($data);
+            DB::commit();
+            return response()->json(['success' => trans('meassge.successs'), 'error' => false]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            
+            throw new Exception($e->getMessage());
+        }
+    }
+
+
+    public function addlessionExercise(Request $request)
+    {
+        $data = $request->all();
+        $class = $this->classRepo->find($data['class_id']);
+
+        $exercise['title'] = $data['title'];
+        $exercise['content'] = $data['content'];
+        $exercise['status'] = 1;
+        $exercise['course_id'] = $class->course_id;
+        $exercise['slug'] = str_slug($data['title']);
+        DB::beginTransaction();
+        try {
+            $exercise = $this->exerciseRepo->create($exercise);
+            $data['excercise_id'] = $exercise->id;
+            $res = $this->lessonExerciseRepo->create($data);
+            DB::commit();
+            return response()->json(['success' => trans('meassge.successs'), 'error' => false]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            
+            throw new Exception($e->getMessage());
+        }
     }
     /**
      * Show the form for creating a new resource.

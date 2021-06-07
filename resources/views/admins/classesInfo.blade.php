@@ -64,7 +64,7 @@
                         <label for="">{{ trans('message.classroom.type') }} <span class="required">*</span></label>
                         <select name="type" id="type" class="form-control">
                                 <option value="0" >{{ trans('message.classroom.lesson_normal') }}</option>
-                                <option value="0" >{{ trans('message.classroom.lesson_test') }}</option>
+                                <option value="1" >{{ trans('message.classroom.lesson_test') }}</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -72,11 +72,12 @@
                         <input type="datetime-local" class="form-control" id="classtimestudy" placeholder="Input field">
                     </div>
                     <div class="form-group">
+                        <label for="">{{ trans('message.classroom.deadline') }} <span class="required">*</span></label>
+                        <input type="datetime-local" class="form-control" id="deadline" placeholder="Input field">
+                    </div>
+                    <div class="form-group">
                         <label for="">{{ trans('message.description') }}</label>
-                        {{-- <input type="datetime-local" class="form-control" id="classtimestudy" placeholder="Input field"> --}}
-                        <textarea style="width: 100%" id="description">
-                            
-                        </textarea>
+                        <textarea style="width: 100%" id="description"></textarea>
                     </div>
                 </form>
             </div>

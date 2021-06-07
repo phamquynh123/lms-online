@@ -10,7 +10,7 @@
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
-                        <li class="breadcrumb-item" aria-current="page">{{ trans('message.lesson') }}</li>
+                        <li class="breadcrumb-item" aria-current="page"><a href="{{ route('classDetail', $class_id) }}">{{ trans('message.lesson') }}: {{ $lessons->name }}</a></li>
                         <li class="breadcrumb-item active" aria-current="page">{{ trans('message.exercise') }}</li>
                     </ol>
                 </nav>
@@ -23,7 +23,8 @@
 <section class="content">
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">{{ $lessons->name }}</h3>
+            <h3 class="box-title">{{ $lessons->name }}</h3> <span></span>
+            <span>{{ trans('message.classroom.deadline') }} : {{ \Carbon\Carbon::parse($lessons->deadline)->format('H:i d/m/Y') }}</span>
             <ul class="box-controls pull-right">
                 <li><a class="box-btn-slide" href="#"></a></li>
             </ul>
@@ -45,8 +46,10 @@
                     </div>
                     @if (Gate::allows('submit_homework'))
                     <div>
-                        <a class="float-right btn btn-orange btn-sm Exercise" data-id="{{ $lessonexercise->id }}" data-toggle="modal" data-target="#submitExercise"><i class="fa fa-pencil-square-o"></i> {{ trans('message.submit') }} {{ trans('message.homework') }}</a>  
-                        <a class="float-right btn btn-warning btn-sm showHomework" data-userId="{{ Auth::user()->id }}" data-id="{{ $lessonexercise->id }}" data-lessonId="{{ $lessons->id }}" data-toggle="modal" data-target="#showHomework"><i class="fa fa-pencil-square-o"></i> {{ trans('message.show') }} {{ trans('message.homework') }}</a>
+                        @if($lessons->deadline > now())
+                        <a class="float-right btn btn-orange btn-sm Exercise" data-id="{{ $lessonexercise->id }}" data-toggle="modal" data-target="#submitExercise"><i class="fa fa-pencil-square-o"></i> {{ trans('message.submit') }} {{ trans('message.homework') }}</a>
+                        @endif
+                        <a class="float-right btn btn-warning btn-sm showHomework mr-4" data-userId="{{ Auth::user()->id }}" data-id="{{ $lessonexercise->id }}" data-lessonId="{{ $lessons->id }}" ><i class="fa fa-pencil-square-o"></i> {{ trans('message.show') }} {{ trans('message.homework') }}</a>
                     </div>
                     @endif
                 </div>
@@ -55,11 +58,6 @@
         </div>
     </div>
 </section>
-@endsection
-
-
-@section('ajax')
-    <script src="{{ asset('js/lesson.js') }}"></script>
 @endsection
 
 <div class="modal fade" id="submitExercise" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -78,9 +76,10 @@
                         <label for="">{{ trans('message.content') }}</label>
                         <textarea name="editor1" id="editor1" rows="10" cols="80" name="content"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary float-right submitExercise" data-lessonId="{{ $lesson_id }}">{{ trans('message.submit') }}</button>
+                    <button type="submit" class="btn btn-primary float-right submitExercise" data-lessonId="{{ $lesson_id }}" data-class={{ $class_id }}>{{ trans('message.submit') }}</button>
                 </form>
             </div>
+            <div class="modal-footer"></div>
         </div>
     </div>
 </div>
@@ -110,8 +109,14 @@
                         <p id="comment" ></p>
                     </div>
                     <button type="button" class="btn btn-default float-right" data-dismiss="modal">Close</button>
+                    <p style="clear:both"></p>
                 </form>
             </div>
+            <div class="modal-footer"></div>
         </div>
     </div>
 </div>
+
+@section('ajax')
+    <script src="{{ asset('js/lesson.js') }}"></script>
+@endsection

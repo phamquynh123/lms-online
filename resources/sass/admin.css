@@ -39,3 +39,10 @@
 .required {
     color:red;
 }
+
+.navbar-nav .dropdown a{
+    padding-top: 20px;
+}
+.messages-menu > a{
+    padding-top: 20px;
+}

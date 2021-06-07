@@ -15,4 +15,11 @@ class LessonDocumentRepository extends EloquentRepository implements inteface
     {
         return LessonDocument::class;
     }
+
+    public function checkExist($data)
+    {
+    	$data = $this->_model->where('class_id', $data['class_id'])->where('lesson_id', $data['lesson_id'])->where('document_id', $data['document_id'])->get();
+
+    	return $data;
+    }
 }

@@ -83,7 +83,7 @@ class ClassesController extends Controller
 
     public function studentClassDatatable($user_id)
     {
-        $data = $this->classInfoRepo->findCondition('user_id', $user_id)->load('classes')->map(function($item) {
+        $data = $this->classInfoRepo->findCondition('student_id', $user_id)->load('classes')->map(function($item) {
             $item['name'] = $item->classes->name;
 
             return $item;
@@ -212,11 +212,13 @@ class ClassesController extends Controller
         DB::beginTransaction();
         try {
             Excel::import(new AddStudentToClassImport(), $request['file']);
+             DB::commit();
             return response()->json([
                 'errors' => false,
                 'message' => 'Import success!',
             ]);
         } catch (\Exception $e){
+            DB::rollBack();
             return response()->json([
                 'errors' => true,
                 'message' => $e->getMessage(),

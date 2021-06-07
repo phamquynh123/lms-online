@@ -27,19 +27,14 @@
 
 <section class="content">
     <div class="box">
-        <div class="box-header with-border">
-            <p>{{ trans('message.classDetail') }}</p>
-            <ul class="box-controls pull-right">
-                <li><a class="box-btn-slide" href="#"></a></li>
-            </ul>
-        </div>
+        <div class="d-none info-class" data-lessonid="{{ $lessons->id }}" data-classId={{ $class->id }}></div>
         <div class="box-body">
             <div class="board">
                 <div class="board-inner">
                     <ul class="nav nav-tabs" id="myTab">
                         {{-- <div class="liner"></div> --}}
-                        <li class="active">
-                            <a href="#home" data-toggle="tab" title="welcome">
+                        <li>
+                            <a href="#home" data-toggle="tab" title="welcome" class="active show">
                                 <span class="round-tabs one">
                                     <i class="fa fa-info"></i>
                                 </span> 
@@ -65,7 +60,7 @@
                 </div>
 
                 <div class="tab-content">
-                    <div class="tab-pane fade in active" id="home">
+                    <div class="tab-pane fade in active show" id="home">
                         <form action="" method="POST" role="form" id="edit-info">
                             @csrf
                             <legend>{{ trans('message.class') }} {{ trans('message.info') }}</legend>
@@ -77,20 +72,38 @@
                             </div>
                             <div class="form-group">
                                 <label for="">{{ trans('message.name') }}</label>
-                                <input type="text" class="form-control" name="name" id="" placeholder="Input field" value ="{{ $lessons->name }}">
+                                <input type="text" class="form-control" name="name"  placeholder="Input field" value ="{{ $lessons->name }}">
                             </div>
                             <div class="form-group">
                                 <label for="">{{ trans('message.time_study') }}</label>
-                                <input type="datetime" class="form-control" name="time_study" id="" placeholder="Input field" value ="{{ $lessons->time_study }}">
+                                <input type="datetime-local" class="form-control" name="schedule_time" placeholder="Input field" value ="{{ \Carbon\Carbon::parse($lessons->schedule_time)->format('Y-m-d\TH:i') }}"> 
+                            </div>
+                            <div class="form-group">
+                                <label for="">{{ trans('message.classroom.deadline') }}</label>
+                                <input type="datetime-local" class="form-control" name="deadline" placeholder="Input field" value ="{{ \Carbon\Carbon::parse($lessons->deadline)->format('Y-m-d\TH:i') }}"> 
+                            </div>
+                            <div class="form-group">
+                                <label for="">{{ trans('message.classroom.type') }}</label>
+                                <select name="is_test" class="form-control" value={{ $lessons->is_test }}>
+                                    <option value=""></option>
+                                    <option value="0" @if($lessons->is_test == 0) selected @endif>{{ trans('message.classroom.lesson_normal') }}</option>
+                                    <option value="1" @if($lessons->is_test == 1) selected @endif>{{ trans('message.classroom.lesson_test') }}</option>
+                            </select>
+                            <div class="form-group">
+                                <label for="">{{ trans('message.description') }}</label>
+                                <textarea style="width: 100%" name="description">{{ $lessons->description }}</textarea>
+                            </div>
                             </div>
 
                             <button type="submit" class="btn btn-primary">{{ trans('message.submit') }}</button>
                         </form>
                     </div>
                     <div class="tab-pane fade" id="profile">
-                        <form action="" method="POST" role="form" id="addTheory" data-lessonid="{{ $lessons->id }}">
+                        <button type="button" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#addNewTheory">{{ trans('message.addNew') }} {{ trans('message.theory') }}</button>
+                        <form action="" method="POST" role="form" id="addTheory" data-lessonid="{{ $lessons->id }}" data-classId={{ $class->id }}>
                             @csrf
                             <legend>{{ trans('message.select') }} {{ trans('message.theory') }}</legend>
+
                             <div class="form-group">
                                 <select name="" id="addLessionDocument" class="form-control select2-document" style="width: 100%">
                                     <option></option>
@@ -125,6 +138,7 @@
                         
                     </div>
                     <div class="tab-pane fade" id="messages">
+                        <button type="button" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#addNewExercise">{{ trans('message.addNew') }} {{ trans('message.exercise') }}</button>
                         <form action="" method="POST" role="form" data-lessonid="{{ $lessons->id }}" id="addExercise">
                             @csrf
                             <legend>{{ trans('message.select') }} {{ trans('message.exercise') }}</legend>
@@ -165,12 +179,71 @@
                 <div class="clearfix"></div>
             </div>
         </div>
+
+        <div class="box-footer">
+            <a href="{{ route('classDetail', $class->id) }}" class="btn btn-info float-right">Trở lại lớp học</a>
+        </div>
     </div>
 </section>
 
 @endsection
 
+<div id="addNewTheory" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"> {{ trans('message.addNew') }} {{ trans('message.theory') }}</h4>
+            </div>
+            <div class="modal-body">
+                <form action="" method="POST" role="form" id="add-new-theory">
+                    <div class="form-group">
+                        <label for="">{{ trans('message.title') }}</label>
+                        <input type="text" class="form-control" id="add-title" name="title" placeholder="Input field">
+                    </div>
+                    <div class="form-group">
+                        <label for="">{{ trans('message.content') }}</label>
+                        <textarea name="content" id="editortheory" rows="10" cols="80" name="content"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-info float-right">{{ trans('message.submit') }}</button> 
+                        <button type="button" class="btn btn-default float-right mr-4" data-dismiss="modal">{{ trans('message.close') }}</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+
+<div id="addNewExercise" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"> {{ trans('message.addNew') }} {{ trans('message.exercise') }}</h4>
+            </div>
+            <div class="modal-body">
+                <form action="" method="POST" role="form" id="add-new-exercise">
+                    <div class="form-group">
+                        <label for="">{{ trans('message.title') }}</label>
+                        <input type="text" class="form-control" id="add-title" name="title" placeholder="Input field">
+                    </div>
+                    <div class="form-group">
+                        <label for="">{{ trans('message.content') }}</label>
+                        <textarea name="content" id="editorexercise" rows="10" cols="80" name="content"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-info float-right">{{ trans('message.submit') }}</button> 
+                        <button type="button" class="btn btn-default float-right mr-4" data-dismiss="modal">{{ trans('message.close') }}</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+
 @section('ajax')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('js/classesDetail.js') }}"></script>
 @endsection

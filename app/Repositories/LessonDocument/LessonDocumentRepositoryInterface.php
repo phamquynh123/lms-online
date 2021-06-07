@@ -4,5 +4,5 @@ namespace App\Repositories\LessonDocument;
 
 interface LessonDocumentRepositoryInterface
 {
-    // public function getUser();
+    public function checkExist($data);
 }
