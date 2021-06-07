@@ -117,6 +117,7 @@
                 'name' => ' Name is require',
                 'num_of_lesson' => 'Number of lesson is require',
                 'schedule_time' => 'Time study is required',
+                'deadline' => 'Homework deadline',
             ],
         ],
     ];

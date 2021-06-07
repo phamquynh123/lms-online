@@ -65,6 +65,10 @@ Route::group(['middleware' => 'locale'], function() {
                 Route::post('/editinfo', 'ClassInforController@editinfo')->name('editinfo');
                 Route::post('/editlessionDocument', 'ClassInforController@editlessionDocument')->name('editlessionDocument');
                 Route::post('/editlessionExercise', 'ClassInforController@editlessionExercise')->name('editlessionExercise');
+
+                 Route::post('/addlessionDocument', 'ClassInforController@addlessionDocument')->name('addlessionDocument');
+                Route::post('/addlessionExercise', 'ClassInforController@addlessionExercise')->name('addlessionExercise');
+
                 Route::get('/ShowLession/{class_id}/{lesson_id}', 'ClassInforController@ShowLession')->name('ShowLession');
                 Route::get('/ShowExercise/{class_id}/{lesson_id}', 'ClassInforController@ShowExercise')->name('ShowExercise');
                 // submit exercise for student.

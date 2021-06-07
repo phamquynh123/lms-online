@@ -23,7 +23,7 @@
 <section class="content">
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">{{ $lesson_id }}</h3>
+            <h3 class="box-title">{{ $class->name }} - {{ $lesson->name }}</h3>
             <ul class="box-controls pull-right">
                 <li><a class="box-btn-slide" href="#"></a></li>
             </ul>

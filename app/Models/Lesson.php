@@ -15,6 +15,7 @@ class Lesson extends Model
         'schedule_time',
         'num_of_lesson',
         'is_test',
-        'description'
+        'description',
+        'deadline'
     ];
 }

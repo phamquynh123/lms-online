@@ -2,7 +2,7 @@
     padding-top:0;
 }
 .board{
-    width: 75%;
+    width: 90%;
     margin: 0 auto;
     background: #fff;
 
@@ -45,6 +45,7 @@ p.narrow{
 }
 
 span.round-tabs{
+    padding-top: 20px;
     width: 70px;
     height: 70px;
     line-height: 70px;
@@ -206,4 +207,12 @@ li.active span.round-tabs.five{
     .btn-outline-rounded {
         padding:12px 20px;
     }
+}
+.accordion .card {
+    border: 1px #b3afaf solid;
+    margin: 0;
+}
+.accordion .card .card-header{
+    padding: 0 !important;
+    /*border: 1px;*/
 }

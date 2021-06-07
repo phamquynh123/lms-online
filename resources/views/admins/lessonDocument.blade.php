@@ -1,5 +1,7 @@
 @extends('layouts.admin')
-
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/editLesson.css') }}">
+@endsection
 @section('content-content')
 
 <div class="content-header">
@@ -10,7 +12,7 @@
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
-                        <li class="breadcrumb-item" aria-current="page">{{ trans('message.lesson') }}</li>
+                        <li class="breadcrumb-item" aria-current="page"><a href="{{ route('classDetail', $class_id) }}">{{ trans('message.lesson') }}: {{ $lessons->name }}</a></li>
                         <li class="breadcrumb-item active" aria-current="page">{{ trans('message.theory') }}</li>
                     </ol>
                 </nav>
@@ -52,6 +54,27 @@
     </div>
 </section>
 @endsection
+
+<div id="addDetail" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">{{ trans('message.addDetail') }} {{ trans('message.class') }}</h4>
+            </div>
+            <div class="modal-body">
+            </table>
+            </div>
+            <div class="modal-footer float-right">
+                <button type="button" class="btn btn-default float-right " data-dismiss="modal">{{ trans('message.close') }}</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 
 @section('ajax')
     <script src="{{ asset('js/classesDetail.js') }}"></script>

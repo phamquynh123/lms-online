@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\ClassInfo\ClassInfoRepositoryInterface;
+use App\Repositories\Classroom\ClassroomRepositoryInterface;
 use App\Repositories\Lesson\LessonRepositoryInterface;
 use App\Repositories\LessonExercise\LessonExerciseRepositoryInterface as lessonExerciseRepo;
 
@@ -27,28 +28,30 @@ class HomeworkController extends Controller
     protected $classInfoRepo;
     protected $lessonRepo;
     protected $lessonExerciseRepo;
+    protected $classRepo;
 
     public function __construct(
         HomeworkRepositoryInterface $homeworkRepo,
         UserRepositoryInterface $userRepo,
-        ClassInfoRepository $classInfoRepo,
+        ClassInfoRepositoryInterface $classInfoRepo,
         LessonRepositoryInterface $lessonRepo,
-        lessonnExerciseRepo $lessonExerciseRepo,
+        lessonExerciseRepo $lessonExerciseRepo,
+        ClassroomRepositoryInterface $classRepo
     ) {
-        $this->$homeworkRepo = $homeworkRepo;
+        $this->homeworkRepo = $homeworkRepo;
         $this->userRepo = $userRepo;
         $this->classInfoRepo = $classInfoRepo;
         $this->lessonRepo = $lessonRepo;
         $this->lessonExerciseRepo = $lessonExerciseRepo;
+        $this->classRepo = $classRepo;
     }
 
     public function submitExercise(HomeworksRequest $request)
     {
         $data =$request->all();
         $data['user_id'] = Auth::user()->id;
-        $data['time_commit_ex'] = now();
-
-        $data = $this->$homeworkRepo->create($data);
+        $data['time_commit'] = now();
+        $respon = $this->homeworkRepo->create($data);
 
         return response()->json(['success' => trans('meassge.successs'), 'error' => false]);
     }
@@ -56,18 +59,19 @@ class HomeworkController extends Controller
     public function showHomework(Request $request)
     {
         $data = $request->all();
-        // dd($data);
-        $response = $this->$homeworkRepo->findHomeworkAnswer($data['lesson_id'], $data['lession_exercise_id'], $data['user_id']);
+        $response = $this->homeworkRepo->findHomeworkAnswer($data['lesson_id'], $data['lession_exercise_id'], $data['user_id']);
 
         return response()->json($response);
     }
 
-    public function showmarkingLession($lesson_id, $class_id)
+    public function showmarkingLession($class_id, $lesson_id)
     {
-        // $ClassInfoRepository = new ClassInfoRepository();
         $studentInClasses = $this->classInfoRepo->findCondition('class_id', $class_id)->load('users');
+        $class = $this->classRepo->find($class_id);
+        $lesson = $this->lessonRepo->find($class_id);
 
-        return view('admins/marking', compact('studentInClasses', 'lesson_id', 'class_id'));
+
+        return view('admins/marking', compact('studentInClasses', 'lesson_id', 'class_id', 'class', 'lesson'));
     }
 
     public function markingLession($lesson_id, $class_id, $user_id)

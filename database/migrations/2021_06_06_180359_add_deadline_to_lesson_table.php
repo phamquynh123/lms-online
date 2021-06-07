@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddDeadlineToLessonExerciseTable extends Migration
+class AddDeadlineToLessonTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddDeadlineToLessonExerciseTable extends Migration
      */
     public function up()
     {
-        Schema::table('lesson_excercie', function (Blueprint $table) {
-            $table->timestamp('deadline')->default(\DB::raw('CURRENT_TIMESTAMP'));
+        Schema::table('lessons', function (Blueprint $table) {
+            $table->dateTime('deadline')->nullable();
         });
     }
 
@@ -25,7 +25,7 @@ class AddDeadlineToLessonExerciseTable extends Migration
      */
     public function down()
     {
-        Schema::table('lesson_excercie', function (Blueprint $table) {
+        Schema::table('lessons', function (Blueprint $table) {
             $table->dropColumn('deadline');
         });
     }
