@@ -46,7 +46,11 @@
                             <td>{{ $studentInClass->users[0]['name'] }}</td>
                             <td>{{ $studentInClass->users[0]['email'] }}</td>
                             <th>
-                                <a href="{{ route('markingLession', [$lesson_id, $class_id, $studentInClass->users[0]['id'] ]) }}" class="btn btn-sm btn-success marking" title="marking"><i class="fa fa-check"></i></a>
+                                {{-- @if(Auth::user()->role_id == config('messages.roleStudent'))  --}}
+                                    <a href="{{ route('markingLession', [$lesson_id, $class_id, $studentInClass->users[0]['id'] ]) }}" class="btn btn-sm btn-success marking" title="marking"><i class="fa fa-check"></i></a>
+                                {{-- @else 
+                                    <a href="{{ route('markingLession', [$lesson_id, $class_id, $studentInClass->users[0]['id'] ]) }}" class="btn btn-sm btn-success marking-teacher" title="marking"><i class="fa fa-check"></i></a>
+                                @endif --}}
                             </th>
                         </tr>
                         @endforeach
@@ -57,3 +61,14 @@
     </div>
 </section>
 @endsection
+
+<div class="modal fade" id="" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>

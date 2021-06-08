@@ -121,4 +121,7 @@
                 'deadline' => 'Hạn nộp bài tập là bắt buộc',
             ],
         ],
+        'point' => 'Điểm',
+        'comment' => 'Nhận xét',
+        'marking_done' => 'Đã chấm điểm'
     ];

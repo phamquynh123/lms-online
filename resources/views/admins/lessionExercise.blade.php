@@ -1,7 +1,11 @@
 @extends('layouts.admin')
 
-@section('content-content')
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/editLesson.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endsection
 
+@section('content-content')
 <div class="content-header">
     <div class="d-flex align-items-center">
         <div class="mr-auto">
@@ -35,14 +39,14 @@
                 <div class="card">
                     <div class="card-header" id="{{ $lessonexercise->id }}">
                         <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ $lessonexercise->exercise->slug }}" aria-expanded="true" aria-controls="{{ $lessonexercise->exercise->slug }}">
-                            {{ $lessonexercise->exercise->title }}
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ $lessonexercise->exercise[0]->slug }}" aria-expanded="true" aria-controls="{{ $lessonexercise->exercise[0]->slug }}">
+                            {{ $lessonexercise->exercise[0]->title }}
                             </button>
                         </h2>
                     </div>
 
-                    <div id="{{ $lessonexercise->exercise->slug }}" class="collapse" aria-labelledby="{{ $lessonexercise->id }}" data-parent="#accordionExample">
-                        <div class="card-body">{!! $lessonexercise->exercise->content !!}</div>
+                    <div id="{{ $lessonexercise->exercise[0]->slug }}" class="collapse" aria-labelledby="{{ $lessonexercise->id }}" data-parent="#accordionExample">
+                        <div class="card-body">{!! $lessonexercise->exercise[0]->content !!}</div>
                     </div>
                     @if (Gate::allows('submit_homework'))
                     <div>
@@ -52,9 +56,11 @@
                         <a class="float-right btn btn-warning btn-sm showHomework mr-4" data-userId="{{ Auth::user()->id }}" data-id="{{ $lessonexercise->id }}" data-lessonId="{{ $lessons->id }}" ><i class="fa fa-pencil-square-o"></i> {{ trans('message.show') }} {{ trans('message.homework') }}</a>
                     </div>
                     @endif
+                    <div class="clear mb-2"></div>
                 </div>
                 @endforeach
             </div>
+           
         </div>
     </div>
 </section>

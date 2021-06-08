@@ -180,13 +180,16 @@ class ClassInforController extends Controller
 
     public function showExercise($lesson_id, $class_id)
     {
+        $user_id = Auth::user()->id;
         $lessons = $this->lessonRepo->find($lesson_id);
 
-        $lessonexercises = $this->lessonExerciseRepo->findCondition('lesson_id', $lesson_id)->load('exercise')->map(function($item) {
-            $item['exercise'] = $item->exercise[0];
-
-            return $item;
-        });
+        $lessonexercises = $this->lessonExerciseRepo->findCondition('lesson_id', $lesson_id)
+        ->load([
+            'exercise',
+            'homework' => function($item) use ($user_id) {
+                $item->where('user_id', $user_id);
+            }
+        ]);
 
         return view('admins/lessionExercise', compact(['lessonexercises', 'lessons', 'lesson_id', 'class_id']));
     }
