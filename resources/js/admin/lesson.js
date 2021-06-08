@@ -6,6 +6,7 @@ $(function() {
     });
 
     CKEDITOR.replace( 'editor1' );
+    CKEDITOR.replace( 'content' );
     $('.Exercise').on('click', function() {
         $('#submitExercise').modal('show');
         $('#submitExercise').attr('lesson_exercise_id', $(this).attr('data-id'));
@@ -67,6 +68,39 @@ $(function() {
                 } else {
                      toastr.warning('Bài học chưa được chấm điểm.')
                 }
+                
+            },
+        });
+    })
+
+    $('.showMarkingHomework').on('click', function(e) {
+        e.preventDefault();
+        $('#mark').html('');
+        $('#content').html('');
+        $('#comment').html('');
+        $('.submitMarking').attr('data-homeworkId', '');
+        var formData = new FormData();
+        formData.append('lesson_id', $(this).attr('data-lessonId'));
+        formData.append('lession_exercise_id', $(this).attr('data-id'));
+        formData.append('user_id', $(this).attr('data-userId'));
+        $.ajax({
+            type: 'post', 
+            url: route('showHomework'),
+            processData: false,
+            contentType: false,
+            data:formData,
+            dataType: 'JSON',
+            success: function (response) {
+                    $('#showHomework').modal('show');
+                    console.log("ndjkfjknf");
+                    $('.submitMarking').attr('data-homeworkId', response.id);
+                    $('#mark').html(response.mark);
+                    // $('#content').html(response.content);
+                    CKEDITOR.instances.content.setData(response.content);
+                    $('#comment').html(response.comment);
+                    $('#mark1').val(response.mark);
+                    $('#comment1').val(response.comment);
+
                 
             },
         });

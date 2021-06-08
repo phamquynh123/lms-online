@@ -46,3 +46,7 @@
 .messages-menu > a{
     padding-top: 20px;
 }
+
+.clear{
+    clear: both;
+}

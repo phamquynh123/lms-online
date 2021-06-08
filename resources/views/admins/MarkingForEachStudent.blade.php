@@ -1,4 +1,8 @@
 @extends('layouts.admin')
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/editLesson.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endsection
 
 @section('content-content')
 
@@ -11,6 +15,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
                         <li class="breadcrumb-item" aria-current="page">{{ trans('message.lesson') }}</li>
+                        <li class="breadcrumb-item" aria-current="page"><a href="{{ route('classDetail', $class_id) }}">{{ trans('message.lesson') }}: {{ $lessons->name }}</a></li>
                         <li class="breadcrumb-item active" aria-current="page">{{ trans('message.exercise') }}</li>
                     </ol>
                 </nav>
@@ -34,21 +39,35 @@
                 <div class="card">
                     <div class="card-header" id="{{ $lessonexercise->id }}">
                         <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ $lessonexercise->exercise->slug }}" aria-expanded="true" aria-controls="{{ $lessonexercise->exercise->slug }}">
-                            {{ $lessonexercise->exercise->title }}
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ $lessonexercise->exercise[0]->slug }}" aria-expanded="true" aria-controls="{{ $lessonexercise->exercise[0]->slug }}">
+                            {{ $lessonexercise->exercise[0]->title }}
                             </button>
                         </h2>
                     </div>
 
-                    <div id="{{ $lessonexercise->exercise->slug }}" class="collapse" aria-labelledby="{{ $lessonexercise->id }}" data-parent="#accordionExample">
-                        <div class="card-body">{!! $lessonexercise->exercise->content !!}</div>
+                    <div id="{{ $lessonexercise->exercise[0]->slug }}" class="collapse" aria-labelledby="{{ $lessonexercise->id }}" data-parent="#accordionExample">
+                        <div class="card-body">{!! $lessonexercise->exercise[0]->content !!}</div>
                     </div>
 
-                    <div>
-                        <a class="float-right btn btn-warning btn-sm showHomework" data-id="{{ $lessonexercise->id }}" data-lessonId="{{ $lessons->id }}" data-userId="{{ $users->id }}" data-toggle="modal" data-target="#showHomework"><i class="fa fa-pencil-square-o"></i> {{ trans('message.show') }} {{ trans('message.homework') }}</a>
-                    </div>
+                    <div class="m-2">
+                        @if(Auth::user()->role_id == config('messages.roleStudent'))
 
+                        @else 
+                            @if (count($lessonexercise->homework) > 0 ) 
+                                <a class="float-right btn btn-warning btn-sm showMarkingHomework" data-id="{{ $lessonexercise->id }}" data-lessonId="{{ $lessons->id }}" data-userId="{{ $users->id }}" data-toggle="modal" data-target="#showHomework"><i class="fa fa-pencil-square-o"></i>
+                                    @if($lessonexercise->homework[0]->mark > 0)
+                                        {{ trans('message.marking_done') }}
+                                    @else 
+                                        {{ trans('message.marking') }} {{ trans('message.homework') }}
+                                    @endif
+                                </a>
+                            @else 
+                                <p class="text-primary float-right"> Chưa làm bài tập về nhà.</p>
+                            @endif
+                        @endif
+                    </div>
                 </div>
+                {{-- <hr style="background-color:black"> --}}
                 @endforeach
             </div>
         </div>
@@ -65,7 +84,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">{{ trans('message.show') }} {{ trans('message.homework') }}</h5>
+                <h5 class="modal-title" id="exampleModalLabel">{{ trans('message.marking') }} {{ trans('message.homework') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -74,13 +93,13 @@
                 <form action="" method="POST" role="form" >
                     @csrf
                     <div class="form-group">
-                        <label for="">{{ trans('message.mark') }}</label>
-                        <input type="number" max="10" id="mark1" class="form-control">
+                        <label for="">{{ trans('message.point') }}</label>
+                        <input type="number" max="10" id="mark1" class="form-control" min="0">
                         {{-- <p id="mark1" class="form-control"></p> --}}
                     </div>
                     <div class="form-group">
                         <label for="">{{ trans('message.content') }}</label>
-                        <p id="content"  class="form-control" ></p>
+                        <textarea name="content" id="content" rows="10" cols="80" name="content"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="">{{ trans('message.comment') }}</label>
@@ -88,9 +107,10 @@
                         {{-- <p id="comment1" ></p> --}}
                     </div>
                     <button type="button" class="btn btn-default float-right" data-dismiss="modal">{{ trans('message.close')}}</button>
-                    <button type="submit" class="btn btn-info float-right submitMarking" data-dismiss="modal" >{{ trans('message.submit') }}</button>
+                    <button type="submit" class="btn btn-info float-right submitMarking mr-4" data-dismiss="modal" >{{ trans('message.submit') }}</button>
                 </form>
             </div>
+            <div class="modal-footer"></div>
         </div>
     </div>
 </div>

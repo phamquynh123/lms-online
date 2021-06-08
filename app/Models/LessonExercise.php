@@ -18,4 +18,9 @@ class LessonExercise extends Model
     {
         return $this->hasMany('App\Models\Exercise', 'id', 'excercise_id');
     }
+
+    public function homework()
+    {
+        return $this->hasMany(Homework::class, 'lession_exercise_id', 'id');
+    }
 }

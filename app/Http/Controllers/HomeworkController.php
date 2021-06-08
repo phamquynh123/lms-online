@@ -70,28 +70,24 @@ class HomeworkController extends Controller
         $class = $this->classRepo->find($class_id);
         $lesson = $this->lessonRepo->find($class_id);
 
-
         return view('admins/marking', compact('studentInClasses', 'lesson_id', 'class_id', 'class', 'lesson'));
     }
 
     public function markingLession($lesson_id, $class_id, $user_id)
     {
-        // $lesson = new LessonRepository();
         $lessons = $this->lessonRepo->find($lesson_id);
+        $lessonexercises = $this->lessonExerciseRepo->findCondition('lesson_id', $lesson_id)
+        ->load([
+            'exercise',
+            'homework' => function($item) use ($user_id) {
+                $item->where('user_id', $user_id);
+            }
+        ]);
+        // dd($lessonexercises->toArray());
 
-        // $lessonexercise = new LessonExerciseRepository();
-        $lessonexercises = $this->lessonExerciseRepo->findCondition('lesson_id', $lesson_id)->load('exercise')->map(function($item) {
-            $item['exercise'] = $item->exercise[0];
-
-            return $item;
-        });
-
-        // $user = new UserRepository();
         $users = $this->userRepo->find($user_id);
 
         return view('admins/MarkingForEachStudent', compact(['lessonexercises', 'lessons', 'users', 'class_id']));
-        // dd($lesson_id);
-
     }
 
     public function submitMarking(Request $request)
@@ -101,7 +97,7 @@ class HomeworkController extends Controller
             return response()->json(['error' => true, 'success' => trans('message.notsubmit')]);
         } else {
             $data['time_marking'] = now();
-            $response = $this->$homeworkRepo->update($data['homeworkId'], $data);
+            $response = $this->homeworkRepo->update($data['homeworkId'], $data);
 
             return response()->json(['success' => trans('message.success'), 'error' => false]);
         }
