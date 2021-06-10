@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Repositories\SubjectRepository;
+use App\Repositories\Course\CourseRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Repositories\RegisterRepository;
 
@@ -38,9 +39,13 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+
+    protected $courseRepo;
+    public function __construct(
+       CourseRepositoryInterface $courseRepo 
+    ) {
         $this->middleware('guest');
+        $this->courseRepo = $courseRepo;
     }
 
     /**
@@ -75,8 +80,7 @@ class RegisterController extends Controller
 
     public function registercustom()
     {
-        $repo = new SubjectRepository();
-        $subjects = $repo->getAll();
+        $subjects = $this->courseRepo->getAll();
 
         return view('auth.registercustom', compact('subjects'));
     }

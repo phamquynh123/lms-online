@@ -173,7 +173,7 @@
             </a>
             <ul class="treeview-menu">
                 <li>
-                    <a href="{{ asset('permission') }}">
+                    <a href="{{ asset('admin/permission') }}">
                         <i class="fa fa-address-book-o" aria-hidden="true"></i>
                         {{ trans('message.permissionMangement') }}
                     </a>

@@ -91,6 +91,24 @@ Route::group(['middleware' => 'locale'], function() {
                 Route::post('/update/{id}', 'CourseController@update')->name('update');
                 Route::post('/delete', 'CourseController@destroy')->name('delete');
             });
+
+            Route::prefix('/permission')->name('permission.')->group(function() {
+                $ctl = 'PermissionController';
+                Route::get('/', 'PermissionController@index');
+                Route::get('/datatable', 'PermissionController@datatable')->name('datatable');
+                Route::get('/datatableRole', 'PermissionController@datatableRole')->name('datatableRole');
+                Route::get('/datatablePermissionRole', 'PermissionController@datatablePermissionRole')->name('datatablePermissionRole');
+                Route::post('/store', 'PermissionController@store')->name('add');
+                Route::get('/edit/{id}', 'PermissionController@edit')->name('edit');
+                Route::post('/update', 'PermissionController@update')->name('update');
+                Route::get('/role/edit/{id}', 'PermissionController@roleEdit')->name('roleedit');
+                Route::post('/role/update', 'PermissionController@roleUpdate')->name('roleupdate');
+                Route::get('/permissionRoleEdit/{id}', 'PermissionController@permissionRoleEdit')->name('permissionRoleEdit');
+                Route::post('/permissionRoleUpdatee', $ctl . '@permissionRoleUpdatee')->name('permissionRoleUpdatee');
+                Route::get('/Capquyen', $ctl . '@addVip')->name('addVip');
+                Route::get('/Capquyen/datatable/{lang_id}', $ctl . '@addVipDatatable')->name('addVipDatatable');
+                Route::post('/changeRole', $ctl . '@changeRole')->name('changeRole');
+            });
         });
 
         Route::prefix('/documents')->group(function() {
@@ -112,8 +130,10 @@ Route::group(['middleware' => 'locale'], function() {
             Route::post('/importData', 'ExerciseController@importData')->name('importData');
         });
 
-        Route::get('permission', 'PermissionController@index');
-        Route::get('permissionDatatable', 'PermissionController@permissionDatatable');
+        // Route::get('permission', 'PermissionController@index');
+        // Route::get('permissionDatatable', 'PermissionController@permissionDatatable');
+
+
         
     });
 });
