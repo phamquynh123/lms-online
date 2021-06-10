@@ -32,7 +32,7 @@
                             <a href="#home" aria-controls="home" role="tab" data-toggle="tab">{{ trans('message.register') }} {{ trans('message.list') }}</a>
                         </li>
                         <li role="presentation"  class="status2">
-                            <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">{{ trans('message.Confirmed') }}</a>
+                            <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">{{ trans('message.confirmed') }}</a>
                         </li>
                     @endif
                 </ul>
