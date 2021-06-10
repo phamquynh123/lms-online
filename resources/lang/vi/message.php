@@ -123,5 +123,9 @@
         ],
         'point' => 'Điểm',
         'comment' => 'Nhận xét',
-        'marking_done' => 'Đã chấm điểm'
+        'marking_done' => 'Đã chấm điểm',
+        'permissions' => "Quyền",
+        'permissions_role' => 'Quyền - vai trò',
+        'role' => 'Vai trò', 
+        
     ];
