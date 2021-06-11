@@ -22,6 +22,7 @@
     {{-- link font-awsome --}}
     <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/font-awesome/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/toastr.min.css') }}">
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.3.0/firebaseui.css">
      @routes()
 </head>
 
@@ -109,6 +110,12 @@
                                 </div>
                             </form> 
 
+                            <form action="">
+                                <div id="recaptcha-container"></div>
+                                <input type="text">
+                                <button type="button" onclick="sendOTP()">xasc nhanaj</button>
+                            </form>
+
                             <div class="text-center">
                                 <p class="mt-15 mb-0">{{ trans('message.hassAccount') }}<a href="{{ route('login') }}" class="text-danger ml-5"> {{ trans('message.login') }}</a></p>
                             </div>
@@ -127,7 +134,7 @@
     <script src="{{ asset('bower_components/adminTemplate/Js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('bower_components/adminTemplate/Js/toastr.min.js') }}"></script>
     {{-- custom js --}}
-    <script src ={{ asset('/js/admin.js') }}></script>
+    {{-- <script src ={{ asset('/js/admin.js') }}></script> --}}
 
 
 <script>
@@ -150,6 +157,92 @@
      js.src = "http://localhost/projectAbc/public/";
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
+
+</script>
+ <!-- The core Firebase JS SDK is always required and must be listed first -->
+ <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+
+ <script>
+     // Your web app's Firebase configuration
+     var firebaseConfig = {
+        apiKey: "AIzaSyDTvkc7ws8JX-4iizqifH2cEZF0eoRMHyY",
+        authDomain: "quynh-firebase.firebaseapp.com",
+        projectId: "quynh-firebase",
+        storageBucket: "quynh-firebase.appspot.com",
+        messagingSenderId: "848117488588",
+        appId: "1:848117488588:web:fef88f5803b55128db9b69",
+        measurementId: "G-M0SQ7QE5WP"
+     };
+     // Initialize Firebase
+     firebase.initializeApp(firebaseConfig);
+ </script>
+
+<script>
+//   // Your web app's Firebase configuration
+//   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+//   firebase.auth().languageCode = 'it';
+  
+//   var firebaseConfig = {
+//     apiKey: "AIzaSyDTvkc7ws8JX-4iizqifH2cEZF0eoRMHyY",
+//     authDomain: "quynh-firebase.firebaseapp.com",
+//     projectId: "quynh-firebase",
+//     storageBucket: "quynh-firebase.appspot.com",
+//     messagingSenderId: "848117488588",
+//     appId: "1:848117488588:web:fef88f5803b55128db9b69",
+//     measurementId: "G-M0SQ7QE5WP"
+//   };
+//   // Initialize Firebase
+//   firebase.initializeApp(firebaseConfig);
+//   firebase.analytics();
+
+ 
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+    async function sendOTP() {
+        var number = '0374352428';
+        //global number phone
+        var split_number = number.slice(1,11);
+        var area = "+84";
+        var phone = area.concat(split_number);
+        window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+        try {
+            let confirmationResult = await firebase.auth().signInWithPhoneNumber(phone,  window.recaptchaVerifier);
+            window.confirmationResult = confirmationResult;
+            coderesult = confirmationResult;
+            window.recaptchaVerifier.clear();
+        } catch (error) {
+            window.recaptchaVerifier.clear();
+        }
+    }
+   
+    function verify() {
+        var code = $(".input_otp").val();
+        coderesult.confirm(code).then(function (result) {
+            let user_phone = $('#porfile_phone').val();
+            $("#successOtpAuth").text("Đã xác minh số điện thoại");
+            $("#successOtpAuth").show();
+            setTimeout(function(){
+                $("#successOtpAuth").hide();
+            }, 3000);
+            $('#modal_verify_phone').modal('hide');
+            var current_user = @json($currentUser->profile->id);
+            let data = new FormData();
+            data.append('verified_phone', user_phone);
+            data.append('id', current_user)
+            axios.post("{{ route('api.profile.update-verify-phone') }}",data)
+            .then(function (res){
+                verified_phone = user_phone;
+                $('#verified_label').css('display','inline-block');
+                $('#verify_button').css('display','none');
+            })
+            $('#submit_update').prop('disabled', false);
+        }).catch(function (error) {
+            $("#error").text('Sai mã xác nhận ! hãy thử lại ');
+            $("#error").show();
+            $('#modal_verify_phone').modal('hide');
+            $('#submit_update').prop('disabled', true);
+        });
+    }
 </script>
 </body>
 </html>

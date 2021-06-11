@@ -61,6 +61,7 @@ $('#changePassword').on('submit', function(e){
 })
 
 $('.form-element').on('submit', function(e) {
+    alert("jhgghg");
     e.preventDefault();
     $.ajax({
         dataType: 'JSON',
