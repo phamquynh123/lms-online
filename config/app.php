@@ -163,6 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class, //social account
         Maatwebsite\Excel\ExcelServiceProvider::class, //import exel file
+        Barryvdh\DomPDF\ServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -227,6 +228,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class, // social account
         'Excel' => Maatwebsite\Excel\Facades\Excel::class, //import exel file
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

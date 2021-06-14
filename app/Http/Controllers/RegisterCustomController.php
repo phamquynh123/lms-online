@@ -5,16 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Repositories\RegisterRepository;
+use App\Repositories\User\UserRepositoryInterface;
 use Yajra\Datatables\Datatables;
 use Socialite;
 
 class RegisterCustomController extends Controller
 {
     protected $RegisterRepository;
+    protected $userRepo;
 
-    public function __construct(RegisterRepository $RegisterRepository)
-    {
+    public function __construct(
+        RegisterRepository $RegisterRepository,
+        UserRepositoryInterface $userRepo
+    ) {
         $this->RegisterRepository = $RegisterRepository;
+        $this->userRepo = $userRepo;
     }
 
     public function registerList()
@@ -49,9 +54,7 @@ class RegisterCustomController extends Controller
     {
 
         $user = Socialite::driver('facebook')->user();
- 
         $authUser = $this->findOrCreateUser($user);
-        
         // Chỗ này để check xem nó có chạy hay không
         // dd($user);
  
@@ -59,17 +62,17 @@ class RegisterCustomController extends Controller
     }
  
     private function findOrCreateUser($facebookUser){
-        $authUser = $this->RegisterRepository->findCondition('provider_id', $facebookUser->id)->first();
+        $authUser = $this->userRepo->findCondition('provider_id', $facebookUser->id)->first();
         if($authUser){
             return $authUser;
         }
- 
-        return $this->RegisterRepository->create([
-            'name' => $facebookUser->name,
-            'email' => $facebookUser->email,
-            'status' => config('messages.deactive'),
-            'subject_id' => '1',
-            'provider_id' => $facebookUser->id,
-        ]);
+        return redirect()->back()->with('error', 'Email Facebook không tồn tại trong CSDL');
+        // return $this->userRepo->create([
+        //     'name' => $facebookUser->name,
+        //     'email' => $facebookUser->email,
+        //     'status' => config('messages.deactive'),
+        //     'subject_id' => '1',
+        //     'provider_id' => $facebookUser->id,
+        // ]);
     }
 }

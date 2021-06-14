@@ -23,6 +23,8 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use DB;
+use Redirect;
+use PDF;
 
 class ClassInforController extends Controller
 {
@@ -265,69 +267,18 @@ class ClassInforController extends Controller
             throw new Exception($e->getMessage());
         }
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\
-     */
-    public function create()
+
+    public function downloadPDF($class_id, $lesson_id)
     {
-        //
+        $lesson = $this->lessonRepo->find($lesson_id);
+        $docs = $this->lessonDocumentRepo->findCondition('lesson_id', $lesson_id)->load('document')
+        ->map(function($item) {
+            return $item->document[0];
+        });
+        $pdf = PDF::loadView('document.downloadview', compact(['lesson', 'docs']));
+        $pdf->download('document.pdf');
+
+        return redirect()->back()->with('success', 'Download tài liệu thành công');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\ClassInfor  $classInfor
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ClassInfor $classInfor)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ClassInfor  $classInfor
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ClassInfor $classInfor)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ClassInfor  $classInfor
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, ClassInfor $classInfor)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\ClassInfor  $classInfor
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(ClassInfor $classInfor)
-    {
-        //
-    }
 }
