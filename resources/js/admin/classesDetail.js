@@ -187,3 +187,6 @@ $(function() {
     })
 })
 
+$(document).on('click', '.download-pdf', function() {
+    
+})

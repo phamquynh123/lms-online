@@ -31,8 +31,14 @@
             <ul class="box-controls pull-right">
                 <li><a class="box-btn-slide" href="#"></a></li>
             </ul>
+            <a type="button" class="btn btn-info btn-sm float-right downloadPdf" href={{ route('downloadPDF', [$class_id, $lessons->id]) }}>Downloaf PDF</a>
         </div>
         <div class="box-body">
+            @if (session('success'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('success') }}
+                </div>
+            @endif
             <div class="accordion" id="accordionExample">
                 @foreach ($lessondocuments as $lessondocument)
                 <div class="card">
