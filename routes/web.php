@@ -18,9 +18,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/course', function() {
-    return view('home1.blade.php');
-});
+// Route::get('/home1', function() {
+//     return view('clients.homepage');
+// });
 // register Course
 Route::get('/registercustom', 'Auth\RegisterController@registercustom')->name('registercustom');
 Route::post('/registerSubmit', 'Auth\RegisterController@registerSubmit')->name('registerSubmit');
@@ -145,3 +145,11 @@ Route::get('reset-password', 'ResetPasswordController@formResetPass');
 route::get('home-page', function() {
     return view('clients.homepage');
 });
+
+// Route::group(['name' => 'client.'], function() {
+    $ctl = 'Client\HomeController';
+    Route::get('/', $ctl . '@index')->name('client.home');
+    Route::get('/course', $ctl . '@course')->name('client.course');
+    Route::get('/teacher', $ctl . '@teacher')->name('client.teacher');
+    Route::get('/mycourse', $ctl . '@mycourse')->name('client.mycourse');
+// });

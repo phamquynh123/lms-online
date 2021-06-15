@@ -17,4 +17,10 @@ class UserRepository extends EloquentRepository implements UserRepositoryInterfa
     {
         return User::class;
     }
+
+    public function getListTeacherClient()
+    {
+        $data = $this->_model::where('role_id', config('messages.roleTeacher'))->where('status', config('messages.active'))->orderBy('created_at', 'DESC')->take(3)->get();
+        return $data;
+    }
 }
