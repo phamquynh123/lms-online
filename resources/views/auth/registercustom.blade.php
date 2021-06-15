@@ -112,8 +112,9 @@
 
                             <form action="">
                                 <div id="recaptcha-container"></div>
-                                <input type="text">
+                                <input type="text" class="input_otp">
                                 <button type="button" onclick="sendOTP()">xasc nhanaj</button>
+                                <button  type="button" class="btn btn-info" onclick="verify()">Verify</button>
                             </form>
 
                             <div class="text-center">
@@ -216,31 +217,13 @@
     }
    
     function verify() {
+        alert("aa");
         var code = $(".input_otp").val();
         coderesult.confirm(code).then(function (result) {
-            let user_phone = $('#porfile_phone').val();
-            $("#successOtpAuth").text("Đã xác minh số điện thoại");
-            $("#successOtpAuth").show();
-            setTimeout(function(){
-                $("#successOtpAuth").hide();
-            }, 3000);
-            $('#modal_verify_phone').modal('hide');
-            var current_user = @json($currentUser->profile->id);
-            let data = new FormData();
-            data.append('verified_phone', user_phone);
-            data.append('id', current_user)
-            axios.post("{{ route('api.profile.update-verify-phone') }}",data)
-            .then(function (res){
-                verified_phone = user_phone;
-                $('#verified_label').css('display','inline-block');
-                $('#verify_button').css('display','none');
-            })
-            $('#submit_update').prop('disabled', false);
+            alert("Đã xác minh số điện thoại")
+
         }).catch(function (error) {
-            $("#error").text('Sai mã xác nhận ! hãy thử lại ');
-            $("#error").show();
-            $('#modal_verify_phone').modal('hide');
-            $('#submit_update').prop('disabled', true);
+            alert("Sai mã xác nhận ! hãy thử lại")
         });
     }
 </script>

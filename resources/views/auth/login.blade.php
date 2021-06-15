@@ -94,12 +94,12 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-6">
+                                    {{-- <div class="col-6">
                                         <div class="checkbox">
                                             <input type="checkbox" id="basic_checkbox_1" >
                                             <label for="basic_checkbox_1">{{ __('Remember Me') }}</label>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <!-- /.col -->
                                     <div class="col-6">
                                         <div class="fog-pwd text-right">
