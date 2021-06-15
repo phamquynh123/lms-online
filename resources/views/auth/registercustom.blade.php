@@ -9,19 +9,19 @@
 
     <title> Register </title>
    <!-- Bootstrap 4.0-->
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/bootstrap.min.css') }}">
     
     <!-- Bootstrap extend-->
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/bootstrap-extend.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/bootstrap-extend.css') }}">
     
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/master_style.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/master_style.css') }}">
 
     <!-- Superieur Admin skins -->
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/_all-skins.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/_all-skins.css') }}">
     {{-- link font-awsome --}}
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/font-awesome/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/toastr.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/toastr.min.css') }}">
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.3.0/firebaseui.css">
      @routes()
 </head>
@@ -111,6 +111,7 @@
                             </form> 
 
                             <form action="">
+                                <button type="button" class="btn btn-info" onclick="sendOTP()">Verify phone</button>
                                 <div id="recaptcha-container"></div>
                                 <input type="text" class="input_otp">
                                 <button type="button" onclick="sendOTP()">xasc nhanaj</button>
@@ -128,12 +129,12 @@
     </div>
 
         <!-- jQuery 3 -->
-    <script src="{{ asset('bower_components/adminTemplate/Js/jquery-3.3.1.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/jquery-3.3.1.js') }}"></script>
     <!-- popper -->
-    <script src="{{ asset('bower_components/adminTemplate/Js/popper.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/popper.min.js') }}"></script>
     <!-- Bootstrap 4.0-->
-    <script src="{{ asset('bower_components/adminTemplate/Js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('bower_components/adminTemplate/Js/toastr.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/toastr.min.js') }}"></script>
     {{-- custom js --}}
     {{-- <script src ={{ asset('/js/admin.js') }}></script> --}}
 
@@ -216,6 +217,7 @@
         }
     }
    
+<<<<<<< HEAD
     function verify() {
         alert("aa");
         var code = $(".input_otp").val();
@@ -226,6 +228,32 @@
             alert("Sai mã xác nhận ! hãy thử lại")
         });
     }
+=======
+    // function verify() {
+    //     var code = $(".input_otp").value;
+    //     coderesult.confirm(code).then(function (result) {
+    //         // let user_phone = $('#porfile_phone').val();
+    //         alert('dung roi');
+    //         // $("#successOtpAuth").text("Đã xác minh số điện thoại");
+    //         // $("#successOtpAuth").show();
+    //         // setTimeout(function(){
+    //         //     $("#successOtpAuth").hide();
+    //         // }, 3000);
+    //         // $('#modal_verify_phone').modal('hide');
+   
+    //     }).catch(function (error) {
+    //         alert('sai roi nhe');
+    //         // $("#error").text('Sai mã xác nhận ! hãy thử lại ');
+    //         // $("#error").show();
+    //         // $('#modal_verify_phone').modal('hide');
+    //         // $('#submit_update').prop('disabled', true);
+    //     });
+    // }
+
+    $(document).on('click', '.class-verify', function() {
+        alert('123');
+    })
+>>>>>>> 495a35317acfdcbdea4269d58b561616748495d8
 </script>
 </body>
 </html>

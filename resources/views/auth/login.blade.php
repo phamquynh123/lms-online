@@ -11,18 +11,18 @@
     <title> welcomee </title>
   
     <!-- Bootstrap 4.0-->
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/bootstrap.min.css') }}">
     
     <!-- Bootstrap extend-->
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/bootstrap-extend.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/bootstrap-extend.css') }}">
     
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/master_style.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/master_style.css') }}">
 
     <!-- Superieur Admin skins -->
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/_all-skins.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/_all-skins.css') }}">
     {{-- link font-awsome --}}
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/font-awesome/css/font-awesome.min.css') }}">
 </head>
 <body class="hold-transition bg-img" style="background-image: url(../../images/gallery/full/6.jpg)" data-overlay="4">
     
@@ -38,7 +38,7 @@
                             <div class="text-center text-white">
                               <p class="mt-20">- {{ trans('message.login') }} With -</p>
                               <p class="gap-items-2 mb-20">
-                                  <a class="btn btn-social-icon btn-outline btn-white" href="#"><i class="fa fa-facebook"></i></a>
+                                  <a class="btn btn-social-icon btn-outline btn-white" href="{{ route('facebook.login') }}"><i class="fa fa-facebook"></i></a>
                                   <a class="btn btn-social-icon btn-outline btn-white" href="#"><i class="fa fa-twitter"></i></a>
                                   <a class="btn btn-social-icon btn-outline btn-white" href="#"><i class="fa fa-google-plus"></i></a>
                                   <a class="btn btn-social-icon btn-outline btn-white" href="#"><i class="fa fa-instagram"></i></a>
@@ -53,6 +53,11 @@
                     </div>
                     <div class="col-lg-5 col-md-5 col-12">
                         <div class="p-40 bg-white content-bottom h-p100">
+                            @if (session('success'))
+                                <div class="alert alert-success" role="alert">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
                             <form action="{{ route('login') }}" method="post" class="form-element">
                                 @csrf
                                 <div class="form-group">
@@ -94,12 +99,6 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    {{-- <div class="col-6">
-                                        <div class="checkbox">
-                                            <input type="checkbox" id="basic_checkbox_1" >
-                                            <label for="basic_checkbox_1">{{ __('Remember Me') }}</label>
-                                        </div>
-                                    </div> --}}
                                     <!-- /.col -->
                                     <div class="col-6">
                                         <div class="fog-pwd text-right">
@@ -123,7 +122,7 @@
                             </form>     
 
                             <div class="text-center">
-                                <p class="mt-15 mb-0">{{ trans('message.donotHasAccount') }}<a href="{{ route('registercustom') }}" class="text-info ml-5">{{ trans('message.login') }}</a></p>
+                                <p class="mt-15 mb-0">{{ trans('message.donotHasAccount') }}<a href="{{ route('registercustom') }}" class="text-info ml-5">{{ trans('message.register') }}</a></p>
                             </div>
                         </div>
                     </div>
@@ -134,13 +133,13 @@
 
 
     <!-- jQuery 3 -->
-    <script src="{{ asset('bower_components/adminTemplate/Js/jquery-3.3.1.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/jquery-3.3.1.js') }}"></script>
     
     <!-- popper -->
-    <script src="{{ asset('bower_components/adminTemplate/Js/popper.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/popper.min.js') }}"></script>
     
     <!-- Bootstrap 4.0-->
-    <script src="{{ asset('bower_components/adminTemplate/Js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/bootstrap.min.js') }}"></script>
 
 </body>
 </html>

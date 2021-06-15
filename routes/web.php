@@ -18,6 +18,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home1', function() {
+//     return view('clients.homepage');
+// });
 // register Course
 Route::get('/registercustom', 'Auth\RegisterController@registercustom')->name('registercustom');
 Route::post('/registerSubmit', 'Auth\RegisterController@registerSubmit')->name('registerSubmit');
@@ -71,6 +74,7 @@ Route::group(['middleware' => 'locale'], function() {
 
                 Route::get('/ShowLession/{class_id}/{lesson_id}', 'ClassInforController@ShowLession')->name('ShowLession');
                 Route::get('/ShowExercise/{class_id}/{lesson_id}', 'ClassInforController@ShowExercise')->name('ShowExercise');
+                Route::get('/download-pdf/{class_id}/{lesson_id}', 'ClassInforController@downloadPDF')->name('downloadPDF');
                 // submit exercise for student.
                 Route::post('/submitExercise', 'HomeworkController@submitExercise')->name('submitExercise');
                 Route::post('/showHomework', 'HomeworkController@showHomework')->name('showHomework');
@@ -132,11 +136,20 @@ Route::group(['middleware' => 'locale'], function() {
 
         // Route::get('permission', 'PermissionController@index');
         // Route::get('permissionDatatable', 'PermissionController@permissionDatatable');
-
-
-        
     });
 });
+
+Route::post('reset-passwords', 'ResetPasswordController@sendMail')->name('request-resetpass');
+Route::post('reset-password/{token}', 'ResetPasswordController@reset')->name('put-resetpass');
+Route::get('reset-password', 'ResetPasswordController@formResetPass');
 route::get('home-page', function() {
     return view('clients.homepage');
 });
+
+// Route::group(['name' => 'client.'], function() {
+    $ctl = 'Client\HomeController';
+    Route::get('/', $ctl . '@index')->name('client.home');
+    Route::get('/course', $ctl . '@course')->name('client.course');
+    Route::get('/teacher', $ctl . '@teacher')->name('client.teacher');
+    Route::get('/mycourse', $ctl . '@mycourse')->name('client.mycourse');
+// });

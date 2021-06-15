@@ -1,5 +1,5 @@
 <?php
-namespace App\Repositories;
+namespace App\Repositories\Course;
 
 use App\Repositories\EloquentRepository;
 use App\Models\Subject;

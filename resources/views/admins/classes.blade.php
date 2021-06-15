@@ -2,7 +2,7 @@
 
 @section('css')
 {{-- <link rel="stylesheet prefetch" href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css"> --}}
-{{-- <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/datepicker.css') }}"> --}}
+{{-- <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/datepicker.css') }}"> --}}
 {{-- <link rel="stylesheet" type="text/css" href="jquery.datetimepicker.css"/> --}}
 <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
 
@@ -273,7 +273,7 @@
 </div>
 
 @section('ajax')
-    <script src="{{ asset('bower_components/adminTemplate/Js/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/bootstrap-datepicker.js') }}"></script>
    
     {{-- <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script> --}}
     <script src="{{ asset('js/classes.js') }}"></script>
