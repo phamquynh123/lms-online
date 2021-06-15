@@ -9,19 +9,19 @@
 
     <title> Register </title>
    <!-- Bootstrap 4.0-->
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/bootstrap.min.css') }}">
     
     <!-- Bootstrap extend-->
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/bootstrap-extend.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/bootstrap-extend.css') }}">
     
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/master_style.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/master_style.css') }}">
 
     <!-- Superieur Admin skins -->
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/_all-skins.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/_all-skins.css') }}">
     {{-- link font-awsome --}}
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/font-awesome/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/toastr.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/toastr.min.css') }}">
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.3.0/firebaseui.css">
      @routes()
 </head>
@@ -111,9 +111,10 @@
                             </form> 
 
                             <form action="">
+                                <button type="button" class="btn btn-info" onclick="sendOTP()">Verify phone</button>
                                 <div id="recaptcha-container"></div>
-                                <input type="text">
-                                <button type="button" onclick="sendOTP()">xasc nhanaj</button>
+                                <input type="text" class ="input_otp">
+                                <button type="button" class="btn btn-info class-verify">xasc nhanaj</button>
                             </form>
 
                             <div class="text-center">
@@ -127,12 +128,12 @@
     </div>
 
         <!-- jQuery 3 -->
-    <script src="{{ asset('bower_components/adminTemplate/Js/jquery-3.3.1.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/jquery-3.3.1.js') }}"></script>
     <!-- popper -->
-    <script src="{{ asset('bower_components/adminTemplate/Js/popper.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/popper.min.js') }}"></script>
     <!-- Bootstrap 4.0-->
-    <script src="{{ asset('bower_components/adminTemplate/Js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('bower_components/adminTemplate/Js/toastr.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/toastr.min.js') }}"></script>
     {{-- custom js --}}
     {{-- <script src ={{ asset('/js/admin.js') }}></script> --}}
 
@@ -215,34 +216,30 @@
         }
     }
    
-    function verify() {
-        var code = $(".input_otp").val();
-        coderesult.confirm(code).then(function (result) {
-            let user_phone = $('#porfile_phone').val();
-            $("#successOtpAuth").text("Đã xác minh số điện thoại");
-            $("#successOtpAuth").show();
-            setTimeout(function(){
-                $("#successOtpAuth").hide();
-            }, 3000);
-            $('#modal_verify_phone').modal('hide');
-            var current_user = @json($currentUser->profile->id);
-            let data = new FormData();
-            data.append('verified_phone', user_phone);
-            data.append('id', current_user)
-            axios.post("{{ route('api.profile.update-verify-phone') }}",data)
-            .then(function (res){
-                verified_phone = user_phone;
-                $('#verified_label').css('display','inline-block');
-                $('#verify_button').css('display','none');
-            })
-            $('#submit_update').prop('disabled', false);
-        }).catch(function (error) {
-            $("#error").text('Sai mã xác nhận ! hãy thử lại ');
-            $("#error").show();
-            $('#modal_verify_phone').modal('hide');
-            $('#submit_update').prop('disabled', true);
-        });
-    }
+    // function verify() {
+    //     var code = $(".input_otp").value;
+    //     coderesult.confirm(code).then(function (result) {
+    //         // let user_phone = $('#porfile_phone').val();
+    //         alert('dung roi');
+    //         // $("#successOtpAuth").text("Đã xác minh số điện thoại");
+    //         // $("#successOtpAuth").show();
+    //         // setTimeout(function(){
+    //         //     $("#successOtpAuth").hide();
+    //         // }, 3000);
+    //         // $('#modal_verify_phone').modal('hide');
+   
+    //     }).catch(function (error) {
+    //         alert('sai roi nhe');
+    //         // $("#error").text('Sai mã xác nhận ! hãy thử lại ');
+    //         // $("#error").show();
+    //         // $('#modal_verify_phone').modal('hide');
+    //         // $('#submit_update').prop('disabled', true);
+    //     });
+    // }
+
+    $(document).on('click', '.class-verify', function() {
+        alert('123');
+    })
 </script>
 </body>
 </html>

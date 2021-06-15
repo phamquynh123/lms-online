@@ -1,7 +1,7 @@
 <?php 
 
     return [
-        'linkdefaul' => 'bower_components/adminTemplate/Img/defaul.jpeg',
+        'linkdefaul' => 'bower_components/bower/adminTemplate/Img/defaul.jpeg',
         'roleTeacher' => '2',
         'roleAdmin' => '1',
         'roleStudent' => '3',

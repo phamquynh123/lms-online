@@ -13,26 +13,26 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
   
     <!-- Bootstrap 4.0-->
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/bootstrap.min.css') }}">
 
     <!-- Bootstrap extend-->
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/bootstrap-extend.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/bootstrap-extend.css') }}">
 
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/master_style.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/master_style.css') }}">
 
     <!-- Superieur Admin skins -->
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/_all-skins.css') }}">   
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/font-awesome/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/linea-icons/linea.css') }}">
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/Ionicons/css/ionicons.css') }}"> 
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/themify-icons/themify-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/_all-skins.css') }}">   
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/linea-icons/linea.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/Ionicons/css/ionicons.css') }}"> 
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/themify-icons/themify-icons.css') }}">
     <!-- dark teamplate  -->
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/master_style_dark.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/master_style_dark.css') }}">
     {{-- datatable  --}}
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/jquery.dataTables.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/toastr.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/datepicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/jquery.dataTables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/toastr.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/datepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     @yield('css')
     @routes()
@@ -46,7 +46,7 @@
             <a href="index.html" class="logo">
               <!-- mini logo -->
                 <div class="logo-mini">
-                    <span class="light-logo"><img src="{{ asset('bower_components/adminTemplate/Img/logo-light.png') }}" alt="logo"></span>
+                    <span class="light-logo"><img src="{{ asset('bower_components/bower/adminTemplate/Img/logo-light.png') }}" alt="logo"></span>
                 </div>
                 <div class="logo-lg">
                     <span class="light-logo">Quynh - HUST </span>
@@ -245,41 +245,41 @@
     <!-- ./wrapper -->
 
     <!-- jQuery 3 -->
-    <script src="{{ asset('bower_components/adminTemplate/Js/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/jquery-3.3.1.min.js') }}"></script>
 
     <!-- popper -->
-    <script src="{{ asset('bower_components/adminTemplate/Js/popper.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/popper.min.js') }}"></script>
 
     <!-- Bootstrap 4.0-->
-    <script src="{{ asset('bower_components/adminTemplate/Js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/bootstrap.min.js') }}"></script>
 
     <!-- SlimScroll -->
-    <script src="{{asset('bower_components/adminTemplate/Js/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{asset('bower_components/bower/adminTemplate/Js/jquery.slimscroll.min.js') }}"></script>
 
     <!-- FastClick -->
-    <script src="{{ asset('bower_components/adminTemplate/Js/fastclick.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/fastclick.js') }}"></script>
 
     <!-- Superieur Admin App -->
-    <script src="{{ asset('bower_components/adminTemplate/Js/template.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/template.js') }}"></script>
 
     <!-- Superieur Admin for demo purposes -->
-    <script src="{{ asset('bower_components/adminTemplate/Js/demo.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/demo.js') }}"></script>
     {{-- link datatable --}}
-    <script src="{{ asset('bower_components/adminTemplate/Js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/jquery.dataTables.min.js') }}"></script>
     {{-- validation  --}}
-    <script src="{{ asset('bower_components/adminTemplate/Js/validation.js') }}"></script>
-    <script src="{{ asset('bower_components/adminTemplate/Js/form-validation.js') }}"></script>
-    <script src="{{ asset('bower_components/adminTemplate/Js/toastr.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/validation.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/form-validation.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/toastr.min.js') }}"></script>
     <script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="{{ asset('bower_components/adminTemplate/Js/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/bootstrap-datepicker.js') }}"></script>
    {{--  <script>
         var CKEDITOR_BASEPATH = 'http://localhost/project1/public/';
-        window.CKEDITOR_BASEPATH = {{ asset('bower_components/adminTemplate/Js/ckeditor.js') }};
+        window.CKEDITOR_BASEPATH = {{ asset('bower_components/bower/adminTemplate/Js/ckeditor.js') }};
     </script>
-    <script src="{{ asset('bower_components/adminTemplate/Js/ckeditor.js') }}"></script> --}}
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/ckeditor.js') }}"></script> --}}
     
-    <script src="{{ asset('bower_components/adminTemplate/Js/sweetalert2@8.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/sweetalert2@8.js') }}"></script>
     {{-- link js nè  --}}
 
     <script src="{{ asset('js/admin.js') }}"></script>

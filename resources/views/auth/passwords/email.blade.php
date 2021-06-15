@@ -61,18 +61,18 @@
     <title> welcomee </title>
   
     <!-- Bootstrap 4.0-->
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/bootstrap.min.css') }}">
     
     <!-- Bootstrap extend-->
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/bootstrap-extend.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/bootstrap-extend.css') }}">
     
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/master_style.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/master_style.css') }}">
 
     <!-- Superieur Admin skins -->
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/_all-skins.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/_all-skins.css') }}">
     {{-- link font-awsome --}}
-    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bower/adminTemplate/Css/font-awesome/css/font-awesome.min.css') }}">
 </head>
 <body class="hold-transition bg-img" style="background-image: url(../../images/gallery/full/6.jpg)" data-overlay="4">
 
@@ -128,13 +128,13 @@
 
 
                      <!-- jQuery 3 -->
-    <script src="{{ asset('bower_components/adminTemplate/Js/jquery-3.3.1.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/jquery-3.3.1.js') }}"></script>
 
     <!-- popper -->
-    <script src="{{ asset('bower_components/adminTemplate/Js/popper.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/popper.min.js') }}"></script>
 
     <!-- Bootstrap 4.0-->
-    <script src="{{ asset('bower_components/adminTemplate/Js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/bootstrap.min.js') }}"></script>
 
 </body>
 </html>
