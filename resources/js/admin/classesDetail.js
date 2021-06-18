@@ -45,7 +45,7 @@ $(function() {
         var document_id = $('option:selected', this).attr('data-documentid');
         var html = `<div data-lessonid="`+ lesson_id +`" data-documentid="`+ document_id +`">`+ $('#addLessionDocument').val() +`
                         <button class="addtheory btn btn-sm btn-info">add</button>
-                    </div>`
+                    </div><hr>`
         $('.appendTheory').append(html);
     });
     $(document).on('click', '.addtheory', function(e) {
@@ -79,7 +79,7 @@ $(function() {
         var exercise_id = $('option:selected', this).attr('data-exerciseid');
         var html = `<div data-lessonid="`+ lesson_id +`" data-exerciseid="`+ exercise_id +`">`+ $(this).val() +`
                         <button class="addexercise">add</button>
-                    </div>`
+                    </div><hr>`
         $('.appendExercise').append(html);
     });
 
@@ -187,6 +187,15 @@ $(function() {
     })
 })
 
-$(document).on('click', '.download-pdf', function() {
-    
+$(document).on('click', '.btn-attendance', function() {
+    var data_id = $(this).attr('data-value');
+    // data.append('class_id', $('.info-class').attr('data-classId'))
+    // data.append('lesson_id', $('.info-class').attr('data-lessonid'));
+    if(data_id == 0) {
+        $(this).addClass('btn-danger')
+    } else if(data_id == 2) {
+        $(this).addClass('btn-warning')
+    } else if(data_id == 1) {
+        $(this).addClass('btn-success')
+    }
 })
