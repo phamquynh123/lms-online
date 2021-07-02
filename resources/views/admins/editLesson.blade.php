@@ -56,6 +56,13 @@
                                 </span>
                             </a>
                         </li>
+                        <li>
+                            <a href="#attendence" data-toggle="tab" title="bootsnipp goodies">
+                                <span class="round-tabs three">
+                                    <i class="fa fa-check"></i>
+                                </span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
 
@@ -174,6 +181,49 @@
                             </div>
                             @endforeach
                         </div>
+                    </div>
+                    <div class="tab-pane fade" id="attendence">
+                        <table class="table table-bordered">
+                            <tr >
+                                <td>Học sinh</td>
+                                <td>ID</td>
+                                <td>Tình trạng</td>
+                            </tr>
+                            @if(count($attendances) > 0)
+                            @foreach($attendances as $attendance)
+                                <tr>
+                                    <td>Student 01</td>
+                                    <td>00001</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-attendance" data-value="1" data-student={{ $attendance->student_id }}> Đúng giờ </button>
+                                        <button class="btn btn-sm btn-attendance" data-value="2" data-student={{ $attendance->student_id }}> Đi muộn </button>
+                                        <button class="btn btn-sm btn-attendance" data-value="0" data-student={{ $attendance->student_id }}> Vắng </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            @endif
+                            
+                            {{--  <tr>
+                                <td>Student 01</td>
+                                <td>00001</td>
+                                <td>
+                                    <button class="btn btn-sm btn-success"> Đúng giờ </button>
+                                    <button class="btn btn-sm"> Đi muộn </button>
+                                    <button class="btn btn-sm"> Vắng </button>
+                                </td>
+                            </tr>
+                             <tr>
+                                <td>Student 01</td>
+                                <td>00001</td>
+                                <td>
+                                    <button class="btn btn-sm"> Đúng giờ </button>
+                                    <button class="btn btn-sm"> Đi muộn </button>
+                                    <button class="btn btn-sm btn-danger"> Vắng </button>
+                                </td>
+                            </tr> --}}
+
+                            
+                        </table>
                     </div>
                 </div>
                 <div class="clearfix"></div>

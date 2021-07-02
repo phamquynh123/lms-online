@@ -119,6 +119,8 @@ class ClassInforController extends Controller
         // all exercise
         $exercises = $this->exerciseRepo->findCondition('course_id', $class->course_id);
         //lessondocument
+        $attendances = $this->classInfoRepo->findCondition('class_id', $class_id);
+
         $lessondocuments = $this->lessonDocumentRepo->findCondition('lesson_id', $lessons->id)->load('document')->map(function($item) {
                 $item['document'] = $item->document[0];
 
@@ -132,7 +134,7 @@ class ClassInforController extends Controller
             return $item;
         });
 
-        return view('admins/editLesson' , compact(['lessons', 'documents', 'exercises', 'lessondocuments', 'lessonexercises', 'class']));
+        return view('admins/editLesson' , compact(['lessons', 'documents', 'exercises', 'lessondocuments', 'lessonexercises', 'class', 'attendances']));
     }
 
     public function editinfo(Request $request)

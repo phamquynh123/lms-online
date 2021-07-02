@@ -250,6 +250,10 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">{{ trans('message.addDetail') }} {{ trans('message.class') }}</h4>
+
+            </div>
+            <div>
+                <button type="button" class="btn btn-info btn-sm float-right mr-2" style="width: 100px">Import excel</button>
             </div>
             <div class="modal-body">
                 <table class="table table-bordered" id="AddStudent2Class" data-status= {{ route('changestatus') }}>

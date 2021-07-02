@@ -221,6 +221,18 @@
         }
     }
    
+<<<<<<< HEAD
+    function verify() {
+        alert("aa");
+        var code = $(".input_otp").val();
+        coderesult.confirm(code).then(function (result) {
+            alert("Đã xác minh số điện thoại")
+
+        }).catch(function (error) {
+            alert("Sai mã xác nhận ! hãy thử lại")
+        });
+    }
+=======
     // function verify() {
     //     var code = $(".input_otp").value;
     //     coderesult.confirm(code).then(function (result) {
@@ -245,6 +257,7 @@
     $(document).on('click', '.class-verify', function() {
         alert('123');
     })
+>>>>>>> 495a35317acfdcbdea4269d58b561616748495d8
 </script>
 
 <script>
