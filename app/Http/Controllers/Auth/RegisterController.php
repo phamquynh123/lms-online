@@ -78,9 +78,14 @@ class RegisterController extends Controller
         ]);
     }
 
-    public function registercustom()
+    public function registercustom(Request $request)
     {
-        $subjects = $this->courseRepo->getAll();
+        if ($request->slug) {
+            $subjects = $this->courseRepo->findCondition('slug', $request->input('slug'));
+        } else {
+            $subjects = $this->courseRepo->getAll();
+        }
+        
 
         return view('auth.registercustom', compact('subjects'));
     }

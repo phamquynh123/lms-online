@@ -20,6 +20,7 @@
         'teacher' => 'Teacher',
         'course' => 'Course',
         'general' => 'General',
+        'document' => 'Document',
         'class' => 'Class',
         'show' => 'Show',
         'management' => 'MANAGEMENT',

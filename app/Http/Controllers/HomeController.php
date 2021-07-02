@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
+use App\Repositories\Classroom\ClassroomRepositoryInterface;
 
 class HomeController extends Controller
 {
@@ -11,9 +13,12 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    protected $classRepo;
+    public function __construct(
+        // ClassroomRepositoryInterface $classRepo,
+    ) {
         $this->middleware('auth');
+        // $this->classRepo = $classRepo;
     }
 
     /**
@@ -23,6 +28,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        $totalClass = DB::table('classes')->count();
+        $totalTeacher = DB::table('users')->where('role_id', config('messages.roleTeacher'))->count();
+        $totalStudent = DB::table('users')->where('role_id', config('messages.roleStudent'))->count();
+        $totalDocument = DB::table('documents')->count() + DB::table('exercises')->count();
+
+        return view('dashboard' , compact(['totalClass', 'totalTeacher', 'totalStudent', 'totalDocument']));
     }
 }

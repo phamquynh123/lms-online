@@ -149,7 +149,8 @@ route::get('home-page', function() {
 // Route::group(['name' => 'client.'], function() {
     $ctl = 'Client\HomeController';
     Route::get('/', $ctl . '@index')->name('client.home');
-    Route::get('/course', $ctl . '@course')->name('client.course');
+    Route::get('/course-infor/{slug}', $ctl . '@courseInfor')->name('client.course.infor');
+    Route::get('/course/', $ctl . '@course')->name('client.course');
     Route::get('/teacher', $ctl . '@teacher')->name('client.teacher');
     Route::get('/mycourse', $ctl . '@mycourse')->name('client.mycourse');
 // });

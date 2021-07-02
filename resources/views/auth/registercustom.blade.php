@@ -75,12 +75,16 @@
                                                 <i class="fa fa-envelope-open-o"></i>
                                             </span>
                                         </div>
-                                        <input type="email" class="form-control pl-15" placeholder="Email" name="email">
+                                        <input type="email" class="form-control pl-15" placeholder="Email" name="email"
+                                        value="@if(Auth::check()) {{ Auth::user()->email }} @endif"
+                                        onchange="checkmailExist()"
+                                        >
+                                        <p class='email-exist'></p>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="input-group mb-3">
-                                        <div class="input-group-prepend form-control">
+                                        <div class="input-group-prepend">
                                             <p class="input-group-text bg-info border-info" style="text-align:center">
                                                 <i class="fa fa-object-group"></i> {{ trans('message.course') }}
                                             </p>
@@ -103,16 +107,16 @@
                                         </div>
                                     </div>
                                     <!-- /.col -->
-                                    <div class="col-12 text-center">
-                                        <button type="submit" class="btn btn-info btn-block margin-top-10">{{ trans('message.register') }}</button>
+                                    <div class="col-12 float-right text-center">
+                                        <button type="submit" class="btn btn-info btn-block margin-top-10 col-2 float-right">{{ trans('message.register') }}</button>
                                     </div>
                                     <!-- /.col -->
                                 </div>
                             </form> 
-
-                            <form action="">
-                                <button type="button" class="btn btn-info" onclick="sendOTP()">Verify phone</button>
+                            <button type="button" class="btn btn-info vefify" onclick="sendOTP()">Verify phone</button>
                                 <div id="recaptcha-container"></div>
+                            <form action="" id="Phone-form">
+                                
                                 <input type="text" class ="input_otp">
                                 <button type="button" class="btn btn-info class-verify">xasc nhanaj</button>
                             </form>
@@ -138,7 +142,7 @@
     {{-- <script src ={{ asset('/js/admin.js') }}></script> --}}
 
 
-<script>
+{{-- <script>
   window.fbAsyncInit = function() {
     FB.init({
       appId      : '441817523214128',
@@ -159,12 +163,12 @@
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
 
-</script>
+</script> --}}
  <!-- The core Firebase JS SDK is always required and must be listed first -->
  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
 
- <script>
+<script>
      // Your web app's Firebase configuration
      var firebaseConfig = {
         apiKey: "AIzaSyDTvkc7ws8JX-4iizqifH2cEZF0eoRMHyY",
@@ -177,25 +181,26 @@
      };
      // Initialize Firebase
      firebase.initializeApp(firebaseConfig);
- </script>
+</script>
+
 
 <script>
-//   // Your web app's Firebase configuration
-//   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-//   firebase.auth().languageCode = 'it';
-  
-//   var firebaseConfig = {
-//     apiKey: "AIzaSyDTvkc7ws8JX-4iizqifH2cEZF0eoRMHyY",
-//     authDomain: "quynh-firebase.firebaseapp.com",
-//     projectId: "quynh-firebase",
-//     storageBucket: "quynh-firebase.appspot.com",
-//     messagingSenderId: "848117488588",
-//     appId: "1:848117488588:web:fef88f5803b55128db9b69",
-//     measurementId: "G-M0SQ7QE5WP"
-//   };
-//   // Initialize Firebase
-//   firebase.initializeApp(firebaseConfig);
-//   firebase.analytics();
+    //   // Your web app's Firebase configuration
+    //   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    //   firebase.auth().languageCode = 'it';
+    
+    //   var firebaseConfig = {
+    //     apiKey: "AIzaSyDTvkc7ws8JX-4iizqifH2cEZF0eoRMHyY",
+    //     authDomain: "quynh-firebase.firebaseapp.com",
+    //     projectId: "quynh-firebase",
+    //     storageBucket: "quynh-firebase.appspot.com",
+    //     messagingSenderId: "848117488588",
+    //     appId: "1:848117488588:web:fef88f5803b55128db9b69",
+    //     measurementId: "G-M0SQ7QE5WP"
+    //   };
+    //   // Initialize Firebase
+    //   firebase.initializeApp(firebaseConfig);
+    //   firebase.analytics();
 
  
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
@@ -240,6 +245,37 @@
     $(document).on('click', '.class-verify', function() {
         alert('123');
     })
+</script>
+
+<script>
+    $(function() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $(".vefify").on('click', function(e) {
+        e.preventDefault();
+        alert("aaa");
+
+    })
+    $('#form-profile').on('submit', function(e) {
+    e.preventDefault();
+    $.ajax({
+        dataType: 'JSON',
+        method: 'post',
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: new FormData(this),
+        url: route('editprofile'),
+        success: function(response){
+            toastr.info(response.success);
+            location.reload();
+        }
+    })
+})
+})
 </script>
 </body>
 </html>

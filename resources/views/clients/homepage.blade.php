@@ -76,30 +76,30 @@
     <div class="container">
     <div class="row">
         <div class="col-md-12">
-        <div class="mu-about-us-area">
-            <div class="row">
-            <div class="col-lg-6 col-md-6">
-                <div class="mu-about-us-left">
-                <!-- Start Title -->
-                <div class="mu-title">
-                    <h2>Giới thiệu</h2>
+            <div class="mu-about-us-area">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="mu-about-us-left">
+                        <!-- Start Title -->
+                            <div class="mu-title">
+                                <h2>Giới thiệu</h2>
+                            </div>
+                            <p>
+                                Đại học Bách Khoa Thành lập từ năm 1956, Trải qua 60 năm xây dựng và phát triển, Trường đã khẳng định vị thế của mình thông qua uy tín về chất lượng đào tạo, các hoạt động phong trào sinh viên sôi nổi, sự gắn bó giữa Nhà trường và xã hội, cam kết đào tạo đội ngũ nhân lực hùng hậu và chất lượng cao cho đất nước.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="mu-about-us-right">                            
+                            {{-- <a id="mu-abtus-video" href="https://www.youtube.com/embed/FqpZ13yVUJI" target="mutube-video"> 
+                            <img src="assets/img/about-us.jpg" alt="img"> --}}
+                                                <iframe width="560" height="315" src="https://www.youtube.com/embed/FqpZ13yVUJI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </a>                
+                        </div>
+                    </div>
                 </div>
-                <p>
-                    Đại học Bách Khoa Thành lập từ năm 1956, Trải qua 60 năm xây dựng và phát triển, Trường đã khẳng định vị thế của mình thông qua uy tín về chất lượng đào tạo, các hoạt động phong trào sinh viên sôi nổi, sự gắn bó giữa Nhà trường và xã hội, cam kết đào tạo đội ngũ nhân lực hùng hậu và chất lượng cao cho đất nước.
-                </p>
             </div>
         </div>
-        <div class="col-lg-6 col-md-6">
-            <div class="mu-about-us-right">                            
-                {{-- <a id="mu-abtus-video" href="https://www.youtube.com/embed/FqpZ13yVUJI" target="mutube-video"> 
-                <img src="assets/img/about-us.jpg" alt="img"> --}}
-                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/FqpZ13yVUJI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </a>                
-        </div>
-    </div>
-    </div>
-    </div>
-    </div>
     </div>
     </div>
     </section>
@@ -129,13 +129,13 @@
                                                       <img src="{{ asset('bower_components/bower/Client/img/courses/default.jpg') }}" alt="img">
                                                   </a>
                                                   <figcaption class="mu-latest-course-imgcaption">
-                                                      <a href="#">Drawing</a>
+                                                      <a href="{{ route('client.course.infor', $course->slug) }}">{{ $course->name }}</a>
                                                       <span><i class="fa fa-clock-o"></i></span>
                                                   </figcaption>
                                               </figure>
                                               <div class="mu-latest-course-single-content">
-                                                  <h4><a href="#">{{ $course->name }}</a></h4>
-                                                  <p>{!! $course->description !!}</p>
+                                                  {{-- <h4><a href="#">{{ $course->name }}</a></h4> --}}
+                                                  <p>{!! $course->note !!}</p>
                                                   {{-- <div class="mu-latest-course-single-contbottom">
                                                       <a class="mu-course-details" href="#">Details</a>
                                                       <span class="mu-course-price" href="#">$165.00</span>

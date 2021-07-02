@@ -54,10 +54,19 @@
                 <div class="form-group">
                     <label for="">{{ trans('message.avatar') }}</label>
                     @if (Auth::user()->avatar == "")
-                        <img src="{{ config('messages.linkdefaul') }}" alt="" class="img-avatar">
+                        <img src="{{ asset(config('messages.linkdefaul')) }}" alt="" class="img-avatar">
                     @else
-                        <img src="{{ asset(Auth::user()->avatar) }}" alt="" class="img-avatar">
+                        {{-- <img src="{{ asset(Auth::user()->avatar) }}" alt="" class="img-avatar"> --}}
+                        <img src=" {{ asset(config('messages.imgDefaul').Auth::user()->avatar) }}" class="user-image rounded-circle img-avatar" alt="User Image">
+
                     @endif
+
+                    {{-- @if( Auth::user()->avatar != null)
+                                    <img src=" {{ asset(config('messages.imgDefaul').Auth::user()->avatar) }}" class="user-image rounded-circle" alt="User Image">
+                                @else
+                                    <img src=" {{ asset(config('messages.linkdefaul')) }}" class="user-image rounded-circle" alt="User Image">
+                                @endif --}}
+
                     <input type="file" class="form-control" id="edit-ava" placeholder="Input field" name="file" value={{ Auth::user()->id }}>
                 </div>
                 <div class="form-group" hidden>
@@ -96,3 +105,21 @@
 @section('ajax')
     <script scr="{{ asset('js/admin.js') }}"></script>
 @endsection
+
+
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>

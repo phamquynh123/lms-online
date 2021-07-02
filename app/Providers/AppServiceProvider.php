@@ -24,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+        app()->singleton('new-domain', 'http://students.com');
         $this->app->bind("App\\Repositories\\User\\UserRepositoryInterface","App\\Repositories\\User\\UserRepository");
         $this->app->bind("App\\Repositories\\Attendance\\AttendanceRepositoryInterface","App\\Repositories\\Attendance\\AttendanceRepository");
         $this->app->bind("App\\Repositories\\Classroom\\ClassroomRepositoryInterface","App\\Repositories\\Classroom\\ClassroomRepository");

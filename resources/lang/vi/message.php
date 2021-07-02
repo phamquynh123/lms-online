@@ -9,6 +9,7 @@
         'teacher' => 'Giáo Viên ',
         'course' => 'Khóa Học ',
         'general' => 'Chung',
+        'document' => 'Tai lieu',
         'management' => 'Quản Lí ',
         'MAINDashboard' => 'Trang Chủ',
         'documentMangement' => 'Quản lí tài liệu',
