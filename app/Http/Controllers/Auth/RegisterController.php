@@ -90,6 +90,29 @@ class RegisterController extends Controller
         return view('auth.registercustom', compact('subjects'));
     }
 
+    public function checkExistEmail(Request $request)
+    {
+        $rules = [
+            'email' => 'unique:users|email',
+        ];
+        $validator = \Validator::make($request->all(), $rules);
+        $validator->setAttributeNames([
+            'email' => 'Email'
+        ]);
+        if ($validator->fails()) {
+            return $this->response_error($validator->messages()->first());
+        }
+
+        return '';
+    }
+    function response_error($message = 'Đã xảy ra lỗi')
+    {
+        return response()->json([
+            'errors' => true,
+            'message' => $message
+        ]);
+    }
+
     public function registerSubmit(Request $request)
     {
         $data = $request->all();

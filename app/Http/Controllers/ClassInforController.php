@@ -133,6 +133,7 @@ class ClassInforController extends Controller
 
             return $item;
         });
+        // dd("gdđ");
 
         return view('admins/editLesson' , compact(['lessons', 'documents', 'exercises', 'lessondocuments', 'lessonexercises', 'class', 'attendances']));
     }

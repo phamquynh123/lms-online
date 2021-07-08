@@ -225,4 +225,11 @@ class ClassesController extends Controller
             ]);
         }
     }
+    function response_error($message = 'Đã xảy ra lỗi')
+    {
+        return response()->json([
+            'errors' => true,
+            'message' => $message
+        ]);
+    }
 }

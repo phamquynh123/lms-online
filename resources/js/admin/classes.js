@@ -213,3 +213,21 @@ $(document).on('click', '.teacherClass3', function() {
         ],
     });
 })
+
+
+$(document).on('submit', '#import-excel', function(e) {
+    e.preventDefault();
+    $.ajax({
+        dataType: 'JSON',
+        method: 'post',
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: new FormData(this),
+        url: route('importStudent2Class'),
+        success: function(response){
+            toastr.info(response.success);
+            // location.reload();
+        }
+    })
+})

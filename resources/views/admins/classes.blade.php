@@ -253,6 +253,11 @@
 
             </div>
             <div>
+                <form id="import-excel" enctype="multipart/form-data">
+
+                    <button type="submit" class="btn btn-info btn-sm float-right mr-2" style="width: 100px">Submit</button>
+                    <input type="file" class="btn btn-info btn-sm float-right mr-2" style="width: 100px" value="" name="file">
+                </form>
                 <button type="button" class="btn btn-info btn-sm float-right mr-2" style="width: 100px">Import excel</button>
             </div>
             <div class="modal-body">

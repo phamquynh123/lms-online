@@ -23,6 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 // });
 // register Course
 Route::get('/registercustom', 'Auth\RegisterController@registercustom')->name('registercustom');
+Route::post('/checkExistEmail', 'Auth\RegisterController@checkExistEmail')->name('checkExistEmail');
 Route::post('/registerSubmit', 'Auth\RegisterController@registerSubmit')->name('registerSubmit');
 // Login Facebook
 Route::get('auth/facebook', 'RegisterCustomController@redirectToProvider')->name('facebook.login') ;
@@ -60,6 +61,7 @@ Route::group(['middleware' => 'locale'], function() {
                 Route::post('/addLesson', 'ClassesController@addLesson')->name('addLesson');
                 Route::get('datatablesAdddetail/{classId}', 'ClassesController@datatablesAdddetail')->name('datatables.addDetaiClass');
                 Route::post('/addStudentToClass', 'ClassesController@addStudentToClass')->name('addStudentToClass');
+                Route::post('/importStudent2Class', 'ClassesController@importStudent2Class')->name('importStudent2Class');
                 // 'ClassInforController@index'
                 Route::get('/classDetail/{id}', 'ClassInforController@index')->name('classDetail');
                 Route::get('/classDetailDatatable/{id}', 'ClassInforController@classDetailDatatable')->name('classDetailDatatable');

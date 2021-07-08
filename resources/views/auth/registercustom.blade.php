@@ -75,11 +75,10 @@
                                                 <i class="fa fa-envelope-open-o"></i>
                                             </span>
                                         </div>
-                                        <input type="email" class="form-control pl-15" placeholder="Email" name="email"
+                                        <input type="email" class="form-control pl-15 checkmailExist" placeholder="Email" name="email"
                                         value="@if(Auth::check()) {{ Auth::user()->email }} @endif"
-                                        onchange="checkmailExist()"
                                         >
-                                        <p class='email-exist'></p>
+                                        <p class='email-exist text-danger'></p>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -113,12 +112,11 @@
                                     <!-- /.col -->
                                 </div>
                             </form> 
-                            <button type="button" class="btn btn-info vefify" onclick="sendOTP()">Verify phone</button>
+                            <button type="button" class="btn btn-info vefify">Verify phone</button>
                                 <div id="recaptcha-container"></div>
-                            <form action="" id="Phone-form">
-                                
+                            <form action="" id="Phone-form" class='d-none'>
                                 <input type="text" class ="input_otp">
-                                <button type="button" class="btn btn-info class-verify">xasc nhanaj</button>
+                                <button type="button" class="btn btn-info btn-sm class-verify">xasc nhanaj</button>
                             </form>
 
                             <div class="text-center">
@@ -132,7 +130,7 @@
     </div>
 
         <!-- jQuery 3 -->
-    <script src="{{ asset('bower_components/bower/adminTemplate/Js/jquery-3.3.1.js') }}"></script>
+    <script src="{{ asset('bower_components/bower/adminTemplate/Js/jquery-3.3.1.min.js') }}"></script>
     <!-- popper -->
     <script src="{{ asset('bower_components/bower/adminTemplate/Js/popper.min.js') }}"></script>
     <!-- Bootstrap 4.0-->
@@ -221,74 +219,65 @@
         }
     }
    
-<<<<<<< HEAD
     function verify() {
-        alert("aa");
         var code = $(".input_otp").val();
+        alert(code)
         coderesult.confirm(code).then(function (result) {
-            alert("Đã xác minh số điện thoại")
-
+            // let user_phone = $('#porfile_phone').val();
+            alert('dung roi');
+            // $("#successOtpAuth").text("Đã xác minh số điện thoại");
+            // $("#successOtpAuth").show();
+            // setTimeout(function(){
+            //     $("#successOtpAuth").hide();
+            // }, 3000);
+            // $('#modal_verify_phone').modal('hide');
+   
         }).catch(function (error) {
-            alert("Sai mã xác nhận ! hãy thử lại")
+            alert('sai roi nhe');
+            // $("#error").text('Sai mã xác nhận ! hãy thử lại ');
+            // $("#error").show();
+            // $('#modal_verify_phone').modal('hide');
+            // $('#submit_update').prop('disabled', true);
         });
     }
-=======
-    // function verify() {
-    //     var code = $(".input_otp").value;
-    //     coderesult.confirm(code).then(function (result) {
-    //         // let user_phone = $('#porfile_phone').val();
-    //         alert('dung roi');
-    //         // $("#successOtpAuth").text("Đã xác minh số điện thoại");
-    //         // $("#successOtpAuth").show();
-    //         // setTimeout(function(){
-    //         //     $("#successOtpAuth").hide();
-    //         // }, 3000);
-    //         // $('#modal_verify_phone').modal('hide');
-   
-    //     }).catch(function (error) {
-    //         alert('sai roi nhe');
-    //         // $("#error").text('Sai mã xác nhận ! hãy thử lại ');
-    //         // $("#error").show();
-    //         // $('#modal_verify_phone').modal('hide');
-    //         // $('#submit_update').prop('disabled', true);
-    //     });
-    // }
 
     $(document).on('click', '.class-verify', function() {
-        alert('123');
-    })
->>>>>>> 495a35317acfdcbdea4269d58b561616748495d8
+        verify();
+    });
 </script>
 
 <script>
     $(function() {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    $(".vefify").on('click', function(e) {
-        e.preventDefault();
-        alert("aaa");
-
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $(".vefify").on('click', function(e) {
+            e.preventDefault();
+            $('#Phone-form').removeClass('d-none') 
+            sendOTP()
+        })
+        $(document).on('change', '.checkmailExist', function(e) {
+            var formData = new FormData();
+            formData.append('email', $('.checkmailExist').val());
+            alert($('.checkmailExist').val())
+            e.preventDefault();
+            $.ajax({
+                dataType: 'JSON',
+                method: 'post',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: formData,
+                url: "/checkExistEmail",
+                success: function(response){
+                    // toastr.info(response.success);
+                    $('.email-exist').html(response.message)
+                }
+            })
+        })
     })
-    $('#form-profile').on('submit', function(e) {
-    e.preventDefault();
-    $.ajax({
-        dataType: 'JSON',
-        method: 'post',
-        cache: false,
-        contentType: false,
-        processData: false,
-        data: new FormData(this),
-        url: route('editprofile'),
-        success: function(response){
-            toastr.info(response.success);
-            location.reload();
-        }
-    })
-})
-})
 </script>
 </body>
 </html>
