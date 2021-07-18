@@ -15,6 +15,7 @@ use App\Repositories\Lesson\LessonRepositoryInterface;
 use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\LessonExercise\LessonExerciseRepositoryInterface as LessonExerciseRepo;
 use App\Repositories\LessonDocument\LessonDocumentRepositoryInterface as LessonDocumentRepo;
+use App\Repositories\Attendance\AttendanceRepositoryInterface;
 use App\Repositories\Homework\HomeworkRepositoryInterface;
 use Yajra\Datatables\Datatables;
 use App\Http\Requests\TestRequest;
@@ -42,6 +43,7 @@ class ClassInforController extends Controller
     protected $exerciseRepo;
     protected $userRepo;
     protected $lessonRepo;
+    protected $attendanceRepo;
 
     public function __construct(
         ClassInfoRepositoryInterface $classInfoRepo,
@@ -52,7 +54,8 @@ class ClassInforController extends Controller
         DocumentRepositoryInterface $documentRepo,
         ExerciseRepositoryInterface $exerciseRepo,
         UserRepositoryInterface $userRepo,
-        LessonRepositoryInterface $lessonRepo
+        LessonRepositoryInterface $lessonRepo,
+        AttendanceRepositoryInterface $attendanceRepo
     ) {
         $this->classInfoRepo = $classInfoRepo;
         $this->homeworkRepo = $homeworkRepo;
@@ -63,6 +66,7 @@ class ClassInforController extends Controller
         $this->exerciseRepo = $exerciseRepo;
         $this->userRepo = $userRepo;
         $this->lessonRepo = $lessonRepo;
+        $this->attendanceRepo = $attendanceRepo;
     }
 
     public function index($id)
@@ -119,7 +123,8 @@ class ClassInforController extends Controller
         // all exercise
         $exercises = $this->exerciseRepo->findCondition('course_id', $class->course_id);
         //lessondocument
-        $attendances = $this->classInfoRepo->findCondition('class_id', $class_id);
+        $attendances = $this->classInfoRepo->findCondition('class_id', $class_id)->load('users');
+        // dd($attendances->toArray());
 
         $lessondocuments = $this->lessonDocumentRepo->findCondition('lesson_id', $lessons->id)->load('document')->map(function($item) {
                 $item['document'] = $item->document[0];
@@ -133,7 +138,6 @@ class ClassInforController extends Controller
 
             return $item;
         });
-        // dd("gdđ");
 
         return view('admins/editLesson' , compact(['lessons', 'documents', 'exercises', 'lessondocuments', 'lessonexercises', 'class', 'attendances']));
     }
@@ -151,7 +155,8 @@ class ClassInforController extends Controller
     {
         // dd($request->all());
         $check = $this->lessonDocumentRepo->checkExist($request->all());
-        if ($check) {
+
+        if (count($check) > 0) {
             return response()->json(['message' => 'Bài lý thuyết đã tồn tại', 'error' => true]);
         }
         $data = $this->lessonDocumentRepo->create($request->all());
@@ -162,11 +167,14 @@ class ClassInforController extends Controller
     public function editlessionExercise(Request $request)
     {
         $data = $request->all();
-        // $repo = new LessonExerciseRepository();
         $data['deadline'] = now()->addDays(2);
-        // dd($data);
+        $data['excercise_id'] = $data['exercise_id'];
+        $check = $this->lessonExerciseRepo->checkExist($request->all());
+
+        if (count($check) > 0) {
+            return response()->json(['message' => 'Bài lý thuyết đã tồn tại', 'error' => true]);
+        }
         $data = $this->lessonExerciseRepo->create($data);
-        // $data = $this->classInfoRepo->find($class_id);
 
         return response()->json(['success' => trans('meassge.successs'), 'error' => false]);
     }
@@ -280,8 +288,18 @@ class ClassInforController extends Controller
         });
         $pdf = PDF::loadView('document.downloadview', compact(['lesson', 'docs']));
         $pdf->download('document.pdf');
-
+        
         return redirect()->back()->with('success', 'Download tài liệu thành công');
+    }
+
+    public function attendance(Request $request)
+    {
+        if (count($check) > 0) {
+            return response()->json(['message' => 'Điểm danh thành công.', 'error' => true]);
+        }
+        $data = $this->lessonExerciseRepo->create($data);
+
+        return response()->json(['success' => trans('meassge.success'), 'error' => false]);
     }
 
 }

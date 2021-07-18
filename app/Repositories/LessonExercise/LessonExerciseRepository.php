@@ -14,4 +14,11 @@ class LessonExerciseRepository extends EloquentRepository implements LessonExerc
     {
         return LessonExercise::class;
     }
+
+    public function checkExist($data)
+    {
+    	$data = $this->_model->where('class_id', $data['class_id'])->where('lesson_id', $data['lesson_id'])->where('excercise_id', $data['exercise_id'])->get();
+
+    	return $data;
+    }
 }

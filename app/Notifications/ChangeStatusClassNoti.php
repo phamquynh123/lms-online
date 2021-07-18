@@ -41,12 +41,12 @@ class ChangeStatusClassNoti extends Notification
     public function toMail($notifiable)
     {
         $url = 'admin/classes/classDetail/' . $this->classes->id;
-        $line = "lop hoc " . $this->classes->name . ' cuar ban da chuyen trang thai tu sap dien ra thanh dang dien ra';
+        $line = "Lớp học " . $this->classes->name . ' đã chuyển trạng thái từ sắp diễn ra thành đang diễn ra';
         // dd($url, $line);
         return (new MailMessage)
                     ->line($line)
                     ->action('Notification Action', url($url))
-                    ->line('Thank you for using our application!');
+                    ->line("Thank you for using Quynh's system!");
     }
 
     /**

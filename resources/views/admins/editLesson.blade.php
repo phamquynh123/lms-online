@@ -43,9 +43,9 @@
 
                         <li>
                             <a href="#profile" data-toggle="tab" title="profile">
-                            <span class="round-tabs two">
-                                <i class="fa fa-book"></i>
-                            </span> 
+                                <span class="round-tabs two">
+                                    <i class="fa fa-book"></i>
+                                </span> 
                             </a>
                         </li>
 
@@ -57,7 +57,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#attendence" data-toggle="tab" title="bootsnipp goodies">
+                            <a href="#attendence" data-toggle="tab" title="attendence">
                                 <span class="round-tabs three">
                                     <i class="fa fa-check"></i>
                                 </span>
@@ -192,12 +192,12 @@
                             @if(count($attendances) > 0)
                             @foreach($attendances as $attendance)
                                 <tr>
-                                    <td>Student 01</td>
-                                    <td>00001</td>
+                                    <td>{{ $attendance->users[0]->name }}</td>
+                                    <td>{{ $attendance->users[0]->id }}</td>
                                     <td>
-                                        <button class="btn btn-sm btn-attendance" data-value="1" data-student={{ $attendance->student_id }}> Đúng giờ </button>
-                                        <button class="btn btn-sm btn-attendance" data-value="2" data-student={{ $attendance->student_id }}> Đi muộn </button>
-                                        <button class="btn btn-sm btn-attendance" data-value="0" data-student={{ $attendance->student_id }}> Vắng </button>
+                                        <button class="btn btn-sm btn-attendance" data-value="1" data-student={{ $attendance->users[0]->id }}> Đúng giờ </button>
+                                        <button class="btn btn-sm btn-attendance" data-value="2" data-student={{ $attendance->users[0]->id }}> Đi muộn </button>
+                                        <button class="btn btn-sm btn-attendance" data-value="0" data-student={{ $attendance->users[0]->id }}> Vắng </button>
                                     </td>
                                 </tr>
                             @endforeach

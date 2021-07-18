@@ -92,9 +92,10 @@ $(document).on('click', '.permission-edit', function() {
         cache: false,
         contentType: false,
         processData: false,
-        data: new FormData(this),
+        data: new FormData(),
         url: route('permission.edit', id),
         success: function(response){
+            console.log("response", response)
             $('#permission-id').val(response.id);
             $('#permission-name').val(response.name);
             $('#permission-display_name').val(response.display_name);
@@ -133,7 +134,7 @@ $(document).on('click', '.role-edit', function() {
         cache: false,
         contentType: false,
         processData: false,
-        data: new FormData(this),
+        data: new FormData(),
         url: route('permission.roleedit', id),
         success: function(response){
             $('#role-id').val(response.id);
@@ -174,10 +175,11 @@ $(document).on('click', '.permission-role-edit', function() {
         cache: false,
         contentType: false,
         processData: false,
-        data: new FormData(this),
+        // data: new FormData(),
         url: route('permission.permissionRoleEdit', id),
         success: function(response) {
-            $('#rolename').html(response.display_name);
+            console.log(response);
+            $('.rolename').html(response.display_name);
             $.each(response.permission, function(key, value) {
                 $('.list-permission-per-people'). append(`<p>` + value['display_name'] + `</p>`);
             })
@@ -200,6 +202,7 @@ $(document).on('click', '#addPermissionRole', function(e) {
     formdata.append('role_id', role_id);
     formdata.append('permission_id', permission_id);
     formdata.append('_token', $('input[name="_token"]').val());
+    console.log("formdata", formdata)
     $.ajax({
         dataType: 'JSON',
         method: 'post',

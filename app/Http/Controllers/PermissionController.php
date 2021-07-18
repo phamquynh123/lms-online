@@ -211,6 +211,10 @@ class PermissionController extends Controller
 
     public function permissionRoleUpdatee(Request $request) {
         $data = $request->all();
+        $check = $this->perrolerepo->findConditionClass('role_id', $data['role_id'], 'permission_id', $data['permission_id']);
+        if (count($check) > 0 ){
+            return response()->json(['success' => trans('Đã tồn tại quyền.')]);
+        } 
         $this->perrolerepo->create($data);
 
         return response()->json(['success' => trans('message.success')]);

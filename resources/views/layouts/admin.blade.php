@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../images/favicon.ico">
+    {{-- <link rel="icon" href="../../images/favicon.ico"> --}}
 
     <title> SuperAdmin </title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">

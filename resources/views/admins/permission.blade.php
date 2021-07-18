@@ -61,7 +61,6 @@
         <hr class="error">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <p><b>{{ trans('message.permissions_role') }}</b></p>
-            <button class="btn btn-info float-right" data-toggle="modal" data-target="#add-permissionrole">{{ trans('message.addNew') }} {{ trans('message.role') }}</button>
             <div class="clear"></div>
             <table class="table table-hover" id="permissionrole" data-url="{{ route('permission.datatablePermissionRole') }}">
                 <thead>
@@ -266,7 +265,7 @@
                         @csrf
                         <div class="form-group">
                             <div class="form-line">
-                                <label for="">{{ trans('message.addNew') }} {{ trans('message.permissions') }} cho <span class="rolename"></span></label>
+                                <label for="">{{ trans('message.addNew') }} {{ trans('message.permissions') }} cho: <span class="rolename"></span></label>
                                 <select name="" id="" class="selectpermission form-control">
                                 </select>
                             </div>

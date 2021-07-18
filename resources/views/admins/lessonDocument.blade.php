@@ -81,7 +81,6 @@
     </div>
 </div>
 
-
 @section('ajax')
     <script src="{{ asset('js/classesDetail.js') }}"></script>
 @endsection

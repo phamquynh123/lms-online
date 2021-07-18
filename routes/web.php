@@ -70,6 +70,7 @@ Route::group(['middleware' => 'locale'], function() {
                 Route::post('/editinfo', 'ClassInforController@editinfo')->name('editinfo');
                 Route::post('/editlessionDocument', 'ClassInforController@editlessionDocument')->name('editlessionDocument');
                 Route::post('/editlessionExercise', 'ClassInforController@editlessionExercise')->name('editlessionExercise');
+                Route::post('/attendance', 'ClassInforController@attendance')->name('attendance');
 
                  Route::post('/addlessionDocument', 'ClassInforController@addlessionDocument')->name('addlessionDocument');
                 Route::post('/addlessionExercise', 'ClassInforController@addlessionExercise')->name('addlessionExercise');

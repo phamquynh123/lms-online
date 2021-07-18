@@ -53,7 +53,7 @@ $(function() {
         var formData = new FormData();
         formData.append('lesson_id', $(this).parent().attr('data-lessonid'));
         formData.append('document_id', $(this).parent().attr('data-documentid'));
-        formData.append('class_id', $('#addTheory').attr('data-classId'));
+        formData.append('class_id', $('#addExercise').attr('data-classId'));
         $.ajax({
             dataType: 'JSON',
             method: 'post',
@@ -88,6 +88,7 @@ $(function() {
         var formData = new FormData();
         formData.append('lesson_id', $(this).parent().attr('data-lessonid'));
         formData.append('exercise_id', $(this).parent().attr('data-exerciseid'));
+        formData.append('class_id', $('#addTheory').attr('data-classId'));
         // formData.append('deadline', $('#a').val());
         $.ajax({
             dataType: 'JSON',
@@ -99,7 +100,7 @@ $(function() {
             url: route('editlessionExercise'),
             success: function(response){
                 toastr.info(response.success);
-                location.reload();
+                // location.reload();
             }
         });
     })
@@ -189,13 +190,20 @@ $(function() {
 
 $(document).on('click', '.btn-attendance', function() {
     var data_id = $(this).attr('data-value');
-    // data.append('class_id', $('.info-class').attr('data-classId'))
-    // data.append('lesson_id', $('.info-class').attr('data-lessonid'));
+    data.append('class_id', $('.info-class').attr('data-classId'))
+    data.append('lesson_id', $('.info-class').attr('data-lessonid'));
+    data.append('student_id', $(this).attr('data-student'));
     if(data_id == 0) {
+        $(this).siblings().css('class', 'btn btn-sm btn-attendance')
         $(this).addClass('btn-danger')
+        $(this).siblings().removeClass('btn-warning')
     } else if(data_id == 2) {
         $(this).addClass('btn-warning')
+        $(this).siblings().css('class', 'btn btn-sm btn-attendance')
     } else if(data_id == 1) {
         $(this).addClass('btn-success')
+        $(this).siblings().css('class', 'btn btn-sm btn-attendance')
     }
+
+
 })

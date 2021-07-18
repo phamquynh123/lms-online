@@ -56,17 +56,17 @@ $(function() {
             dataType: 'JSON',
             success: function (response) {
                 console.log(response);
-                if(response == undefined || response == null || response.length == 0) {
+                // != undefined || response != null || response.length != 0
+                if(Object.keys(response).length !== 0) {
                     $('#showHomework').modal('show');
-                    console.log("ndjkfjknf");
                     $('.submitMarking').attr('data-homeworkId', response.id);
                     $('#mark').html(response.mark);
-                    $('#content').html(response.content);
+                    CKEDITOR.instances.content.setData(response.content);
                     $('#comment').html(response.comment);
                     $('#mark1').val(response.mark);
                     $('#comment1').val(response.comment);
                 } else {
-                     toastr.warning('Bài học chưa được chấm điểm.')
+                     toastr.warning('Chưa làm bài tập về nhà.')
                 }
                 
             },
